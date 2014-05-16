@@ -54,4 +54,10 @@ group :test do
   # DSL for browser-based testing
   gem 'capybara'
 
+  # PhantomJS driver for capybara
+  gem 'poltergeist'
+
+  # See what your headless browser is seeing with save_and_open_page
+  gem 'launchy'
+
 end
