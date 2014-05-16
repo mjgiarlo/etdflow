@@ -26,6 +26,9 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 
+# core testing framework for rails
+gem 'rspec-rails', groups: [:development, :test]
+
 group :development do
 
   # Spring speeds up development by keeping your application running in the background.
@@ -35,9 +38,6 @@ group :development do
 end
 
 group :test do
-
-  # core unit testing framework
-  gem 'rspec'
 
   # human readable acceptance test framework
   gem 'cucumber'
