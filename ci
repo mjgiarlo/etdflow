@@ -39,9 +39,9 @@ bundle exec rspec --no-color spec/unit
 #echo '========== Integration Tests ============================================='
 #bundle exec rspec --no-color spec/integration
 
-#echo '========== Acceptance Tests ============================================='
-#bundle exec cucumber --no-color
-#
+echo '========== Acceptance Tests ============================================='
+bundle exec cucumber --no-color
+
 #echo '========== Deploy To Staging ============================================'
 #current_revision=`git show | awk '/^commit / { print $2 }'`
 #bundle exec cap staging deploy -s branch=$current_revision
