@@ -11,33 +11,33 @@ set -x # Echo each command
 echo '========== Install Gems ============================================='
 bundle install --no-color
 
-#echo '========== Prepare Database ============================================='
-#
-#cat > config/database.yml <<EOF
-#development:
-#  adapter: mysql2
-#  database: etdflow_development
-#
-#test: &test
-#  adapter: mysql2
-#  database: etdflow_test
-#
-#cucumber:
-#  <<: *test
-#EOF
-#
-#bundle exec rake db:create:all
-#bundle exec rake db:migrate
-#bundle exec rake db:test:prepare
+echo '========== Prepare Database ============================================='
+
+cat > config/database.yml <<EOF
+development:
+  adapter: mysql2
+  database: etdflow_development
+
+test: &test
+  adapter: mysql2
+  database: etdflow_test
+
+cucumber:
+  <<: *test
+EOF
+
+bundle exec rake db:create:all
+bundle exec rake db:migrate
+bundle exec rake db:test:prepare
 
 echo '========== Unit Tests ============================================='
 bundle exec rspec --no-color spec/unit
 
-#echo '========== Component Tests ============================================='
-#bundle exec rspec --no-color spec/component
-#
-#echo '========== Integration Tests ============================================='
-#bundle exec rspec --no-color spec/integration
+echo '========== Component Tests ============================================='
+bundle exec rspec --no-color spec/component
+
+echo '========== Integration Tests ============================================='
+bundle exec rspec --no-color spec/integration
 
 echo '========== Acceptance Tests ============================================='
 bundle exec cucumber --no-color
