@@ -38,6 +38,12 @@ group :development do
   # Read more: https://github.com/rails/spring
   gem 'spring'
 
+  # Deploy to multiple environments
+  gem 'capistrano-ext'
+
+  # Useful recipes for generalizing deployment behavior
+  gem 'capistrano-helpers'
+
 end
 
 group :test do
