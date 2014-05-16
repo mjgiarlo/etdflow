@@ -42,4 +42,7 @@ group :test do
   # human readable acceptance test framework
   gem 'cucumber'
 
+  # DSL for browser-based testing
+  gem 'capybara'
+
 end
