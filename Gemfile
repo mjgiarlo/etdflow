@@ -32,6 +32,9 @@ gem 'jbuilder'
 # core testing framework for rails
 gem 'rspec-rails', groups: [:development, :test]
 
+# Core repository software stack
+gem 'hydra'
+
 group :development do
 
   # Spring speeds up development by keeping your application running in the background.
