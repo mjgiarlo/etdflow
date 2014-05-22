@@ -29,11 +29,14 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 
-# core testing framework for rails
-gem 'rspec-rails', groups: [:development, :test]
-
 # Core repository software stack
 gem 'hydra'
+
+# Authentication
+gem "devise"
+
+# Added by hydra generator
+gem "devise-guests", "~> 0.3"
 
 group :development do
 
@@ -65,9 +68,12 @@ group :test do
 
 end
 
-gem "devise"
-gem "devise-guests", "~> 0.3"
 group :development, :test do
+
+  # core testing framework for rails
   gem "rspec-rails"
+
+  # Solr and fedora development environment
   gem "jettywrapper"
+
 end
