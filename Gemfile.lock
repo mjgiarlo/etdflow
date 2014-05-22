@@ -97,8 +97,6 @@ GEM
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
-    devise-guests (0.3.3)
-      devise
     diff-lcs (1.2.5)
     ebnf (0.3.6)
       haml (~> 4.0)
@@ -380,7 +378,6 @@ DEPENDENCIES
   coffee-rails
   cucumber
   devise
-  devise-guests (~> 0.3)
   hydra
   jbuilder
   jettywrapper
