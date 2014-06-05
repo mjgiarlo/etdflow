@@ -33,7 +33,9 @@ gem 'jbuilder'
 gem 'rspec-rails', groups: [:development, :test]
 
 # core institutional repository platform
-gem 'worthwhile'
+# temporarily pointing to their github repo
+# see: https://github.com/curationexperts/worthwhile/issues/10
+gem 'worthwhile', github: 'curationexperts/worthwhile' 
 
 group :development do
 
