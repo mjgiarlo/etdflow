@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
- #root :to => "catalog#index"
   get '/catalog' => "catalog#index"
   blacklight_for :catalog
   devise_for :users
@@ -10,7 +9,6 @@ Rails.application.routes.draw do
   worthwhile_curation_concerns
   worthwhile_embargo_management
 
- #get '/home' => 'static#home', as: :home
   root :to => 'static#home'
 
 end
