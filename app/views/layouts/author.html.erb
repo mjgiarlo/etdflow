@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ETD Flow</title>
+  <%= stylesheet_link_tag    'base', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'author', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'base', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'author', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+  <%= yield %>
+
+</body>
+</html>
