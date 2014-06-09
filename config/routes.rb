@@ -11,4 +11,6 @@ Rails.application.routes.draw do
 
   root :to => 'static#home'
 
+  get    '/mockups/:page' => 'mockups#show', as: :mockup
+
 end
