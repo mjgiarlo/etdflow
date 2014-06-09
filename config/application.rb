@@ -15,6 +15,11 @@ Bundler.require(*Rails.groups)
 
 module Etdflow
   class Application < Rails::Application
+
+    # Precompile additional assets.
+    # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
+    config.assets.precompile += %w( base.css author.css admin.css base.js author.js admin.js )
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
