@@ -37,9 +37,6 @@ gem 'worthwhile', github: 'curationexperts/worthwhile'
 # Authentication
 gem 'devise'
 
-# Added by hydra generator
-gem 'devise-guests', '~> 0.3'
-
 group :development do
 
   # Spring speeds up development by keeping your application running in the background.
