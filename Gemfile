@@ -54,7 +54,7 @@ end
 group :test do
 
   # human readable acceptance test framework
-  gem 'cucumber'
+  gem 'cucumber-rails', :require => false
 
   # DSL for browser-based testing
   gem 'capybara'
@@ -64,6 +64,12 @@ group :test do
 
   # See what your headless browser is seeing with save_and_open_page
   gem 'launchy'
+
+  # Clean out database between test runs
+  gem 'database_cleaner'
+
+  # Helpful RSpec matchers for rails
+  gem 'shoulda-matchers'
 
 end
 

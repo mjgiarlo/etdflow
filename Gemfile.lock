@@ -125,7 +125,14 @@ GEM
       gherkin (~> 2.12)
       multi_json (>= 1.7.5, < 2.0)
       multi_test (>= 0.1.1)
+    cucumber-rails (1.4.1)
+      capybara (>= 1.1.2, < 3)
+      cucumber (>= 1.3.8, < 2)
+      mime-types (~> 1.16)
+      nokogiri (~> 1.5)
+      rails (>= 3, < 5)
     daemons (1.1.9)
+    database_cleaner (1.3.0)
     deprecation (0.1.0)
       activesupport
     devise (3.2.4)
@@ -415,6 +422,8 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0)
+    shoulda-matchers (2.6.1)
+      activesupport (>= 3.0.0)
     signet (0.5.0)
       addressable (>= 2.2.3)
       faraday (>= 0.9.0.rc5)
@@ -513,7 +522,8 @@ DEPENDENCIES
   capistrano-helpers
   capybara
   coffee-rails
-  cucumber
+  cucumber-rails
+  database_cleaner
   devise
   jbuilder
   jettywrapper
@@ -524,6 +534,7 @@ DEPENDENCIES
   rails (~> 4.1.0)
   rspec-rails
   sass-rails
+  shoulda-matchers
   spring
   therubyracer
   turbolinks
