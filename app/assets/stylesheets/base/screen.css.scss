@@ -35,7 +35,7 @@ table {
     }
 
     &.inactive {
-      td:first-child {
+      td {
         color: $gray-light;
       }
     }
