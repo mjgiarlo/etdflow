@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-3">
+    <nav id="main-navigation" class="collapse navbar-collapse">
+      <ul class="nav nav-pills nav-stacked" role="navigation">
+        <li><%= link_to 'Dashboard', '#' %></li>
+        <li><%= link_to 'Authors', '#' %></li>
+        <li class="active"><%= link_to 'Programs', '#' %></li>
+        <li><%= link_to 'Degrees', '#' %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="col-xs-12 col-sm-9">
+    <div class="row">
+      <div class="col-xs-12 col-sm-9">
+        <h1>Programs</h1>
+      </div>
+      <div class="col-xs-12 col-sm-3">
+        <%= link_to "<span class='glyphicon glyphicon-plus'></span> Add a New Program".html_safe, '#new_program_path', class: 'btn btn-default add-button pull-right' %>
+      </div>
+    </div>
+
+    <table id="programs-index" class="table table-bordered table-striped table-responsive">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Active?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @programs.each do |program| %>
+            <tr class="<%= cycle('odd', 'even') %> <%= 'inactive' unless program.is_active? %>">
+              <td><%= link_to program.description, '#edit_program_path(program)' %></td>
+              <td><%= program.is_active %></td>
+            </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+</div>

@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   worthwhile_curation_concerns
   worthwhile_embargo_management
 
+  resources :programs, except: [:show, :new, :create, :edit, :update, :destroy]
+
   root :to => 'static#home'
 
   get    '/mockups/:page' => 'mockups#show', as: :mockup
