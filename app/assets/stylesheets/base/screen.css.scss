@@ -1,1 +1,27 @@
 @import 'bootstrap';
+
+#account-navigation {
+  margin: 0px;
+  min-height: 38px;
+
+  @media (min-width: 768px) {
+    .navbar-text.small {
+      margin-top: 10px;
+      margin-bottom: 9px;
+    }
+
+    .navbar-btn.btn-sm {
+      margin-top: 3px;
+      margin-bottom: 3px;
+    }
+  }
+}
+
+#courtesy-navigation {
+  min-height: 40px;
+
+  a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
