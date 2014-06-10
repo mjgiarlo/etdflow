@@ -7,5 +7,7 @@ Given(/^some programs exist$/) do
 end
 
 Then(/^I should see a listing of all the programs$/) do
-  pending # express the regexp above with the code you wish you had
+  @programs.each do |program|
+    expect(page).to have_content program.description
+  end
 end
