@@ -25,3 +25,19 @@
     padding-bottom: 10px;
   }
 }
+
+table {
+  tr {
+    &.odd {
+      td {
+        background-color: $table-bg-accent;
+      }
+    }
+
+    &.inactive {
+      td:first-child {
+        color: $gray-light;
+      }
+    }
+  }
+}
