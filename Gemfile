@@ -81,5 +81,8 @@ group :development, :test do
   # Solr and fedora development environment
   gem 'jettywrapper'
   
+  # Test object factory
+  gem 'factory_girl_rails'
+
 end
 
