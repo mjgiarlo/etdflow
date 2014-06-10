@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140609140644) do
+ActiveRecord::Schema.define(version: 20140610152859) do
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id",       null: false
@@ -24,6 +24,11 @@ ActiveRecord::Schema.define(version: 20140609140644) do
   end
 
   add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
+
+  create_table "programs", force: true do |t|
+    t.string  "description"
+    t.boolean "is_active"
+  end
 
   create_table "searches", force: true do |t|
     t.text     "query_params"
