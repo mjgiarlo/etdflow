@@ -3,7 +3,7 @@ Given(/^I am a partner admin$/) do
 end
 
 Given(/^some programs exist$/) do
-  @programs = Array.new(10){ Programs.make! }
+  @programs = Array.new(10){ create :program }
 end
 
 Then(/^I should see a listing of all the programs$/) do
