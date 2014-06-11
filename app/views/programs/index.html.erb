@@ -16,11 +16,6 @@
         </tr>
       </thead>
       <tbody>
-        <% @programs.each do |program| %>
-            <tr class="<%= cycle('odd', 'even') %> <%= 'inactive' unless program.is_active? %>">
-              <td><%= link_to program.description, edit_program_path(program) %></td>
-              <td><%= program.is_active %></td>
-            </tr>
-        <% end %>
+        <%= render @programs %>
       </tbody>
     </table>
