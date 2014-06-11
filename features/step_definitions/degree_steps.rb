@@ -13,3 +13,8 @@ Then(/^I should see the degree (.*)$/) do |name|
     expect(page).to have_content name
   end
 end
+
+When(/^I choose a degree to edit$/) do
+  @degree_to_edit = @degrees.first
+  click_link @degree_to_edit.name
+end

@@ -23,3 +23,11 @@ Feature: Manage degrees
     Then I should be on the degrees page
     And I should see the degree MArch
 
+  Scenario: Edit an existing degree
+    Given some degrees exist
+    And I am on the degrees page
+    When I choose a degree to edit
+    And I fill in "Name" with "MY-NEW-NAME"
+    And I press "Update Degree"
+    Then I should be on the degrees page
+    And I should see the degree MY-NEW-NAME
