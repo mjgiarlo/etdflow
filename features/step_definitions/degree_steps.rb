@@ -7,3 +7,9 @@ Then(/^I should see a listing of all the degrees$/) do
     expect(page).to have_content degree.name
   end
 end
+
+Then(/^I should see the degree (.*)$/) do |name|
+  within('#degrees-index') do
+    expect(page).to have_content name
+  end
+end
