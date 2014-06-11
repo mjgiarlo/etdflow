@@ -17,6 +17,18 @@ class DegreesController < ApplicationController
     render :new
   end
 
+  def edit
+    @degree = Degree.find(params[:id])
+  end
+
+  def update
+    @degree = Degree.find(params[:id])
+    @degree.update_attributes!(degree_params)
+    redirect_to degrees_path
+  rescue ActiveRecord::RecordInvalid
+    redirect_to edit_degree_path(@degree)
+  end
+
   private
 
   def degree_params

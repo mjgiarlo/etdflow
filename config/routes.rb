@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   worthwhile_embargo_management
 
   resources :programs, except: [:show, :destroy]
-  resources :degrees,  except: [:edit, :update, :show, :destroy]
+  resources :degrees,  except: [:show, :destroy]
 
   root :to => 'static#home'
 
