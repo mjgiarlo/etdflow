@@ -6,7 +6,7 @@ Feature: Manage programs
   Background:
     Given I am a partner admin
 
-  Scenario: View listings
+  Scenario: View programs
     Given some programs exist
     When I go to the programs page
     Then I should see a listing of all the programs
