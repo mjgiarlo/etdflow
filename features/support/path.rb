@@ -3,6 +3,7 @@ module NavigationHelper
   def path_to(page_name)
     case page_name
       when 'the programs page' then programs_path
+      when 'the new program page' then new_program_path
       else
         raise ArgumentError, 'Cannot find path mapping for page called #{page_name.inspect}'
     end

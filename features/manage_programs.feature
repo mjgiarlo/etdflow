@@ -14,9 +14,9 @@ Feature: Manage programs
   Scenario: Create a new program
     Given I am on the programs page
     When I click the "Add a New Program" link
-    Then I should be on the edit program page
+    Then I should be on the new program page
     When I fill in "Description" with "Acoustics"
-    And I check "is Active"
-    And I press "Submit"
+    And I check "Is active"
+    And I press "Create Program"
     Then I should be on the programs page
     And I should see the new program
