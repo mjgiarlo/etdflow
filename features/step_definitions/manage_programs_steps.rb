@@ -12,8 +12,13 @@ Then(/^I should see a listing of all the programs$/) do
   end
 end
 
-Then(/^I should see the new program$/) do
+Then(/^I should see the program (.*)$/) do |description|
   within('#programs-index') do
-    expect(page).to have_content 'Acoustics'
+    expect(page).to have_content description
   end
+end
+
+When(/^I choose a program to edit$/) do
+  @program_to_edit = @programs.first
+  click_link @program_to_edit.description
 end

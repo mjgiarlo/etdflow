@@ -19,4 +19,13 @@ Feature: Manage programs
     And I check "Is active"
     And I press "Create Program"
     Then I should be on the programs page
-    And I should see the new program
+    And I should see the program Acoustics
+
+  Scenario: Edit an existing program
+    Given some programs exist
+    And I am on the programs page
+    When I choose a program to edit
+    And I fill in "Description" with "MY NEW DESCRIPTION"
+    And I press "Update Program"
+    Then I should be on the programs page
+    And I should see the program MY NEW DESCRIPTION
