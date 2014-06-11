@@ -1,0 +1,6 @@
+            <tr class="<%= cycle('odd', 'even') %> <%= 'inactive' unless degree.is_active? %>">
+              <td><%= link_to degree.name, '#edit_degree_path(degree)' %></td>
+              <td><%= degree.description %></td>
+              <td><%= degree.degree_type %></td>
+              <td><%= degree.is_active %></td>
+            </tr>

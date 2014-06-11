@@ -3,5 +3,7 @@ Given(/^some degrees exist$/) do
 end
 
 Then(/^I should see a listing of all the degrees$/) do
-  pending # express the regexp above with the code you wish you had
+  @degrees.each do |degree|
+    expect(page).to have_content degree.name
+  end
 end
