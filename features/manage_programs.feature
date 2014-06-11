@@ -10,3 +10,13 @@ Feature: Manage programs
     Given some programs exist
     When I go to the programs page
     Then I should see a listing of all the programs
+
+  Scenario: Create a new program
+    Given I am on the programs page
+    When I click the "Add a New Program" link
+    Then I should be on the edit program page
+    When I fill in "Description" with "Acoustics"
+    And I check "is Active"
+    And I press "Submit"
+    Then I should be on the programs page
+    And I should see the new program
