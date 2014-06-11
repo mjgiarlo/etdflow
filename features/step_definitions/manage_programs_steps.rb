@@ -13,5 +13,7 @@ Then(/^I should see a listing of all the programs$/) do
 end
 
 Then(/^I should see the new program$/) do
-  pending # express the regexp above with the code you wish you had
+  within('#programs-index') do
+    expect(page).to have_content 'Acoustics'
+  end
 end
