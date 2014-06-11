@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   worthwhile_curation_concerns
   worthwhile_embargo_management
 
-  resources :programs, except: [:show, :edit, :update, :destroy]
+  resources :programs, except: [:show, :destroy]
 
   root :to => 'static#home'
 
