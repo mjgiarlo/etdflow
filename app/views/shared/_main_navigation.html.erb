@@ -1,0 +1,16 @@
+<nav id="main-navigation" class="collapse navbar-collapse">
+  <ul class="nav nav-pills nav-stacked" role="navigation">
+    <li class="<%= 'active' if current_page? root_path %>" >
+      <%= link_to 'Dashboard', root_path %>
+    </li>
+    <li>
+      <%= link_to 'Authors', '#' %>
+    </li>
+    <li class="<%= 'active' if controller_name == 'programs' %>" >
+      <%= link_to 'Programs', programs_path %>
+    </li>
+    <li>
+      <%= link_to 'Degrees', '#' %>
+    </li>
+  </ul>
+</nav>
