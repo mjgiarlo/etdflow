@@ -1,0 +1,8 @@
+<%= simple_form_for @degree do |f| %>
+  <%= f.input :name %>
+  <%= f.input :description %>
+  <%= f.input :degree_type %>
+  <%= f.input :is_active %>
+  <%= f.button :submit %>
+  <%= link_to "Cancel", degrees_path %>
+<% end %>

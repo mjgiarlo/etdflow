@@ -10,3 +10,16 @@ Feature: Manage degrees
     Given some degrees exist
     When I go to the degrees page
     Then I should see a listing of all the degrees
+
+  Scenario: Create a new degree
+    Given I am on the degrees page
+    When I click the "Add a New Degree" link
+    Then I should be on the new degree page
+    When I fill in "Name" with "MArch"
+    When I fill in "Description" with "Master of Architecture"
+    When I fill in "Degree type" with "Master"
+    And I check "Is active"
+    And I press "Create Degree"
+    Then I should be on the degrees page
+    And I should see the degree MArch
+
