@@ -17,7 +17,16 @@
 
     <%= render 'shared/header' %>
 
-    <%= yield %>
+    <div class="row">
+      <div class="col-xs-12 col-sm-3">
+        <%= render 'shared/main_navigation' %>
+      </div>
+      <div class="col-xs-12 col-sm-9">
+
+        <%= yield %>
+
+      </div>
+    </div>
 
     <%= render 'shared/footer' %>
 
