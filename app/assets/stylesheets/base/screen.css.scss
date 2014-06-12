@@ -1,32 +1,50 @@
 @import 'bootstrap';
 
-#account-navigation {
-  margin: 0px;
-  min-height: 38px;
+html, body, #body-container {
+  position: relative;
+  height: 100%;
+}
 
-  @media (min-width: 768px) {
-    .navbar-text.small {
-      margin-top: 10px;
-      margin-bottom: 9px;
-    }
+#header-row {
 
-    .navbar-btn.btn-sm {
-      margin-top: 3px;
-      margin-bottom: 3px;
+  #account-navigation {
+    margin: 0px;
+    min-height: 38px;
+
+    @media (min-width: 768px) {
+      .navbar-text.small {
+        margin-top: 10px;
+        margin-bottom: 9px;
+      }
+
+      .navbar-btn.btn-sm {
+        margin-top: 3px;
+        margin-bottom: 3px;
+      }
     }
   }
+}
+
+#content-row {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
 }
 
 #main-navigation {
   margin-top: 20px;
 }
 
-#courtesy-navigation {
-  min-height: 40px;
+#footer-row {
 
-  a {
-    padding-top: 10px;
-    padding-bottom: 10px;
+  #courtesy-navigation {
+    min-height: 40px;
+    margin-bottom: 0px;
+
+    a {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
   }
 }
 
