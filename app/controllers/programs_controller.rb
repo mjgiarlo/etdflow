@@ -11,8 +11,8 @@ class ProgramsController < ApplicationController
   def create
     @program = Program.new(program_params)
     @program.save!
-    flash[:success] = 'Program created'
     redirect_to programs_path
+    flash[:notice] = 'Program successfully created'
   rescue ActiveRecord::RecordInvalid
     render :new
   end
@@ -25,6 +25,7 @@ class ProgramsController < ApplicationController
     @program = Program.find(params[:id])
     @program.update_attributes!(program_params)
     redirect_to programs_path
+    flash[:notice] = 'Program successfully updated'
   rescue ActiveRecord::RecordInvalid
     redirect_to edit_program_path(@program)
   end

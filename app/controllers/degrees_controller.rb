@@ -11,8 +11,8 @@ class DegreesController < ApplicationController
   def create
     @degree = Degree.new(degree_params)
     @degree.save!
-    flash[:success] = 'Degree created'
     redirect_to degrees_path
+    flash[:notice] = 'Degree successfully created'
   rescue ActiveRecord::RecordInvalid
     render :new
   end
@@ -25,6 +25,7 @@ class DegreesController < ApplicationController
     @degree = Degree.find(params[:id])
     @degree.update_attributes!(degree_params)
     redirect_to degrees_path
+    flash[:notice] = 'Degree successfully updated'
   rescue ActiveRecord::RecordInvalid
     redirect_to edit_degree_path(@degree)
   end
