@@ -2,9 +2,10 @@ require 'component/component_spec_helper'
 
 describe Program do
 
-  it { should have_db_column :description }
-  it { should have_db_column :is_active }
+  specify { expect(subject).to have_db_column :name }
+  specify { expect(subject).to have_db_column :is_active }
 
-  it { should validate_presence_of :description }
+  specify { expect(subject).to validate_presence_of :name }
 
+  specify { expect(subject).to validate_uniqueness_of :name }
 end
