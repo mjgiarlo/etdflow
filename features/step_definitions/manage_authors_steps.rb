@@ -3,5 +3,7 @@ Given(/^some authors exist$/) do
 end
 
 Then(/^I should see a listing of all the authors$/) do
-  pending # express the regexp above with the code you wish you had
+  @authors.each do |author|
+    expect(page).to have_content author.access_id
+  end
 end
