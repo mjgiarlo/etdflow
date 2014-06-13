@@ -1,11 +1,11 @@
 FactoryGirl.define do
 
-  sequence :name, 1000 do |n|
-    "name #{n}"
-  end
-
   factory :degree do |p|
-    name
+
+    sequence :name, 1000 do |n|
+      "degree name #{n}"
+    end
+
     description
     degree_type "Master"
   end
