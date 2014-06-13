@@ -11,4 +11,6 @@ class Degree <  ActiveRecord::Base
   validates_presence_of :degree_type
 
   validates_inclusion_of :degree_type,  in: DEGREE_TYPES
+
+  validates_uniqueness_of :name
 end

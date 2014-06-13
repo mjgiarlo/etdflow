@@ -7,4 +7,5 @@ describe Program do
 
   specify { expect(subject).to validate_presence_of :name }
 
+  specify { expect(subject).to validate_uniqueness_of :name }
 end
