@@ -15,7 +15,7 @@ Feature: Manage programs
     Given I am on the programs page
     When I click the "Add a New Program" link
     Then I should be on the new program page
-    When I fill in "Description" with "Acoustics"
+    When I fill in "Name" with "Acoustics"
     And I check "Is active"
     And I press "Create Program"
     Then I should be on the programs page
@@ -25,7 +25,7 @@ Feature: Manage programs
     Given some programs exist
     And I am on the programs page
     When I choose a program to edit
-    And I fill in "Description" with "MY NEW DESCRIPTION"
+    And I fill in "Name" with "MY NEW NAME"
     And I press "Update Program"
     Then I should be on the programs page
-    And I should see the program MY NEW DESCRIPTION
+    And I should see the program MY NEW NAME
