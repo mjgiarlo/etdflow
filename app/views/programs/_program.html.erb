@@ -1,4 +1,4 @@
-            <tr class="<%= cycle('odd', 'even') %> <%= 'inactive' unless program.is_active? %>">
-              <td><%= link_to program.name, edit_program_path(program) %></td>
-              <td><%= program.is_active? %></td>
-            </tr>
+<tr class="<%= cycle('odd', 'even') %> <%= 'inactive' unless program.is_active? %>">
+  <td><%= link_to program.name, edit_program_path(program) %></td>
+  <td><%= program.is_active? %></td>
+</tr>
