@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140611201539) do
+ActiveRecord::Schema.define(version: 20140613174521) do
 
   create_table "bookmarks", force: true do |t|
     t.integer  "user_id",       null: false
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20140611201539) do
   end
 
   create_table "programs", force: true do |t|
-    t.string  "description"
+    t.string  "name"
     t.boolean "is_active"
   end
 
