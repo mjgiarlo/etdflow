@@ -18,5 +18,10 @@
         </div>
       </div><!-- /.col-* -->
     </nav>
+
+    <% if flash %>
+      <%= render partial: 'shared/flash_messages' %>
+    <% end %>
+
   </header>
 </div>
