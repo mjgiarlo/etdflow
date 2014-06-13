@@ -1,8 +1,10 @@
 FactoryGirl.define do
 
   factory :author do |p|
-    sequence :access_id, :psu_email_address, 1000 do |n|
+    sequence :access_id, 1000 do |n|
       "XYZ#{n}"
+    end
+    sequence :psu_email_address, 1000 do |n|
       "XYZ#{n}@psu.edu"
     end
     first_name "Joseph"
