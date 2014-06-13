@@ -21,10 +21,12 @@ setup_layout = () ->
   set_header_and_footer_spacing = () ->
     header_height = header.outerHeight(true)
     footer_height = footer.outerHeight(true)
+    footer_padding = 20
+    bottom_height = footer_height + footer_padding
 
     content_row.css(
       'padding-top': header_height
-      'padding-bottom': footer_height
+      'padding-bottom': bottom_height
     )
     header_row.css('margin-bottom', -header_height)
     footer_row.css('margin-top', -footer_height)
