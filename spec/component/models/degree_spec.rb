@@ -11,4 +11,6 @@ describe Degree do
   it { should validate_presence_of :description }
   it { should validate_presence_of :degree_type }
 
+  it { should ensure_inclusion_of(:degree_type).in_array(Degree::DEGREE_TYPES) }
+
 end
