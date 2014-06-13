@@ -37,6 +37,10 @@ gem 'worthwhile', github: 'curationexperts/worthwhile'
 # Authentication
 gem 'devise'
 
+# Form builder
+gem 'simple_form', '3.1.0.rc1'
+
+
 group :development do
 
   # Spring speeds up development by keeping your application running in the background.
