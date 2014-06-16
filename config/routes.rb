@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resources :programs, except: [:show, :destroy]
   resources :degrees,  except: [:show, :destroy]
-  resources :authors,  except: [:new, :create, :edit, :update, :show, :destroy]
+  resources :authors,  except: [:new, :create, :show, :destroy]
 
   root :to => 'static#home'
 
