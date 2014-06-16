@@ -14,7 +14,18 @@ When(/^I choose an author to edit$/) do
 end
 
 When(/^I modify the rest of author's attributes$/) do
-  pending # express the regexp above with the code you wish you had
+  step 'I fill in "Last name" with "NEW-LAST-NAME"'
+  step 'I fill in "Middle name" with "NEW-MIDDLE-NAME"'
+  step 'I fill in "Alternate email address" with "NEW-ALTERNATE-EMAIL-ADDRESS"'
+  step 'I fill in "Psu email address" with "NEW-PSU-EMAIL-ADDRESS"'
+  step 'I fill in "Phone number" with "123-456-7890"'
+  step 'I check "Is alternate email public"'
+  step 'I fill in "Address 1" with "NEW-ADDRESS-1"'
+  step 'I fill in "Address 2" with "NEW-ADDRESS-2"'
+  step 'I fill in "City" with "NEW-CITY"'
+  step 'I fill in "State" with "NEW-STATE"'
+ #step 'I select "New Jersey" from "State"'
+  step 'I fill in "Zip" with "12345"'
 end
 
 Then(/^I should see the author (.*)$/) do |first_name|

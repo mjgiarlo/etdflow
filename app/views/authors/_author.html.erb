@@ -1,5 +1,5 @@
 <tr class="<%= cycle('odd', 'even') %>">
-  <td><%= link_to author.access_id, '#edit_author_path(author)' %></td>
+  <td><%= link_to author.access_id, edit_author_path(author) %></td>
   <td><%= author.last_name %></td>
   <td><%= author.first_name %></td>
   <td><%= author.alternate_email_address %></td>

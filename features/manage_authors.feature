@@ -1,4 +1,4 @@
-Feature: Manage degrees
+Feature: Manage authors
   As a partner admin
   I should be able to view and edit authors
   So that my school has up-to-date author information
