@@ -13,7 +13,7 @@ describe Degree do
   specify { expect(subject).to validate_presence_of :description }
   specify { expect(subject).to validate_presence_of :degree_type }
 
-  specify { expect(subject).to ensure_inclusion_of(:degree_type).in_array(Degree::DEGREE_TYPES) }
+  specify { expect(subject).to ensure_inclusion_of(:degree_type).in_array(Etdflow::Application.config.degree_types) }
 
   specify { expect(subject).to validate_uniqueness_of :name }
 
