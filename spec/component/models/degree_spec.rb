@@ -58,4 +58,10 @@ describe Degree do
       end
     end
   end
+
+  describe '#set_is_active_to_true' do
+    it "Sets activation status to true for new instances" do
+      expect(degree.is_active).to be_true
+    end
+  end
 end
