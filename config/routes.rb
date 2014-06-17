@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   get '/catalog' => "catalog#index"
   blacklight_for :catalog
   devise_for :users
@@ -13,8 +12,7 @@ Rails.application.routes.draw do
   resources :degrees,  except: [:show, :destroy]
   resources :authors,  except: [:new, :create, :show, :destroy]
 
-  root :to => 'static#home'
+  root to: 'static#home'
 
-  get    '/mockups/:page' => 'mockups#show', as: :mockup
-
+  get '/mockups/:page' => 'mockups#show', as: :mockup
 end

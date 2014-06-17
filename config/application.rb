@@ -15,6 +15,12 @@ Bundler.require(*Rails.groups)
 
 module Etdflow
   class Application < Rails::Application
+    
+    config.generators do |g|
+      g.test_framework :rspec, :spec => true
+    end
+
+
 
     # Precompile additional assets.
     # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.

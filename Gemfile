@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
 
-
 # web framework
-gem 'rails', '~> 4.1.0'
+gem 'rails', '~> 4.0.5'
 
 # Use mysql as the database for Active Record
 gem 'mysql2'
@@ -16,7 +15,7 @@ gem 'uglifier'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails'
 
-# Provide a Javascript runtime for ExecJS 
+# Provide a Javascript runtime for ExecJS
 gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
@@ -32,14 +31,13 @@ gem 'jbuilder'
 # core institutional repository platform
 # temporarily pointing to their github repo
 # see: https://github.com/curationexperts/worthwhile/issues/10
-gem 'worthwhile', github: 'curationexperts/worthwhile' 
+gem 'worthwhile', github: 'curationexperts/worthwhile'
 
 # Authentication
 gem 'devise'
 
 # Form builder
 gem 'simple_form', '3.1.0.rc1'
-
 
 group :development do
 
@@ -53,6 +51,11 @@ group :development do
   # Useful recipes for generalizing deployment behavior
   gem 'capistrano-helpers'
 
+  # Multi-threaded dev HTTP server
+  gem 'unicorn-rails'
+
+  # Debugger
+  gem 'byebug'
 end
 
 group :test do
@@ -81,12 +84,11 @@ group :development, :test do
 
   # core testing framework for rails
   gem 'rspec-rails'
-  
+
   # Solr and fedora development environment
   gem 'jettywrapper'
-  
+
   # Test object factory
   gem 'factory_girl_rails'
 
 end
-
