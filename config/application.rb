@@ -32,6 +32,21 @@ module Etdflow
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    # Partner name
+    config.partner_name = "Graduate School"
+
+    # Partner website
+    config.partner_url = "http://www.gradschool.psu.edu/index.cfm/current-students/etd/"
+
+    # Partner description
+    config.partner_description = "The primary purpose of a thesis or dissertation is to train the student in the process of scholarly research and writing under the direction of members of the Graduate Faculty. After the student has graduated and the work is published, it serves as a contribution to human knowledge, is useful to other scholars and perhaps even to a more general audience. Electronic thesis and dissertations (eTDs) expand the creative possibilities open to students and empower students to convey a richer message by permitting video, sound, and color images to be integrated into their work. Submitting and archiving eTDs helps students to understand electronic publishing issues and provides greater acess to students' research. Through the Web, people from any place on the globe can link directly to eTD collections at Penn State and other universities."
+
+    # Slug (this is used to generate the dev url, production url, and the path name
+    config.slug  = "etd"
+
+    # Partner email address
+    config.partner_email_address = "gradthesis@psu.edu"
+
     # Supply the types of degrees available within your institution:
     config.degree_types = [
                            "Dissertation",
