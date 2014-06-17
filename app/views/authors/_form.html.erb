@@ -10,8 +10,7 @@
   <%= f.input :address_1 %>
   <%= f.input :address_2 %>
   <%= f.input :city %>
-  <%= f.input :state %>
-  <%# f.input :degree_type, collection: Degree::DEGREE_TYPES, prompt: "Please Select" %>
+  <%= f.input :state, collection: Author::USSTATES, prompt: "Please Select" %>
   <%= f.input :zip %>
   <div class="form-group actions">
     <%= f.button :submit %>

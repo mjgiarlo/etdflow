@@ -28,4 +28,5 @@ describe Author do
   specify { expect(subject).to validate_presence_of :state }
   specify { expect(subject).to validate_presence_of :zip }
 
+  specify { expect(subject).to ensure_inclusion_of(:state).in_array(Author::USSTATES) }
 end
