@@ -9,6 +9,7 @@ end
 Then(/^I should see a listing of all the programs$/) do
   @programs.each do |program|
     expect(page).to have_content program.name
+    expect(page).to have_content program.active_status
   end
 end
 
