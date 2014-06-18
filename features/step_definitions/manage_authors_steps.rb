@@ -16,8 +16,8 @@ end
 When(/^I modify the rest of author's attributes$/) do
   step 'I fill in "Last name" with "NEW-LAST-NAME"'
   step 'I fill in "Middle name" with "NEW-MIDDLE-NAME"'
-  step 'I fill in "Alternate email address" with "NEW-ALTERNATE-EMAIL-ADDRESS"'
-  step 'I fill in "PSU email address" with "NEW-PSU-EMAIL-ADDRESS"'
+  step 'I fill in "Alternate email address" with "NEW-ALTERNATE-EMAIL-ADDRESS@example.com"'
+  step 'I fill in "PSU email address" with "NEW-PSU_EMAIL-ADDRESS@psu.edu"'
   step 'I fill in "Phone number" with "123-456-7890"'
   step 'I check "Is alternate email public"'
   step 'I fill in "Address 1" with "NEW-ADDRESS-1"'

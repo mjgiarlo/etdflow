@@ -13,8 +13,9 @@ class AuthorsController < ApplicationController
     @author.update_attributes!(author_params)
     redirect_to authors_path
     flash[:notice] = 'Author successfully updated'
-  rescue ActiveRecord::RecordInvalid
+  rescue ActiveRecord::RecordInvalid => e
     redirect_to edit_author_path(@author)
+    flash[:notice] = e.message
   end
 
   private
