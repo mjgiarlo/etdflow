@@ -17,7 +17,8 @@ class Author <  ActiveRecord::Base
                       with: /\A[\w]([^@\s,;]+)@(([\w-]+\.)+(com|edu|org|net|gov|mil|biz|info))\z/i
 
   validates_format_of :phone_number,
-                      with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/
+                      with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/,
+                      message: 'should be in the form 1234567890 or 123-456-7890'
 
   validates_format_of :zip,
                       with: /\A\d{5}(-\d{4})?\z/,

@@ -37,7 +37,12 @@ describe Author do
 
     it 'only accepts correctly formatted phone numbers' do
       expect( FactoryGirl.build(:author, phone_number: '123-456-7890') ).to be_valid
+      expect( FactoryGirl.build(:author, phone_number: '(123) 456-7890') ).to be_valid
+      expect( FactoryGirl.build(:author, phone_number: '1234567890') ).to be_valid
       expect( FactoryGirl.build(:author, phone_number: '123-xyz-7890') ).to_not be_valid
+      expect( FactoryGirl.build(:author, phone_number: '1234-567890') ).to_not be_valid
+      expect( FactoryGirl.build(:author, phone_number: '123456789') ).to_not be_valid
+      expect( FactoryGirl.build(:author, phone_number: '12345678901') ).to_not be_valid
     end
 
     it 'only accepts correctly formatted zip codes' do
