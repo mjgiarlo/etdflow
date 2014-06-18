@@ -30,13 +30,14 @@ describe Author do
 
   specify { expect(subject).to ensure_inclusion_of(:state).in_array(Author::USSTATES) }
 
-  describe 'Email format validation:' do
-    it 'accepts properly formatted email_addresses' do
+    it 'only accepts properly formatted email_addresses' do
       expect( FactoryGirl.build(:author, alternate_email_address: 'xyz-123@yahoo.com') ).to be_valid
-    end
-    it 'does not accept improperly formatted email_addresses' do
       expect( FactoryGirl.build(:author, alternate_email_address: 'xyz-123 .com') ).to_not be_valid
     end
-  end
+
+    it 'only accepts properly formatted phone numbers' do
+      expect( FactoryGirl.build(:author, phone_number: '123-456-7890') ).to be_valid
+      expect( FactoryGirl.build(:author, phone_number: '123-xyz-7890') ).to_not be_valid
+    end
 
 end
