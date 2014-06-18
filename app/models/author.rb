@@ -12,6 +12,8 @@ class Author <  ActiveRecord::Base
                         :state,
                         :zip
 
+  validates_format_of :alternate_email_address, :psu_email_address, :with => /(^([^,@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i
+
   USSTATES = [
          'Alabama',
          'Alaska',

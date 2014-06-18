@@ -29,4 +29,14 @@ describe Author do
   specify { expect(subject).to validate_presence_of :zip }
 
   specify { expect(subject).to ensure_inclusion_of(:state).in_array(Author::USSTATES) }
+
+  describe 'Email format validation:' do
+    it 'accepts properly formatted email_addresses' do
+      expect( FactoryGirl.build(:author, alternate_email_address: 'xyz-123@yahoo.com') ).to be_valid
+    end
+    it 'does not accept improperly formatted email_addresses' do
+      expect( FactoryGirl.build(:author, alternate_email_address: 'xyz-123 .com') ).to_not be_valid
+    end
+  end
+
 end
