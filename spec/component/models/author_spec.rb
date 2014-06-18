@@ -30,14 +30,22 @@ describe Author do
 
   specify { expect(subject).to ensure_inclusion_of(:state).in_array(Author::USSTATES) }
 
-    it 'only accepts properly formatted email_addresses' do
+    it 'only accepts correctly formatted email_addresses' do
       expect( FactoryGirl.build(:author, alternate_email_address: 'xyz-123@yahoo.com') ).to be_valid
       expect( FactoryGirl.build(:author, alternate_email_address: 'xyz-123 .com') ).to_not be_valid
     end
 
-    it 'only accepts properly formatted phone numbers' do
+    it 'only accepts correctly formatted phone numbers' do
       expect( FactoryGirl.build(:author, phone_number: '123-456-7890') ).to be_valid
       expect( FactoryGirl.build(:author, phone_number: '123-xyz-7890') ).to_not be_valid
+    end
+
+    it 'only accepts correctly formatted zip codes' do
+      expect( FactoryGirl.build(:author, zip: '07843') ).to be_valid
+      expect( FactoryGirl.build(:author, zip: '07843-1234') ).to be_valid
+      expect( FactoryGirl.build(:author, zip: '078431-1234') ).to_not be_valid
+      expect( FactoryGirl.build(:author, zip: '07843-12345') ).to_not be_valid
+      expect( FactoryGirl.build(:author, zip: 'AB843-1234') ).to_not be_valid
     end
 
 end
