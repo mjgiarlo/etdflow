@@ -12,7 +12,9 @@ class Author <  ActiveRecord::Base
                         :state,
                         :zip
 
-  validates_format_of :alternate_email_address, :psu_email_address, :with => /\A[\w]([^@\s,;]+)@(([\w-]+\.)+(com|edu|org|net|gov|mil|biz|info))\z/i
+  validates_format_of :alternate_email_address, :psu_email_address, with: /\A[\w]([^@\s,;]+)@(([\w-]+\.)+(com|edu|org|net|gov|mil|biz|info))\z/i
+
+  validates_format_of :phone_number, with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/
 
   USSTATES = [
          'Alabama',
