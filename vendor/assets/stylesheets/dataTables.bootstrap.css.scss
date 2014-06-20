@@ -317,5 +317,19 @@ div.FixedHeader_Cloned table {
       }
     }
   }
+
+  .dataTables_processing {
+    top: 48px;
+    left: 15px;
+    right: 15px;
+    height: 37px;
+    padding: 10px 0px;
+    font-size: 1em;
+    background: #EEE;
+    margin: 0;
+    width: auto;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+  }
 }
 
