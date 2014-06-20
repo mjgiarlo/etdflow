@@ -2,6 +2,22 @@ class AuthorsController < ApplicationController
 
   def index
     @authors = Author.all
+    respond_to do |format|
+      format.html
+      format.json {
+        @authors_map = @authors.map do |a|
+          [
+              "<a href=#{edit_author_path(a)}>#{a.access_id}</a>",
+              a.last_name,
+              a.first_name,
+              a.alternate_email_address,
+              a.psu_email_address
+          ]
+        end
+        @authors_json = { data: @authors_map }
+        render json: @authors_json
+      }
+    end
   end
 
   def edit

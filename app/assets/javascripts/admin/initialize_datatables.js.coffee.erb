@@ -34,4 +34,11 @@ setup_datatables = () ->
     $.extend(degree_options, common_options)
   )
 
+  $('#authors-index.datatable').dataTable(
+    author_options = {
+      ajax: '/authors.json'
+    }
+    $.extend(author_options, common_options)
+  )
+
 $(document).on('page:load ready', setup_datatables)
