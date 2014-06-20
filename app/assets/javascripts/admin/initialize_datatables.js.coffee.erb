@@ -1,0 +1,26 @@
+#= require dataTables.js
+#= require dataTables.bootstrap.js
+
+setup_datatables = () ->
+
+  common_options = {
+    processing: true
+    pageLength: 25
+    stateSave: true
+    stateDuration: 60 * 60 * 24
+    language:
+      processing: "<img src='<%= image_path('spinner.gif') %>' alt='Loading...' /> entries"
+  }
+
+  $('#programs-index.datatable').dataTable(
+    program_options = {
+      ajax: '/programs.json'
+      rowCallback: (row, program_data) ->
+        program_status = program_data[1]
+        if program_status == "No"
+          $(row).addClass('inactive')
+    }
+    $.extend(program_options, common_options)
+  )
+
+$(document).on('page:load ready', setup_datatables)
