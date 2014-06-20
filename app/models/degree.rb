@@ -10,10 +10,6 @@ class Degree <  ActiveRecord::Base
 
   after_initialize :set_is_active_to_true
 
-  def inactive?
-    is_active ? false : true
-  end
-
   def active_status
     is_active ? 'Yes' : 'No'
   end

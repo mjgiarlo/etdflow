@@ -23,4 +23,15 @@ setup_datatables = () ->
     $.extend(program_options, common_options)
   )
 
+  $('#degrees-index.datatable').dataTable(
+    degree_options = {
+      ajax: '/degrees.json'
+      rowCallback: (row, degree_data) ->
+        degree_status = degree_data[1]
+        if degree_status == "No"
+          $(row).addClass('inactive')
+    }
+    $.extend(degree_options, common_options)
+  )
+
 $(document).on('page:load ready', setup_datatables)
