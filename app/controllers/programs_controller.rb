@@ -2,19 +2,6 @@ class ProgramsController < ApplicationController
 
   def index
     @programs = Program.all
-    respond_to do |format|
-      format.html
-      format.json {
-        @programs_map = @programs.map do |p|
-          [
-            "<a href=#{edit_program_path(p)}>#{p.name}</a>",
-            p.active_status
-          ]
-        end
-        @programs_json = { data: @programs_map }
-        render json: @programs_json
-      }
-    end
   end
 
   def new

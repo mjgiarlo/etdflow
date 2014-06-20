@@ -2,21 +2,6 @@ class DegreesController < ApplicationController
 
   def index
     @degrees = Degree.all
-    respond_to do |format|
-      format.html
-      format.json {
-        @degrees_map = @degrees.map do |d|
-          [
-              "<a href=#{edit_degree_path(d)}>#{d.name}</a>",
-              d.description,
-              d.degree_type,
-              d.active_status
-          ]
-        end
-        @degrees_json = { data: @degrees_map }
-        render json: @degrees_json
-      }
-    end
   end
 
   def new
