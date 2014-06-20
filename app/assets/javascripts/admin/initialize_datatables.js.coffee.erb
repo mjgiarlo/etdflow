@@ -14,7 +14,7 @@ setup_datatables = () ->
 
   $('#programs-index.datatable').dataTable(
     program_options = {
-      ajax: '/programs.json'
+      ajax: '/programs'
       rowCallback: (row, program_data) ->
         program_status = program_data[1]
         if program_status == "No"
@@ -25,7 +25,7 @@ setup_datatables = () ->
 
   $('#degrees-index.datatable').dataTable(
     degree_options = {
-      ajax: '/degrees.json'
+      ajax: '/degrees'
       rowCallback: (row, degree_data) ->
         degree_status = degree_data[1]
         if degree_status == "No"
@@ -36,7 +36,7 @@ setup_datatables = () ->
 
   $('#authors-index.datatable').dataTable(
     author_options = {
-      ajax: '/authors.json'
+      ajax: '/authors'
     }
     $.extend(author_options, common_options)
   )
