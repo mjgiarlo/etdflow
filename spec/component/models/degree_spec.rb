@@ -17,27 +17,6 @@ describe Degree do
 
   specify { expect(subject).to validate_uniqueness_of :name }
 
-  describe '#inactive?' do
-    context 'When is_active is false' do
-      before { degree.is_active = false }
-      it 'returns true' do
-        expect(degree.inactive?).to be_true
-      end
-    end
-    context 'When is_active is true' do
-      before { degree.is_active = true }
-      it 'returns false' do
-        expect(degree.inactive?).to be_false
-      end
-    end
-    context 'When is_active is nil' do
-      before { degree.is_active = nil }
-      it 'returns true' do
-        expect(degree.inactive?).to be_true
-      end
-    end
-  end
-
   describe '#active_status' do
     context 'When is_active is false' do
       before { degree.is_active = false }
