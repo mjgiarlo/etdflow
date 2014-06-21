@@ -9,6 +9,7 @@ setup_datatables = () ->
     stateSave: true
     stateDuration: 60 * 60 * 24
     language:
+      loadingRecords: '&nbsp;'
       processing: "<img src='<%= image_path('spinner.gif') %>' alt='Loading data...' /> Loading data..."
     fnDrawCallback: () ->
       pagination = $('.dataTables_paginate')
