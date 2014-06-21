@@ -10,6 +10,13 @@ setup_datatables = () ->
     stateDuration: 60 * 60 * 24
     language:
       processing: "<img src='<%= image_path('spinner.gif') %>' alt='Loading data...' /> Loading data..."
+    fnDrawCallback: () ->
+      pagination = $('.dataTables_paginate')
+      buttons_we_care_to_see = pagination.find('.paginate_button').not('.disabled, .active')
+      if buttons_we_care_to_see.length
+        pagination.show()
+      else
+        pagination.hide()
   }
 
   $('#programs-index.datatable').dataTable(
