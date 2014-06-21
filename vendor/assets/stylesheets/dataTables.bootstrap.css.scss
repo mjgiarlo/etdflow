@@ -303,17 +303,24 @@ div.FixedHeader_Cloned table {
       }
 
       &[id*='ellipsis'] {
+        display: inline-block !important;
 
         &:focus {
           outline: 0;
         }
         a {
           border-color: transparent;
+          cursor: default;
+          padding: 6px;
 
           &:focus {
             ouline: 0;
           }
         }
+      }
+
+      &.disabled {
+        display: none;
       }
     }
   }
