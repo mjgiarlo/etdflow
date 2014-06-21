@@ -329,14 +329,16 @@ div.FixedHeader_Cloned table {
     top: 48px;
     left: 15px;
     right: 15px;
-    height: 37px;
+    bottom: 7px;
+    height: auto;
     padding: 10px 0px;
     font-size: 1em;
-    background: #EEE;
+    background: #fefefe;
     margin: 0;
     width: auto;
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
+    opacity: 0.9;
   }
 }
 
