@@ -49,4 +49,6 @@ setup_datatables = () ->
     $.extend(author_options, common_options)
   )
 
+  $('div.dataTables_filter input').attr('placeholder', 'Search records...')
+
 $(document).on('page:load ready', setup_datatables)
