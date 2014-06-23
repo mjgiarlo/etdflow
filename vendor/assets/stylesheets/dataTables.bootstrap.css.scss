@@ -340,5 +340,15 @@ div.FixedHeader_Cloned table {
     border-right: 1px solid #ccc;
     opacity: 0.9;
   }
+
+  .dataTables_filter {
+    max-width: 100%;
+
+    input {
+      width: 285px;
+      max-width: 100%;
+      margin-left: 0px;
+    }
+  }
 }
 
