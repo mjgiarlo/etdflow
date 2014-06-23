@@ -3,7 +3,12 @@
 
 setup_datatables = () ->
 
+  table = $('.datatable')
+
+  return unless table.length
+
   common_options = {
+    ajax: table.attr('data-ajax-url')
     processing: true
     pageLength: 25
     stateSave: true
@@ -22,7 +27,6 @@ setup_datatables = () ->
 
   $('#programs-index.datatable').dataTable(
     program_options = {
-      ajax: '/admin/programs'
       rowCallback: (row, program_data) ->
         program_status = program_data[1]
         if program_status == "No"
@@ -33,7 +37,6 @@ setup_datatables = () ->
 
   $('#degrees-index.datatable').dataTable(
     degree_options = {
-      ajax: '/admin/degrees'
       rowCallback: (row, degree_data) ->
         degree_status = degree_data[1]
         if degree_status == "No"
@@ -43,10 +46,7 @@ setup_datatables = () ->
   )
 
   $('#authors-index.datatable').dataTable(
-    author_options = {
-      ajax: '/admin/authors'
-    }
-    $.extend(author_options, common_options)
+    common_options
   )
 
   $('div.dataTables_filter input').attr('placeholder', 'Search records...')
