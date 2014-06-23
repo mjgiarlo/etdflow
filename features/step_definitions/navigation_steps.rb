@@ -17,3 +17,7 @@ Then /^I should be on (.*)$/ do |page_name|
   current_path = URI.parse(current_url).path
   expect(current_path).to eq( "#{path_to(page_name)}" )
 end
+
+Then /^Show me the page$/ do
+  save_and_open_screenshot
+end
