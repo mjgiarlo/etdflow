@@ -1,4 +1,4 @@
-class DegreesController < ApplicationController
+class Admin::DegreesController < ApplicationController
 
   def index
     @degrees = Degree.all
@@ -11,7 +11,7 @@ class DegreesController < ApplicationController
   def create
     @degree = Degree.new(degree_params)
     @degree.save!
-    redirect_to degrees_path
+    redirect_to admin_degrees_path
     flash[:notice] = 'Degree successfully created'
   rescue ActiveRecord::RecordInvalid
     render :new
@@ -24,10 +24,10 @@ class DegreesController < ApplicationController
   def update
     @degree = Degree.find(params[:id])
     @degree.update_attributes!(degree_params)
-    redirect_to degrees_path
+    redirect_to admin_degrees_path
     flash[:notice] = 'Degree successfully updated'
   rescue ActiveRecord::RecordInvalid
-    redirect_to edit_degree_path(@degree)
+    redirect_to edit_admin_degree_path(@degree)
   end
 
   private

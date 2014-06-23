@@ -1,4 +1,4 @@
-class AuthorsController < ApplicationController
+class Admin::AuthorsController < ApplicationController
 
   def index
     @authors = Author.all
@@ -11,10 +11,10 @@ class AuthorsController < ApplicationController
   def update
     @author = Author.find(params[:id])
     @author.update_attributes!(author_params)
-    redirect_to authors_path
+    redirect_to admin_authors_path
     flash[:notice] = 'Author successfully updated'
   rescue ActiveRecord::RecordInvalid => e
-    redirect_to edit_author_path(@author)
+    redirect_to edit_admin_author_path(@author)
     flash[:notice] = e.message
   end
 
