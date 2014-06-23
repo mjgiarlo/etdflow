@@ -1,8 +1,8 @@
-<%= simple_form_for @program do |f| %>
+<%= simple_form_for [:admin, @program] do |f| %>
   <%= f.input :name %>
   <%= f.input :is_active, wrapper: :checkbox %>
   <div class="form-group actions">
     <%= f.button :submit %>
-    <%= link_to "Cancel", programs_path %>
+    <%= link_to "Cancel", admin_programs_path %>
   </div>
 <% end %>

@@ -1,4 +1,4 @@
-class ProgramsController < ApplicationController
+class Admin::ProgramsController < ApplicationController
 
   def index
     @programs = Program.all
@@ -11,7 +11,7 @@ class ProgramsController < ApplicationController
   def create
     @program = Program.new(program_params)
     @program.save!
-    redirect_to programs_path
+    redirect_to admin_programs_path
     flash[:notice] = 'Program successfully created'
   rescue ActiveRecord::RecordInvalid
     render :new
@@ -24,10 +24,10 @@ class ProgramsController < ApplicationController
   def update
     @program = Program.find(params[:id])
     @program.update_attributes!(program_params)
-    redirect_to programs_path
+    redirect_to admin_programs_path
     flash[:notice] = 'Program successfully updated'
   rescue ActiveRecord::RecordInvalid
-    redirect_to edit_program_path(@program)
+    redirect_to edit_admin_program_path(@program)
   end
 
   private

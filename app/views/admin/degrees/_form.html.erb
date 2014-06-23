@@ -1,10 +1,10 @@
-<%= simple_form_for @degree do |f| %>
+<%= simple_form_for [:admin, @degree] do |f| %>
   <%= f.input :name %>
   <%= f.input :description %>
   <%= f.input :degree_type, collection: Etdflow::Application.config.degree_types, prompt: "Please Select" %>
   <%= f.input :is_active, wrapper: :checkbox %>
   <div class="form-group actions">
     <%= f.button :submit %>
-    <%= link_to "Cancel", degrees_path %>
+    <%= link_to "Cancel", admin_degrees_path %>
   </div>
 <% end %>

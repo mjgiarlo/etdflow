@@ -9,9 +9,11 @@ Rails.application.routes.draw do
   worthwhile_curation_concerns
   worthwhile_embargo_management
 
-  resources :programs, except: [:show, :destroy]
-  resources :degrees,  except: [:show, :destroy]
-  resources :authors,  except: [:new, :create, :show, :destroy]
+  namespace :admin do
+    resources :programs, except: [:show, :destroy]
+    resources :degrees,  except: [:show, :destroy]
+    resources :authors,  except: [:new, :create, :show, :destroy]
+  end
 
   root :to => 'static#home'
 

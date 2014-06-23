@@ -8,26 +8,26 @@ Feature: Manage degrees
 
   Scenario: View degrees
     Given some degrees exist
-    When I go to the degrees page
+    When I go to the admin degrees page
     Then I should see a listing of all the degrees
 
   Scenario: Create a new degree
-    Given I am on the degrees page
+    Given I am on the admin degrees page
     When I click the "Add a New Degree" link
-    Then I should be on the new degree page
+    Then I should be on the new admin degree page
     When I fill in "Name" with "MArch"
     When I fill in "Description" with "Master of Architecture"
     When I select "Master" from "Degree type"
     And I check "Is active"
     And I press "Create Degree"
-    Then I should be on the degrees page
+    Then I should be on the admin degrees page
     And I should see the degree MArch
 
   Scenario: Edit an existing degree
     Given some degrees exist
-    And I am on the degrees page
+    And I am on the admin degrees page
     When I choose a degree to edit
     And I fill in "Name" with "MY-NEW-NAME"
     And I press "Update Degree"
-    Then I should be on the degrees page
+    Then I should be on the admin degrees page
     And I should see the degree MY-NEW-NAME

@@ -4,13 +4,13 @@
       <%= link_to 'Dashboard', root_path %>
     </li>
     <li class="<%= 'active' if controller_name == 'authors' %>" >
-      <%= link_to 'Authors', authors_path %>
+      <%= link_to 'Authors', admin_authors_path %>
     </li>
     <li class="<%= 'active' if controller_name == 'programs' %>" >
-      <%= link_to 'Programs', programs_path %>
+      <%= link_to 'Programs', admin_programs_path %>
     </li>
     <li class="<%= 'active' if controller_name == 'degrees' %>" >
-      <%= link_to 'Degrees', degrees_path %>
+      <%= link_to 'Degrees', admin_degrees_path %>
     </li>
   </ul>
 </nav>

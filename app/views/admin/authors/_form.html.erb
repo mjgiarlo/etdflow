@@ -1,4 +1,4 @@
-<%= simple_form_for @author do |f| %>
+<%= simple_form_for [:admin, @author] do |f| %>
   <%= f.input :access_id, label: 'Access id' %>
   <%= f.input :first_name %>
   <%= f.input :last_name %>
@@ -14,6 +14,6 @@
   <%= f.input :zip %>
   <div class="form-group actions">
     <%= f.button :submit %>
-    <%= link_to "Cancel", authors_path %>
+    <%= link_to "Cancel", admin_authors_path %>
   </div>
 <% end %>
