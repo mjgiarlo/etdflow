@@ -40,6 +40,9 @@ gem 'devise'
 # Form builder
 gem 'simple_form', '3.1.0.rc1'
 
+# Ruby templating system for generating JSON
+gem 'rabl'
+
 
 group :development do
 

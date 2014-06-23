@@ -1,0 +1,54 @@
+#= require dataTables.js
+#= require dataTables.bootstrap.js
+
+setup_datatables = () ->
+
+  common_options = {
+    processing: true
+    pageLength: 25
+    stateSave: true
+    stateDuration: 60 * 60 * 24
+    language:
+      loadingRecords: '&nbsp;'
+      processing: "<img src='<%= image_path('spinner.gif') %>' alt='Loading data...' /> Loading data..."
+    fnDrawCallback: () ->
+      pagination = $('.dataTables_paginate')
+      buttons_we_care_to_see = pagination.find('.paginate_button').not('.disabled, .active')
+      if buttons_we_care_to_see.length
+        pagination.show()
+      else
+        pagination.hide()
+  }
+
+  $('#programs-index.datatable').dataTable(
+    program_options = {
+      ajax: '/programs'
+      rowCallback: (row, program_data) ->
+        program_status = program_data[1]
+        if program_status == "No"
+          $(row).addClass('inactive')
+    }
+    $.extend(program_options, common_options)
+  )
+
+  $('#degrees-index.datatable').dataTable(
+    degree_options = {
+      ajax: '/degrees'
+      rowCallback: (row, degree_data) ->
+        degree_status = degree_data[1]
+        if degree_status == "No"
+          $(row).addClass('inactive')
+    }
+    $.extend(degree_options, common_options)
+  )
+
+  $('#authors-index.datatable').dataTable(
+    author_options = {
+      ajax: '/authors'
+    }
+    $.extend(author_options, common_options)
+  )
+
+  $('div.dataTables_filter input').attr('placeholder', 'Search records...')
+
+$(document).on('page:load ready', setup_datatables)
