@@ -47,6 +47,9 @@ module Etdflow
     # Partner email address
     config.partner_email_address = "gradthesis@psu.edu"
 
+    # Should the paper form display the "Display your alternate email address on your eTD document summary page?" question?
+    config.display_is_alternate_email_public_question = true
+
     # Supply the types of degrees available within your institution:
     config.degree_types = [
                            "Dissertation",

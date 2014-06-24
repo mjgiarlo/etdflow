@@ -16,6 +16,11 @@ Rails.application.routes.draw do
     get '/', to: 'papers#index', as: :dashboard
   end
 
+  namespace :author do
+    resource :papers, except: [:edit, :update, :show, :destroy]
+    get '/', to: 'papers#index', as: :dashboard
+  end
+
   root :to => 'static#home'
 
   get    '/mockups/:page' => 'mockups#show', as: :mockup
