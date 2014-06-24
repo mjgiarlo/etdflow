@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :programs, except: [:show, :destroy]
     resources :degrees,  except: [:show, :destroy]
     resources :authors,  except: [:new, :create, :show, :destroy]
+    get '/', to: 'papers#index', as: :dashboard
   end
 
   root :to => 'static#home'

@@ -1,7 +1,9 @@
 <div id="header-row" class="row">
   <header>
     <div class="header-image">
-      <%= image_tag 'https://etda.libraries.psu.edu/media/img/grad.png', class: 'img-responsive center-block' %>
+      <%= link_to root_path do %>
+        <%= image_tag 'https://etda.libraries.psu.edu/media/img/grad.png', class: 'img-responsive center-block' %>
+      <% end %>
     </div>
 
     <nav id="account-navigation" class="navbar navbar-default" role="navigation">

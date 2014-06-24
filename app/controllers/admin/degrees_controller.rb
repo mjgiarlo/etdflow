@@ -1,4 +1,4 @@
-class Admin::DegreesController < ApplicationController
+class Admin::DegreesController < AdminController
 
   def index
     @degrees = Degree.all
