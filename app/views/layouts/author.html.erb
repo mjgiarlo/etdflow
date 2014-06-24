@@ -2,15 +2,36 @@
 <html>
 <head>
   <title>ETD Flow</title>
+
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0">
+
   <%= stylesheet_link_tag    'base', media: 'all', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag    'author', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'base', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'author', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
 
-  <%= yield %>
+<body class='<%= page_classes %>'>
+
+  <div id="body-container" class="container-fluid">
+
+    <%= render 'shared/header' %>
+
+    <div id="content-row" class="row">
+      <div class="col-xs-12 col-sm-3">
+        <%= render 'author/shared/main_navigation' %>
+      </div>
+      <div class="col-xs-12 col-sm-9">
+
+        <%= yield %>
+
+      </div>
+    </div>
+
+    <%= render 'author/shared/footer' %>
+
+  </div>
 
 </body>
 </html>
