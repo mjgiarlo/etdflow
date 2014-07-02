@@ -17,8 +17,8 @@ Rails.application.routes.draw do
   end
 
   namespace :author do
-    resource :papers, except: [:edit, :update, :show, :destroy]
-    get '/', to: 'papers#index', as: :dashboard
+    resource :submissions, except: [:edit, :update, :show, :destroy]
+    root to: 'submissions#index'
   end
 
   root :to => 'static#home'

@@ -5,7 +5,7 @@ So that I can eventually graduate
 
 Scenario: Visiting the site for the first time
   Given I have not yet entered my author information
-  When I go to the submissions index page
+  When I go to the author submissions page
   Then I should be prompted to confirm my contact information
   When I click the "Confirm my contact information" link
   Then I should be on the new author page
