@@ -25,3 +25,7 @@ end
 Then /^Show me the page$/ do
   save_and_open_screenshot
 end
+
+Then(/^There should be a link to "(.*?)"$/) do |link|
+  expect(page).to have_link link
+end
