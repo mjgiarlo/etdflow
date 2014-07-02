@@ -33,6 +33,17 @@ html, body, #body-container {
 
 #main-navigation {
   margin-top: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid $gray-lighter;
+}
+
+#contact-information {
+  @extend .small;
+
+  @media (min-width: 768px) {
+    padding: 0px 15px 20px;
+  }
 }
 
 #footer-row {
@@ -71,5 +82,131 @@ table {
 form {
   .actions {
     margin-top: 30px;
+  }
+}
+
+#submissions {
+  .submission {
+    border-top: 1px solid $gray-lighter;
+    padding: 20px 15px;
+  }
+}
+
+.progress-indicator {
+
+  .step {
+    @extend .clearfix;
+    margin-bottom: 10px;
+    position: relative;
+
+    .number {
+      border: 1px solid $gray-lighter;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      background: $gray-lighter;
+      color: #fff;
+      font-size: 18px;
+      text-align: center;
+      line-height: 50px;
+      text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+      float: left;
+      clear: both;
+      margin: 0px 10px 30px 0px;
+    }
+
+    .information {
+      display: block;
+      min-height: 68px;
+
+      .description {
+        @extend .text-muted;
+        margin: 12px 0px 0px;
+        font-size: 18px;
+      }
+
+      .status {
+        @extend .small;
+        display: block;
+        color: $gray-light;
+        text-indent: 2px;
+      }
+    }
+
+    .direction {
+      position: absolute;
+      top: 63px;
+      left: 18px;
+      color: $gray-lighter;
+    }
+
+    &.complete {
+      .number {
+        border-color: $brand-success;
+        background-color: $brand-success;
+      }
+
+      .description {
+        color: inherit;
+      }
+
+      .direction {
+        color: $gray;
+      }
+    }
+
+    &.current {
+      .number {
+        border-color: $brand-primary;
+        background-color: $brand-primary;
+      }
+
+      .description {
+        color: inherit;
+      }
+    }
+  }
+
+  &.preview, &.archive {
+    .step {
+      margin-bottom: 5px;
+
+      .number {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+        line-height: 30px;
+        margin: 0px 5px 15px 0px;
+      }
+
+      .information {
+        min-height: 38px;
+
+        .description {
+          margin: 7px 0px 0px;
+          font-size: 12px;
+        }
+      }
+
+      .direction {
+        font-size: 9px;
+        top: 35px;
+        left: 10px;
+      }
+    }
+  }
+
+  &.archive {
+    .step {
+      .information {
+        .description {
+          margin-top: 4px;
+          @extend .text-muted;
+        }
+        .status {
+          color: #333;
+        }
+      }
+    }
   }
 }
