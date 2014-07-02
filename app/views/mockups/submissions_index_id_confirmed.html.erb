@@ -14,16 +14,18 @@
 </div>
 
 <div class="row">
-  <div class="col-xs-12 col-sm-9">
+  <div class="col-xs-12">
     <h2>My Submissions</h2>
-  </div>
-  <div class="col-xs-12 col-sm-3">
-    <%= link_to "Start a new submission", new_author_papers_path, class: 'btn btn-default add-button pull-right' %>
   </div>
 </div>
 
-<div class="row">
-  <div class="col-xs-12">
+<div id="submissions" class="row">
 
+  <div class="col-xs-12 submission">
+    <p>You don't have any submissions yet.</p>
+    <p><%= link_to "Start a new Submission", '/mockups/new_submission_program_information', class: 'btn btn-primary' %></p>
+
+    <%= render 'progress_indicator_preview' %>
   </div>
+
 </div>
