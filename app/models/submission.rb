@@ -1,4 +1,4 @@
-class Paper
+class Submission
   extend ActiveModel::Naming
   include ActiveModel::Conversion
   include ActiveModel::Validations
