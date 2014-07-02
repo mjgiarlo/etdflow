@@ -7,7 +7,8 @@ module NavigationHelper
       when 'the admin degrees page' then admin_degrees_path
       when 'the new admin degree page' then new_admin_degree_path
       when 'the admin authors page' then admin_authors_path
-      when 'the author submissions page' then author_submissions_path
+      when 'the author submissions page' then author_root_path
+      when 'the new author page' then new_author_authors_path
       when 'the new format review page' then new_author_papers_path
       else
         raise ArgumentError, 'Cannot find path mapping for page called #{page_name.inspect}'
