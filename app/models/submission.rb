@@ -1,16 +1,19 @@
-class Submission
-  extend ActiveModel::Naming
-  include ActiveModel::Conversion
-  include ActiveModel::Validations
+class Submission < ActiveRecord::Base
 
-  attr_accessor :author_id
+  validates_presence_of :author_id,
+                        :program_id,
+                        :degree_id,
+                        :semester,
+                        :year
 
-  def persisted?
-    false
-  end
+  SEMESTERS = [
+                'Fall',
+                'Spring',
+                'Summer'
+              ].freeze
 
-  def self.ask_to_display_email?
-    Etdflow::Application.config.display_is_alternate_email_public_question
-  end
+  validates_inclusion_of :semester,  in: SEMESTERS
+
+  validates :year, numericality: { only_integer: true }
 
 end

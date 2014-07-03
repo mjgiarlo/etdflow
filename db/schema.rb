@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140613205625) do
+ActiveRecord::Schema.define(version: 20140703200942) do
 
   create_table "authors", force: true do |t|
     t.string  "access_id"
@@ -62,6 +62,14 @@ ActiveRecord::Schema.define(version: 20140613205625) do
   end
 
   add_index "searches", ["user_id"], name: "index_searches_on_user_id", using: :btree
+
+  create_table "submissions", force: true do |t|
+    t.integer "author_id"
+    t.integer "program_id"
+    t.integer "degree_id"
+    t.string  "semester"
+    t.integer "year"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
