@@ -53,4 +53,13 @@ describe Author do
       expect( FactoryGirl.build(:author, zip: 'AB843-1234') ).to_not be_valid
     end
 
+    describe '#full_name' do
+      it "returns the author's first middle and last names" do
+        author = create :author, first_name: 'Joe',
+                                middle_name: 'Quincy',
+                                last_name: 'Example'
+        expect(author.full_name).to eq 'Joe Quincy Example'
+      end
+    end
+
 end
