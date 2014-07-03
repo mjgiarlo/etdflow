@@ -81,4 +81,8 @@ class Author <  ActiveRecord::Base
 
   validates_inclusion_of :state,  in: USSTATES
 
+  def full_name
+    first_name + ' ' + middle_name + ' ' + last_name
+  end
+
 end
