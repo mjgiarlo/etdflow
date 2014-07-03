@@ -5,7 +5,7 @@ class Author::SubmissionsController < AuthorController
   end
 
   def new
-    @Submission = Submission.new
+    @submission = Submission.new
   end
 
   def create

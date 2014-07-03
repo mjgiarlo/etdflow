@@ -16,4 +16,14 @@ class Submission < ActiveRecord::Base
 
   validates :year, numericality: { only_integer: true }
 
+  def self.years
+    current_year = Date.today.year
+    [
+      "#{current_year}",
+      "#{current_year + 1}",
+      "#{current_year + 2}",
+      "#{current_year + 3}"
+    ]
+  end
+
 end

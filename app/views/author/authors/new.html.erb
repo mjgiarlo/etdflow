@@ -14,7 +14,7 @@
       <%= f.input :alternate_email_address %>
       <%= f.input :psu_email_address, label: 'PSU email address' %>
       <%= f.input :phone_number %>
-      <%= f.input :is_alternate_email_public, label: "Display your alternate email address on your eTD document summary page?", as: :boolean, wrapper: :checkbox if Submission.ask_to_display_email? %>
+      <%= f.input :is_alternate_email_public, label: "Display your alternate email address on your eTD document summary page?", as: :boolean, wrapper: :checkbox if Author.ask_to_display_email? %>
       <%= f.input :address_1 %>
       <%= f.input :address_2 %>
       <%= f.input :city %>

@@ -85,4 +85,8 @@ class Author <  ActiveRecord::Base
     first_name + ' ' + middle_name + ' ' + last_name
   end
 
+  def self.ask_to_display_email?
+    Etdflow::Application.config.display_is_alternate_email_public_question
+  end
+
 end
