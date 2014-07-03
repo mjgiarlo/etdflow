@@ -36,3 +36,21 @@ Then(/^I should see my new contact information$/) do
     expect(page).to have_content "123-456-7890"
   end
 end
+
+Given(/^I have confirmed my contact information$/) do
+  # Due to http_basic_auth the author's access_id has to be set as the
+  # http_basic_auth user.
+  create :author, access_id: 'etdflow'
+end
+
+When(/^I fill in my program information$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should see my new program information$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^My program information progress indicator should be updated$/) do
+  pending # express the regexp above with the code you wish you had
+end
