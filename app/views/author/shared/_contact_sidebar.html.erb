@@ -4,15 +4,15 @@
   </div>
   <div class="col-xs-12">
     <p>
-      Joe Q Example<br />
-      123 ABC Lane<br />
-      Suite 301<br />
-      State College, PA 16801
+      <%= @author.full_name %><br />
+      <%= @author.address_1%><br />
+      <%= @author.address_2%><br />
+      <%= @author.city %>, <%= @author.state %> <%= @author.zip %><br />
     </p>
     <p>
-      <strong>Phone:</strong> 123-456-7890<br />
-      <strong>Alternate email:</strong> joeqexample@hotmail.com<br />
-      <strong>Publish my alternate email?</strong> Yes<br />
+      <strong>Phone:</strong> <%= @author.phone_number %> <br />
+      <strong>Alternate email:</strong> <%= @author.alternate_email_address %><br />
+      <strong>Publish my alternate email?</strong> <%= @author.is_alternate_email_public ? 'Yes' : 'No' %><br />
     </p>
   </div>
 </div>

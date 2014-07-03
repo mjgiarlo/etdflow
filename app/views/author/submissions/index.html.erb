@@ -13,9 +13,4 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-xs-12">
-    <p><strong>To start your first eTD submission, please confirm your contact information.</strong></p>
-    <p><%= link_to "Confirm my contact information", new_author_authors_path, class: 'btn btn-default btn-primary' %></p>
-  </div>
-</div>
+ <%= render @view.partial_name %>

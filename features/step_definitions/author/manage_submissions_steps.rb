@@ -8,7 +8,10 @@ Then(/^I should be prompted to confirm my contact information$/) do
 end
 
 When(/^I fill in my author information$/) do
-  step 'I fill in "Access id" with "xyz123"'
+  # Due to http_basic_auth the author's access_id has to be set as the
+  # http_basic_auth user. This step will break when we eventually
+  # disband http_basic_auth.
+  step 'I fill in "Access id" with "etdflow"'
   step 'I fill in "First name" with "NEW-FIRST-NAME"'
   step 'I fill in "Middle name" with "NEW-MIDDLE-NAME"'
   step 'I fill in "Last name" with "NEW-LAST-NAME"'

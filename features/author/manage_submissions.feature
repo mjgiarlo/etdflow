@@ -14,4 +14,4 @@ Scenario: Confirm my contact information
   Then I should be on the author submissions page
   And I should see my new contact information
   And I should see that I don't have any submissions yet
-  And There should be a link to "Start a new submission"
+  And There should be a link to "Start a new Submission"
