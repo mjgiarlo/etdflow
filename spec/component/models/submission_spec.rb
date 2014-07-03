@@ -17,4 +17,11 @@ describe Submission do
   specify { expect(subject).to ensure_inclusion_of(:semester).in_array(Submission::SEMESTERS) }
 
   specify { expect(subject).to validate_numericality_of :year }
+
+  describe '.years' do
+    it 'Returns an array containing the current year plus 3 more' do
+      today = Date.today
+      expect(Submission.years).to eq ["#{today.year}", "#{(today+1.year).year}", "#{(today+2.years).year}", "#{(today+3.years).year}"]
+    end
+  end
 end
