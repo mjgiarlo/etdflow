@@ -1,6 +1,7 @@
-class Author::SubmissionsController < ApplicationController
+class Author::SubmissionsController < AuthorController
 
   def index
+    @view = SubmissionsIndexView.new(@author)
   end
 
   def new

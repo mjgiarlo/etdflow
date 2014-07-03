@@ -14,4 +14,12 @@ class ApplicationController < ActionController::Base
   # Blanket, site-wide password protection to keep development secret
   http_basic_authenticate_with name: "etdflow", password: "fold wet"
 
+  protected
+
+  #  the http_authenticated user
+  def remote_user
+    access_id, pass = ActionController::HttpAuthentication::Basic::user_name_and_password(request)
+    access_id
+  end
+
 end

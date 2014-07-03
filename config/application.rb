@@ -55,5 +55,9 @@ module Etdflow
                            "Dissertation",
                            "Master Thesis"
                           ].freeze
+
+    config.autoload_paths += [
+      Rails.root.join('app/presenters')
+    ]
   end
 end

@@ -15,5 +15,5 @@
   </ul>
 </nav>
 
-<!--TODO: hide this until the author confirms contact information-->
-<%= render '/author/shared/contact_sidebar' %>
+<!-- Hide this until the author confirms contact information-->
+<%= render '/author/shared/contact_sidebar' unless @author.new_record? %>
