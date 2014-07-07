@@ -9,7 +9,22 @@ class Author::SubmissionsController < AuthorController
   end
 
   def create
-    redirect_to author_submissions_path
+    @submission = Submission.new(submission_params)
+    @submission.save!
+    redirect_to author_root_path
+    flash[:notice] = 'Program information saved successfully'
+  rescue ActiveRecord::RecordInvalid
+    render :new
+  end
+
+  private
+
+  def submission_params
+    params.require(:submission).permit(:semester,
+                                       :year,
+                                       :author_id,
+                                       :program_id,
+                                       :degree_id)
   end
 
 end

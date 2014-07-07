@@ -44,7 +44,10 @@ Given(/^I have confirmed my contact information$/) do
 end
 
 When(/^I fill in my program information$/) do
-  pending # express the regexp above with the code you wish you had
+  step "I select 'Spring' from 'Semester Intending to Graduate'"
+  step "I select \'#{Date.today.year}\' from 'Graduation Year'"
+  step "I select \'#{Program.first.name}\' from 'Program'"
+  step "I select \'#{Degree.first.name}\' from 'Degree'"
 end
 
 Then(/^I should see my new program information$/) do
