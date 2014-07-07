@@ -15,6 +15,8 @@ describe Author do
   specify { expect(subject).to have_db_column :state }
   specify { expect(subject).to have_db_column :zip }
   specify { expect(subject).to have_db_column :is_alternate_email_public }
+  specify { expect(subject).to have_db_column :created_at }
+  specify { expect(subject).to have_db_column :updated_at }
 
   specify { expect(subject).to validate_presence_of :access_id }
   specify { expect(subject).to validate_presence_of :first_name }
