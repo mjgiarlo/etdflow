@@ -3,6 +3,10 @@ As an author
 I need to initiate the thesis/dissertation submission process
 So that I can eventually graduate
 
+  Background:
+    Given some programs exist
+    And some degrees exist
+
   Scenario: Confirm my contact information
     Given I have not yet entered my author information
     When I go to the author submissions page
