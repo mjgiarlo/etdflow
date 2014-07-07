@@ -23,7 +23,7 @@ When(/^I modify the rest of author's attributes$/) do
   step 'I fill in "Address 1" with "NEW-ADDRESS-1"'
   step 'I fill in "Address 2" with "NEW-ADDRESS-2"'
   step 'I fill in "City" with "NEW-CITY"'
-  step 'I select "New Jersey" from "State"'
+  step "I select 'New Jersey' from 'State'"
   step 'I fill in "Zip" with "12345"'
 end
 

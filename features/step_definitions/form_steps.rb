@@ -12,6 +12,6 @@ When /^(?:|I )press "([^"]*)"?$/ do |button|
   click_button(button)
 end
 
-When /^(?:|I )select "([^"]*)" from "([^"]*)"?$/ do |value, field|
+When(/^I select '(.*?)' from '(.*?)'$/) do |value, field|
   select(value, :from => field)
 end

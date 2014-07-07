@@ -17,7 +17,7 @@ Feature: Manage degrees
     Then I should be on the new admin degree page
     When I fill in "Name" with "MArch"
     When I fill in "Description" with "Master of Architecture"
-    When I select "Master" from "Degree type"
+    When I select 'Master' from 'Degree type'
     And I check "Is active"
     And I press "Create Degree"
     Then I should be on the admin degrees page
