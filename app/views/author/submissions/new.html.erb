@@ -8,10 +8,10 @@
   <div class="col-xs-12">
     <%= simple_form_for [:author, @submission] do |f| %>
       <%= f.input :author_id, as: :hidden, input_html: { value: @author.id } %>
-      <%= f.input :semester, label: 'Semester Intending to Graduate', collection: Submission::SEMESTERS, prompt: "Please Select" %>
-      <%= f.input :year, label: 'Graduation Year', collection: Submission.years, prompt: "Please Select" %>
       <%= f.input :program_id, label: 'Program', collection: Program.all, prompt: "Please Select" %>
       <%= f.input :degree_id, label: 'Degree', collection: Degree.all, prompt: "Please Select" %>
+      <%= f.input :semester, label: 'Semester Intending to Graduate', collection: Submission::SEMESTERS, prompt: "Please Select" %>
+      <%= f.input :year, label: 'Graduation Year', collection: Submission.years, prompt: "Please Select" %>
       <div class="form-group actions">
         <%= f.button :submit, class: "btn-primary", value: "Save Program Information" %>
         <%= link_to "Cancel", author_root_path %>
