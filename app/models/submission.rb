@@ -1,5 +1,9 @@
 class Submission < ActiveRecord::Base
 
+  belongs_to :author
+  belongs_to :program
+  belongs_to :degree
+
   validates_presence_of :author_id,
                         :program_id,
                         :degree_id,

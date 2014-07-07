@@ -28,6 +28,8 @@ describe Author do
   specify { expect(subject).to validate_presence_of :state }
   specify { expect(subject).to validate_presence_of :zip }
 
+  specify { expect(subject).to have_many :submissions }
+
   specify { expect(subject).to ensure_inclusion_of(:state).in_array(Author::USSTATES) }
 
     it 'only accepts correctly formatted email_addresses' do

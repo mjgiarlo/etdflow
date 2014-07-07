@@ -1,5 +1,7 @@
 class Program <  ActiveRecord::Base
 
+  has_many :submissions
+
   validates_presence_of :name
 
   validates_uniqueness_of :name
