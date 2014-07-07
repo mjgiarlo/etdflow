@@ -1,5 +1,7 @@
 class Author <  ActiveRecord::Base
 
+  has_many :submissions
+
   validates_presence_of :access_id,
                         :first_name,
                         :last_name,

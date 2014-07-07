@@ -17,6 +17,8 @@ describe Degree do
 
   specify { expect(subject).to validate_uniqueness_of :name }
 
+  specify { expect(subject).to have_many :submissions }
+
   describe '#active_status' do
     context 'When is_active is false' do
       before { degree.is_active = false }
