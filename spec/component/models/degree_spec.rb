@@ -8,6 +8,8 @@ describe Degree do
   specify { expect(subject).to have_db_column :description }
   specify { expect(subject).to have_db_column :degree_type }
   specify { expect(subject).to have_db_column :is_active }
+  specify { expect(subject).to have_db_column :created_at }
+  specify { expect(subject).to have_db_column :updated_at }
 
   specify { expect(subject).to validate_presence_of :name }
   specify { expect(subject).to validate_presence_of :description }

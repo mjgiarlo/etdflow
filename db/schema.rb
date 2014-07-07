@@ -11,22 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140703200942) do
+ActiveRecord::Schema.define(version: 20140707201933) do
 
   create_table "authors", force: true do |t|
-    t.string  "access_id"
-    t.string  "first_name"
-    t.string  "last_name"
-    t.string  "middle_name"
-    t.string  "alternate_email_address"
-    t.string  "psu_email_address"
-    t.string  "phone_number"
-    t.string  "address_1"
-    t.string  "address_2"
-    t.string  "city"
-    t.string  "state"
-    t.string  "zip"
-    t.boolean "is_alternate_email_public"
+    t.string   "access_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "middle_name"
+    t.string   "alternate_email_address"
+    t.string   "psu_email_address"
+    t.string   "phone_number"
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.boolean  "is_alternate_email_public"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "bookmarks", force: true do |t|
@@ -42,15 +44,19 @@ ActiveRecord::Schema.define(version: 20140703200942) do
   add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
 
   create_table "degrees", force: true do |t|
-    t.string  "name"
-    t.string  "description"
-    t.string  "degree_type"
-    t.boolean "is_active"
+    t.string   "name"
+    t.string   "description"
+    t.string   "degree_type"
+    t.boolean  "is_active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "programs", force: true do |t|
-    t.string  "name"
-    t.boolean "is_active"
+    t.string   "name"
+    t.boolean  "is_active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "searches", force: true do |t|
@@ -64,11 +70,13 @@ ActiveRecord::Schema.define(version: 20140703200942) do
   add_index "searches", ["user_id"], name: "index_searches_on_user_id", using: :btree
 
   create_table "submissions", force: true do |t|
-    t.integer "author_id"
-    t.integer "program_id"
-    t.integer "degree_id"
-    t.string  "semester"
-    t.integer "year"
+    t.integer  "author_id"
+    t.integer  "program_id"
+    t.integer  "degree_id"
+    t.string   "semester"
+    t.integer  "year"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

@@ -7,6 +7,8 @@ describe Submission do
   specify { expect(subject).to have_db_column :degree_id }
   specify { expect(subject).to have_db_column :semester }
   specify { expect(subject).to have_db_column :year }
+  specify { expect(subject).to have_db_column :created_at }
+  specify { expect(subject).to have_db_column :updated_at }
 
   specify { expect(subject).to validate_presence_of :author_id }
   specify { expect(subject).to validate_presence_of :program_id }
