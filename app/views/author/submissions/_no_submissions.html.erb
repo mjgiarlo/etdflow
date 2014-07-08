@@ -6,16 +6,12 @@
 
 <div id="submissions" class="row">
 
-  <% @view.submissions.each do |submission| %>
-    <% @submission_view = SubmissionView.new(submission) %>
-
-    <div class="col-xs-12 submission">
-      <h3><%= @submission_view.name %></h3>
-      <%= render 'progress_indicator', submission: @submission_view %>
-    </div>
-  <% end %>
   <div class="col-xs-12 submission">
+    <p>You don't have any submissions yet.</p>
     <p><%= link_to "Start a new Submission", new_author_submissions_path, class: 'btn btn-primary' %></p>
+
+    <% @submission_view = SubmissionView.new %>
+    <%= render 'progress_indicator', submission: @submission_view %>
   </div>
 
 </div>
