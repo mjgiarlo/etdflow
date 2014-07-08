@@ -130,6 +130,10 @@ form {
         display: block;
         color: $gray-light;
         text-indent: 2px;
+
+        .glyphicon {
+          color: $brand-success;
+        }
       }
     }
 
@@ -142,12 +146,13 @@ form {
 
     &.complete {
       .number {
-        border-color: $brand-success;
+        border-color: $gray-light;
         background-color: $brand-success;
       }
 
       .description {
         color: inherit;
+        margin-top: 8px;
       }
 
       .direction {
