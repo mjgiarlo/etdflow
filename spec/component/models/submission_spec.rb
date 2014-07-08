@@ -24,6 +24,20 @@ describe Submission do
 
   specify { expect(subject).to validate_numericality_of :year }
 
+  let(:submission) { create :submission }
+
+  describe '#program_name' do
+    it 'returns the name of the associated program' do
+      expect(submission.program_name).to eq(submission.program.name)
+    end
+  end
+
+  describe '#degree_name' do
+    it 'returns the name of the associated degree' do
+      expect(submission.degree_name).to eq(submission.degree.name)
+    end
+  end
+
   describe '.years' do
     it 'Returns an array containing the current year plus 3 more' do
       today = Date.today
@@ -32,18 +46,18 @@ describe Submission do
   end
 
   describe '#created_on' do
-    let(:submission) { Submission.new }
+    let(:new_submission) { Submission.new }
     context 'for a new record' do
       it 'returns nil' do
-        expect(submission.created_on).to be_nil
+        expect(new_submission.created_on).to be_nil
       end
     end
     context 'when the submission exists' do
       before do
-        submission.created_at = Time.new(2014, 7, 4)
+        new_submission.created_at = Time.new(2014, 7, 4)
       end
       it 'returns the formatted date' do
-        expect(submission.created_on).to eq('July 4, 2014')
+        expect(new_submission.created_on).to eq('July 4, 2014')
       end
     end
   end
