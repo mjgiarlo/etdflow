@@ -30,4 +30,22 @@ describe Submission do
       expect(Submission.years).to eq ["#{today.year}", "#{(today+1.year).year}", "#{(today+2.years).year}", "#{(today+3.years).year}"]
     end
   end
+
+  describe '#created_on' do
+    let(:submission) { Submission.new }
+    context 'for a new record' do
+      it 'returns nil' do
+        expect(submission.created_on).to be_nil
+      end
+    end
+    context 'when the submission exists' do
+      before do
+        submission.created_at = Time.new(2014, 7, 4)
+      end
+      it 'returns the formatted date' do
+        expect(submission.created_on).to eq('July 4, 2014')
+      end
+    end
+  end
+
 end
