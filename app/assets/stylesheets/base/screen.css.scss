@@ -129,10 +129,12 @@ form {
         @extend .small;
         display: block;
         color: $gray-light;
-        text-indent: 2px;
+        vertical-align: top;
+        line-height: 18px;
 
         .glyphicon {
           color: $brand-success;
+          font-size: 140%;
         }
       }
     }
@@ -147,7 +149,7 @@ form {
     &.complete {
       .number {
         border-color: $gray-light;
-        background-color: $brand-success;
+        background-color: $gray-light;
       }
 
       .description {

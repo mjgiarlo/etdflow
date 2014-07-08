@@ -1,29 +1,29 @@
-<div class="progress-indicator preview">
-  <div class="step">
+<div class="progress-indicator <%= 'preview' unless @view.author_has_submissions? %>" id="<%= @submission_view.id %>">
+  <div class="step step-1 <%= @submission_view.step_one_class %>">
     <div class="number">1</div>
     <div class="information">
-      <div class="description">Provide program information</div>
-      <div class="status"></div>
+      <div class="description">Provide program information <%= @submission_view.program_information_link.html_safe %></div>
+      <div class="status"><%= @submission_view.step_one_status %></div>
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>
-  <div class="step">
+  <div class="step step-2 <%= @submission_view.step_two_class %>">
     <div class="number">2</div>
     <div class="information">
-      <div class="description">Provide committee</div>
-      <div class="status"></div>
+      <div class="description">Provide committee <%# @submission_view.committee_link %></div>
+      <div class="status"><%# @submission_view.step_two_status %></div>
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>
-  <div class="step">
+  <div class="step step-3 <%# @submission_view.step_three_class %>">
     <div class="number">3</div>
     <div class="information">
       <div class="description">Upload Format Review files</div>
-      <div class="status"></div>
+      <div class="status"><%# @submission_view.step_three_status %></div>
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>
-  <div class="step">
+  <div class="step step-4">
     <div class="number">4</div>
     <div class="information">
       <div class="description">Graduate school approves Format Review files</div>
@@ -31,7 +31,7 @@
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>
-  <div class="step">
+  <div class="step step-5">
     <div class="number">5</div>
     <div class="information">
       <div class="description">Upload Final Submission files</div>
@@ -39,7 +39,7 @@
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>
-  <div class="step">
+  <div class="step step-6">
     <div class="number">6</div>
     <div class="information">
       <div class="description">Graduate school approves Final Submission files</div>
@@ -47,7 +47,7 @@
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>
-  <div class="step">
+  <div class="step step-7">
     <div class="number">7</div>
     <div class="information">
       <div class="description">Released for publication</div>

@@ -51,9 +51,13 @@ When(/^I fill in my program information$/) do
 end
 
 Then(/^I should see my new program information$/) do
-  pending # express the regexp above with the code you wish you had
+  expect(page).to have_content "#{Program.first.name} #{Degree.first.name} - Spring #{Date.today.year}"
 end
 
 Then(/^My program information progress indicator should be updated$/) do
-  pending # express the regexp above with the code you wish you had
+  expect(page).to_not have_css ".preview"
+  within '#submission-1' do
+    expect(page).to have_link '[update]'
+    expect(page).to have_content "completed on #{Date.today.strftime('%B %e, %Y')}"
+  end
 end
