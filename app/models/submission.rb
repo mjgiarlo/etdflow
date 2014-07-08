@@ -4,6 +4,9 @@ class Submission < ActiveRecord::Base
   belongs_to :program
   belongs_to :degree
 
+  delegate :name, to: :program, prefix: :program
+  delegate :name, to: :degree, prefix: :degree
+
   validates_presence_of :author_id,
                         :program_id,
                         :degree_id,
