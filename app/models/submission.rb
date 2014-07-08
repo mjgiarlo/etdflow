@@ -30,4 +30,8 @@ class Submission < ActiveRecord::Base
     ]
   end
 
+  def created_on
+    created_at ? created_at.strftime('%B %-e, %Y') : nil
+  end
+
 end
