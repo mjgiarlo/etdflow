@@ -1,4 +1,4 @@
-class Author::AuthorsController < ApplicationController
+class Author::AuthorsController < AuthorController
 
   def new
     @author = Author.new
@@ -11,6 +11,18 @@ class Author::AuthorsController < ApplicationController
     flash[:notice] = 'Contact information confirmed successfully'
   rescue ActiveRecord::RecordInvalid
     render :new
+  end
+
+  def edit
+  end
+
+  def update
+    @author.update_attributes!(author_params)
+    redirect_to author_root_path
+    flash[:notice] = 'Contact information updated successfully'
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to edit_author_author_path(@author)
+    flash[:notice] = e.message
   end
 
   private

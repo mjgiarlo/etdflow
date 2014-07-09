@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   end
 
   namespace :author do
-    resource :authors, except: [:index, :edit, :update, :show, :destroy]
+    resources :authors, except: [:index, :show, :destroy]
     resource :submissions, except: [:edit, :update, :show, :destroy]
     root to: 'submissions#index'
   end
