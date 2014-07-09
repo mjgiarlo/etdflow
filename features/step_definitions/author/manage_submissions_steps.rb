@@ -61,3 +61,7 @@ Then(/^My program information progress indicator should be updated$/) do
     expect(page).to have_content "completed on #{Date.today.strftime('%B %e, %Y')}"
   end
 end
+
+Given(/^My contact information already exists in etdlfow$/) do
+  step "I have confirmed my contact information"
+end
