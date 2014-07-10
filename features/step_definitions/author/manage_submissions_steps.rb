@@ -71,3 +71,11 @@ Given(/^I have started a submission$/) do
   author = Author.where(access_id: 'etdflow').first
   create :submission, author: author
 end
+
+When(/^I provide my committee$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^My provide committee progress indicator should be updated$/) do
+  pending # express the regexp above with the code you wish you had
+end
