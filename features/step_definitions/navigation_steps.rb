@@ -9,8 +9,10 @@ When /^I go to (.*)$/ do |page_name|
   basic_auth_and_visit path_to(page_name)
 end
 
-When(/^I click the "(.*?)" link$/) do |link|
-  click_link link
+When /^I click the "(.*?)" link(?: within "([^"]*)")?$/ do |link, selector|
+  with_scope selector do
+    click_link link
+  end
 end
 
 When(/^I click the "(.*?)" button$/) do |button|
@@ -29,3 +31,10 @@ end
 Then(/^There should be a link to "(.*?)"$/) do |link|
   expect(page).to have_link link
 end
+
+module WithinHelpers
+  def with_scope locator
+    locator ? within(locator) { yield } : yield
+  end
+end
+World WithinHelpers
