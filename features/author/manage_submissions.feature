@@ -39,3 +39,10 @@ So that I can eventually graduate
     And I click the "Save" button
     Then I should be on the author submissions page
     And I should see my new contact information
+
+  Scenario: Delete my submission
+    Given I have started a submission
+    When I go to the author submissions page
+    And I click the "Delete" button
+    Then I should be on the author submissions page
+    And I should see that I don't have any submissions yet

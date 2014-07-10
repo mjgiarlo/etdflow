@@ -65,3 +65,9 @@ end
 Given(/^My contact information already exists in etdlfow$/) do
   step "I have confirmed my contact information"
 end
+
+Given(/^I have started a submission$/) do
+  step "I have confirmed my contact information"
+  author = Author.where(access_id: 'etdflow').first
+  create :submission, author: author
+end
