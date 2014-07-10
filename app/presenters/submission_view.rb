@@ -1,4 +1,5 @@
 class SubmissionView
+  include Rails.application.routes.url_helpers
 
   def initialize(submission=nil)
     @submission = submission
@@ -21,7 +22,7 @@ class SubmissionView
   end
 
   def program_information_link
-    @submission ? "<a href='#' class='small'>[update]</a>".html_safe : ''
+    @submission ? "<a href='" + edit_author_submission_path(@submission) + "' class='small'>[update]</a>".html_safe : ''
   end
 
   def step_two_class

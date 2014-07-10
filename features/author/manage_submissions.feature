@@ -34,7 +34,7 @@ So that I can eventually graduate
   Scenario: Edit my contact information
     Given My contact information already exists in etdlfow
     When I go to the author submissions page
-    And I click the "update" link
+    And I click the "update" link within "#contact-information"
     When I fill in my author information
     And I click the "Save" button
     Then I should be on the author submissions page
@@ -46,3 +46,12 @@ So that I can eventually graduate
     And I click the "delete" link within "#submission-1"
     Then I should be on the author submissions page
     And I should see that I don't have any submissions yet
+
+  Scenario: Update my program information
+    Given I have started a submission
+    When I go to the author submissions page
+    And I click the "update" link within "#submission-1"
+    When I fill in my program information
+    And I click the "Update Program Information" button
+    Then I should be on the author submissions page
+    And I should see my new program information
