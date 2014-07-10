@@ -50,7 +50,7 @@ describe SubmissionView do
     describe '#program_information_link' do
       context 'when the submission exists' do
         it 'returns a link to edit the program information' do
-          expect(view_with_submission.program_information_link).to eq("<a href='#' class='small'>[update]</a>")
+          expect(view_with_submission.program_information_link).to eq("<a href='/author/submissions/#{submission.id}/edit' class='small'>[update]</a>")
         end
       end
       context 'when the submission is nil' do

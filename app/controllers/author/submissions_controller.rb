@@ -17,6 +17,20 @@ class Author::SubmissionsController < AuthorController
     render :new
   end
 
+  def edit
+    @submission = Submission.find(params[:id])
+  end
+
+  def update
+    @submission = Submission.find(params[:id])
+    @submission.update_attributes!(submission_params)
+    redirect_to author_root_path
+    flash[:notice] = 'Program information updated successfully'
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to edit_author_submission_path(@submission)
+    flash[:notice] = e.message
+  end
+
   def destroy
     @submission = Submission.find(params[:id])
     @submission.destroy

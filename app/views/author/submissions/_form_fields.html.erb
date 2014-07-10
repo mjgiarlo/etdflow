@@ -1,0 +1,5 @@
+<%= form.input :author_id, as: :hidden, input_html: { value: @author.id } %>
+<%= form.input :program_id, label: 'Program', collection: Program.all, prompt: "Please Select" %>
+<%= form.input :degree_id, label: 'Degree', collection: Degree.all, prompt: "Please Select" %>
+<%= form.input :semester, label: 'Semester Intending to Graduate', collection: Submission::SEMESTERS, prompt: "Please Select" %>
+<%= form.input :year, label: 'Graduation Year', collection: Submission.years, prompt: "Please Select" %>
