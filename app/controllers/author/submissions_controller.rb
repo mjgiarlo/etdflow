@@ -17,6 +17,16 @@ class Author::SubmissionsController < AuthorController
     render :new
   end
 
+  def destroy
+    @submission = Submission.find(params[:id])
+    @submission.destroy
+    flash[:notice] = "Submission deleted successfully."
+    redirect_to author_root_path
+  rescue
+    flash[:notice] = "Can not delete submission."
+    redirect_to author_root_path
+  end
+
   private
 
   def submission_params
