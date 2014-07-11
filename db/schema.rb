@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140707201933) do
+ActiveRecord::Schema.define(version: 20140711180540) do
 
   create_table "authors", force: true do |t|
     t.string   "access_id"
@@ -42,6 +42,16 @@ ActiveRecord::Schema.define(version: 20140707201933) do
   end
 
   add_index "bookmarks", ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
+
+  create_table "committee_members", force: true do |t|
+    t.integer  "submission_id"
+    t.string   "role"
+    t.string   "name"
+    t.string   "email"
+    t.boolean  "is_advisor"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "degrees", force: true do |t|
     t.string   "name"

@@ -4,6 +4,8 @@ class Submission < ActiveRecord::Base
   belongs_to :program
   belongs_to :degree
 
+  has_many :committee_members
+
   delegate :name, to: :program, prefix: :program
   delegate :name, to: :degree, prefix: :degree
 
