@@ -20,6 +20,8 @@ describe Submission do
   specify { expect(subject).to belong_to :degree }
   specify { expect(subject).to belong_to :program }
 
+  specify { expect(subject).to have_many :committee_members }
+
   specify { expect(subject).to ensure_inclusion_of(:semester).in_array(Submission::SEMESTERS) }
 
   specify { expect(subject).to validate_numericality_of :year }
