@@ -8,9 +8,11 @@
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>
   <div class="step step-2 <%= @submission_view.step_two_class %>">
+  <%= link_to new_author_submission_committee_path(@submission_view.submission) do %>
     <div class="number">2</div>
+  <% end %>
     <div class="information">
-      <div class="description">Provide committee <%# @submission_view.committee_link %></div>
+      <div class="description"><%= link_to "Provide committee", new_author_submission_committee_path(@submission_view.submission) %> <%# @submission_view.committee_link %></div>
       <div class="status"><%# @submission_view.step_two_status %></div>
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>

@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h1>Committee</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <%= simple_form_for @committee, url: author_submission_committee_path, method: :post do |form| %>
+
+      <%= form.simple_fields_for :committee_members do |cmf| %>
+        <%= cmf.input :submission_id, as: :hidden %>
+        <%= cmf.input :is_advisor, as: :hidden %>
+        <%= cmf.input :role, label: 'Role', input_html: { readonly: true } %>
+        <%= cmf.input :name, label: 'Name' %>
+        <%= cmf.input :email, label: 'email' %>
+      <% end %>
+
+      <div class="form-group actions">
+        <%= form.button :submit, class: "btn-primary", value: "Save Committee" %>
+        <%= link_to "Cancel", author_root_path %>
+      </div>
+    <% end %>
+  </div>
+</div>

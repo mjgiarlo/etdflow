@@ -20,6 +20,10 @@ module Etdflow
     # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
     config.assets.precompile += %w( base.css author.css admin.css base.js author.js admin.js )
 
+    config.autoload_paths += [
+      Rails.root.join('app/presenters')
+    ]
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -56,8 +60,12 @@ module Etdflow
                            "Master Thesis"
                           ].freeze
 
-    config.autoload_paths += [
-      Rails.root.join('app/presenters')
-    ]
+    # Supply the structure of the committee
+    config.committee_advisor_role = "Advisor"
+    config.committee_other_required_roles = [
+                                             "Committee Chair",
+                                             "Committee Member",
+                                             "Special Member"
+                                            ].freeze
   end
 end
