@@ -12,7 +12,6 @@ describe CommitteeMember do
   specify { expect(subject).to validate_presence_of :role          }
   specify { expect(subject).to validate_presence_of :name          }
   specify { expect(subject).to validate_presence_of :email         }
-  specify { expect(subject).to validate_presence_of :is_advisor    }
 
   specify { expect(subject).to belong_to :submission }
 end
