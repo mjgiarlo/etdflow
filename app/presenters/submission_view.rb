@@ -1,6 +1,8 @@
 class SubmissionView
   include Rails.application.routes.url_helpers
 
+  attr_reader :submission
+
   def initialize(submission=nil)
     @submission = submission
   end
