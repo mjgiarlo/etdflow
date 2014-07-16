@@ -5,6 +5,14 @@ class Committee
 
   attr_accessor :committee_members
 
+  def self.advisor
+    Etdflow::Application.config.committee_advisor_role
+  end
+
+  def self.additional_roles
+    Etdflow::Application.config.committee_other_required_roles
+  end
+
   def self.members(submission)
     members = []
     members << CommitteeMember.new(role: Committee.advisor, is_advisor: true, submission: submission)
@@ -41,14 +49,6 @@ class Committee
       result = false unless cm.valid?
     end
     result
-  end
-
-  def self.advisor
-    Etdflow::Application.config.committee_advisor_role
-  end
-
-  def self.additional_roles
-    Etdflow::Application.config.committee_other_required_roles
   end
 
 end
