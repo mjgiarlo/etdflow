@@ -65,6 +65,7 @@ describe SubmissionView do
     let(:view_on_step_two) { SubmissionView.new submission }
     describe '#step_two_class' do
       context 'when the submission exists and does not yet have a committee' do
+        before { submission.status = 'collecting committee' }
         it 'returns "current"' do
           expect(view_on_step_two.step_two_class).to eq('current')
         end

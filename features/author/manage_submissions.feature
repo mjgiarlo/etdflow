@@ -30,6 +30,7 @@ So that I can eventually graduate
     Then I should be on the author submissions page
     And I should see my new program information
     And My program information progress indicator should be updated
+    And I should now be on "step-2" "Provide committee"
 
   Scenario: Edit my contact information
     Given My contact information already exists in etdlfow

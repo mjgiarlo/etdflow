@@ -32,7 +32,11 @@ class SubmissionView
   end
 
   def step_two_class
-    @submission ? 'current' : ''
+    case submission_status
+      when 'collecting committee' then 'current'
+      else
+        ''
+    end
   end
 
 end

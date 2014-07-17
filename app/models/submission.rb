@@ -1,4 +1,5 @@
 class Submission < ActiveRecord::Base
+  class InvalidTransition < Exception; end
 
   belongs_to :author
   belongs_to :program
@@ -38,7 +39,8 @@ class Submission < ActiveRecord::Base
   def self.statuses
     [
       nil,
-      'collecting committee'
+      'collecting committee',
+      'collecting format review papers'
     ]
   end
 
@@ -52,5 +54,15 @@ class Submission < ActiveRecord::Base
     status == 'collecting committee' ? true : false
   end
 
+  def collecting_committee!
+    if status == nil
+      status = 'collecting committee'
+      update_attribute :status, status
+    elsif status == 'collecting committee'
+      return
+    else
+      raise InvalidTransition
+    end
+  end
 
 end

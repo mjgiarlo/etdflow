@@ -85,3 +85,8 @@ end
 Then(/^My provide committee progress indicator should be updated$/) do
   pending # express the regexp above with the code you wish you had
 end
+
+Then /^I should now be on "(.*?)" "(.*?)"$/ do |step, name|
+  expect(page).to have_css ".step.#{step}.current"
+  expect(page).to have_link name
+end
