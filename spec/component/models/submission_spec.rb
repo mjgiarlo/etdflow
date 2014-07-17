@@ -82,4 +82,26 @@ describe Submission do
     end
   end
 
+  describe '#collecting_committee!' do
+    context 'when status has been set to nil' do
+      before { submission.status = nil }
+      it "saves status as 'collecting committee'" do
+        submission.collecting_committee!
+        expect(submission.status).to eq('collecting committee')
+      end
+    end
+    context "when status has been set to 'collecting committee'" do
+      before { submission.status = 'collecting committee' }
+      it "does not change status" do
+        expect(submission.status).to eq('collecting committee')
+      end
+    end
+    context 'when status has been set to a different valid value' do
+      before { submission.status = 'collecting format review papers' }
+      it "raises an error" do
+        expect { submission.collecting_committee! }.to raise_error(Submission::InvalidTransition)
+      end
+    end
+  end
+
 end
