@@ -35,8 +35,22 @@ class Submission < ActiveRecord::Base
     ]
   end
 
+  def self.statuses
+    [
+      nil,
+      'collecting committee'
+    ]
+  end
+
+  validates :status, inclusion: { in: statuses }
+
   def created_on
     created_at ? created_at.strftime('%B %-e, %Y') : nil
   end
+
+  def collecting_committee?
+    status == 'collecting committee' ? true : false
+  end
+
 
 end

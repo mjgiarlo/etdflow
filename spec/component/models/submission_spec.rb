@@ -27,6 +27,8 @@ describe Submission do
 
   specify { expect(subject).to validate_numericality_of :year }
 
+  specify { expect(subject).to ensure_inclusion_of(:status).in_array(Submission.statuses) }
+
   let(:submission) { create :submission }
 
   describe '#program_name' do
@@ -61,6 +63,21 @@ describe Submission do
       end
       it 'returns the formatted date' do
         expect(new_submission.created_on).to eq('July 4, 2014')
+      end
+    end
+  end
+
+  describe '#collecting_committee?' do
+    context "when status is not set" do
+      before { submission.status = nil }
+      it "returns false" do
+        expect(submission).to_not be_collecting_committee
+      end
+    end
+    context "when status is set to 'collecting committee'" do
+      before { submission.status = "collecting committee" }
+      it "returns true" do
+        expect(submission).to be_collecting_committee
       end
     end
   end
