@@ -72,6 +72,12 @@ Given(/^I have started a submission$/) do
   create :submission, author: author
 end
 
+Given(/^I am ready to provide my committee$/) do
+  step "I have confirmed my contact information"
+  author = Author.where(access_id: 'etdflow').first
+  create :submission, author: author, status: 'collecting committee'
+end
+
 When(/^I provide my committee$/) do
   pending # express the regexp above with the code you wish you had
 end

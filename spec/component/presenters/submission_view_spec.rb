@@ -77,4 +77,13 @@ describe SubmissionView do
     end
   end
 
+  describe '#submission_status' do
+    it 'returns the status of the associated submission' do
+      expect(view_with_submission.submission_status).to eq(view_with_submission.submission.status)
+    end
+    it 'returns nil when there is no submission' do
+      expect(view_without_submission.submission_status).to be_nil
+    end
+  end
+
 end

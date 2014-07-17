@@ -15,6 +15,10 @@ class SubmissionView
     @submission.program_name + ' ' + @submission.degree_name + ' - ' + @submission.semester + ' ' + @submission.year.to_s
   end
 
+  def submission_status
+    @submission ? @submission.status : nil
+  end
+
   def step_one_class
     @submission ? 'complete' : ''
   end

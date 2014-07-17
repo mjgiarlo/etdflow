@@ -56,8 +56,8 @@ So that I can eventually graduate
     Then I should be on the author submissions page
     And I should see my new program information
 
-  Scenario: Add my committee
-    Given I have started a submission
+  Scenario: Provide my committee
+    Given I am ready to provide my committee
     When I go to the author submissions page
     And I click the "Provide committee" link within "#submission-1"
     When I provide my committee
