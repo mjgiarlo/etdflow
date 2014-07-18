@@ -13,6 +13,10 @@ class Committee
     Etdflow::Application.config.committee_other_required_roles
   end
 
+  def self.minimum_number_of_members
+    Committee.additional_roles.count + 1
+  end
+
   def self.members(submission)
     members = []
     members << CommitteeMember.new(role: Committee.advisor, is_advisor: true, submission: submission)

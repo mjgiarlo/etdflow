@@ -19,6 +19,10 @@ class SubmissionView
     @submission ? @submission.status : nil
   end
 
+  def submission_with_committee?
+    @submission && @submission.has_committee?
+  end
+
   def step_one_class
     @submission ? 'complete' : ''
   end
@@ -32,11 +36,21 @@ class SubmissionView
   end
 
   def step_two_class
-    case submission_status
-      when 'collecting committee' then 'current'
-      else
+    if submission_status == 'collecting committee'
+      'current'
+    elsif submission_with_committee?
+      'complete'
+    else
         ''
     end
+  end
+
+  def step_two_status
+    submission_with_committee? ? "<span class='glyphicon glyphicon-ok-circle'></span> completed".html_safe : ''
+  end
+
+  def committee_link
+    submission_with_committee? ? "<a href='" + "#" + "' class='small'>[update]</a>".html_safe : ''
   end
 
 end

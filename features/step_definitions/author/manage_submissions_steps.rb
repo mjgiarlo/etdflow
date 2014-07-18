@@ -57,8 +57,10 @@ end
 Then(/^My program information progress indicator should be updated$/) do
   expect(page).to_not have_css ".preview"
   within '#submission-1' do
-    expect(page).to have_link '[update]'
-    expect(page).to have_content "completed on #{Date.today.strftime('%B %e, %Y')}"
+    within '.step.step-1' do
+      expect(page).to have_link '[update]'
+      expect(page).to have_content "completed on #{Date.today.strftime('%B %e, %Y')}"
+    end
   end
 end
 
@@ -79,11 +81,19 @@ Given(/^I am ready to provide my committee$/) do
 end
 
 When(/^I provide my committee$/) do
-  pending # express the regexp above with the code you wish you had
+  Committee.minimum_number_of_members.times do |i|
+    fill_in "committee_committee_members_attributes_#{i}_name", with: "name_#{i}"
+    fill_in "committee_committee_members_attributes_#{i}_email", with: "name_#{i}@example.com"
+  end
 end
 
-Then(/^My provide committee progress indicator should be updated$/) do
-  pending # express the regexp above with the code you wish you had
+Then(/^My committee progress indicator should be updated$/) do
+  within '#submission-1' do
+    within '.step.step-2' do
+      expect(page).to have_link '[update]'
+      expect(page).to have_content "completed"
+    end
+  end
 end
 
 Then /^I should now be on "(.*?)" "(.*?)"$/ do |step, name|

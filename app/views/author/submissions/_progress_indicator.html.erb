@@ -15,10 +15,10 @@
         <% if @submission_view.submission_status == 'collecting committee' %>
           <%= link_to "Provide committee", new_author_submission_committee_path(@submission_view.submission) %>
         <% else %>
-          Provide committee
+          Provide committee <%= @submission_view.committee_link.html_safe %>
         <% end %>
       </div>
-      <div class="status"><%# @submission_view.step_two_status %></div>
+      <div class="status"><%= @submission_view.step_two_status %></div>
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>

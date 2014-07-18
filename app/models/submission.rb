@@ -40,7 +40,7 @@ class Submission < ActiveRecord::Base
     [
       nil,
       'collecting committee',
-      'collecting format review papers'
+      'collecting format review files'
     ]
   end
 
@@ -52,6 +52,14 @@ class Submission < ActiveRecord::Base
 
   def collecting_committee?
     status == 'collecting committee' ? true : false
+  end
+
+  def has_committee?
+    if committee_members.any?
+      committee_members.count >= Committee.minimum_number_of_members ? true : false
+    else
+      false
+    end
   end
 
   def collecting_committee!

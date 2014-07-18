@@ -82,6 +82,30 @@ describe Submission do
     end
   end
 
+  describe '#has_committee?' do
+    context 'when there are no committee members' do
+      it 'returns false' do
+        expect(submission.has_committee?).to be_false
+      end
+    end
+    context 'when only one member exists' do
+      before { create :committee_member, submission: submission }
+      it 'returns false' do
+        expect(submission.has_committee?).to be_false
+      end
+    end
+    context 'when the minimum number of members exist' do
+      before do
+        Committee.minimum_number_of_members.times do
+          create :committee_member, submission: submission
+        end
+      end
+      it 'returns true' do
+        expect(submission.has_committee?).to be_true
+      end
+    end
+  end
+
   describe '#collecting_committee!' do
     context 'when status has been set to nil' do
       before { submission.status = nil }
