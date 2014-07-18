@@ -6,6 +6,9 @@ class Author::CommitteesController < AuthorController
   end 
 
   def create
+    submission = Submission.find(params[:submission_id])
+    #TODO make this a submission.collecting_format_review_files! method
+    submission.update_attribute :status, 'collecting format review files'
     @committee = Committee.new(params[:committee])
     @committee.save
     flash[:notice] = 'Committee saved successfully'

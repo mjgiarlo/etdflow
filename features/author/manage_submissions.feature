@@ -64,4 +64,4 @@ So that I can eventually graduate
     When I provide my committee
     And I click the "Save Committee" button
     Then I should be on the author submissions page
-    And My provide committee progress indicator should be updated
+    And My committee progress indicator should be updated
