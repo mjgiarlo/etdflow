@@ -73,4 +73,15 @@ class Submission < ActiveRecord::Base
     end
   end
 
+  def collecting_format_review_files!
+    if status == 'collecting committee'
+      status = 'collecting format review files'
+      update_attribute :status, status
+    elsif status == 'collecting format review files'
+      return
+    else
+      raise InvalidTransition
+    end
+  end
+
 end
