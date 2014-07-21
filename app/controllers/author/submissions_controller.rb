@@ -11,10 +11,7 @@ class Author::SubmissionsController < AuthorController
   def create
     @submission = Submission.new(submission_params)
     @submission.save!
-    begin
-      @submission.collecting_committee!
-    rescue Submission::InvalidTransition
-    end
+    @submission.collecting_committee!
     redirect_to author_root_path
     flash[:notice] = 'Program information saved successfully'
   rescue ActiveRecord::RecordInvalid
