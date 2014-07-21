@@ -22,10 +22,16 @@
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>
-  <div class="step step-3 <%# @submission_view.step_three_class %>">
+  <div class="step step-3 <%= @submission_view.step_three_class %>">
     <div class="number">3</div>
     <div class="information">
-      <div class="description">Upload Format Review files</div>
+      <div class="description">
+        <% if @submission_view.submission_status == 'collecting format review files' %>
+          <%= link_to "Upload Format Review files", new_author_submission_format_review_path(@submission_view.submission) %>
+        <% else %>
+          Upload Format Review files <%# @submission_view.format_review_link.html_safe %>
+        <% end %>
+      </div>
       <div class="status"><%# @submission_view.step_three_status %></div>
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>

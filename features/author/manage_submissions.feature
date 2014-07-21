@@ -65,3 +65,4 @@ So that I can eventually graduate
     And I click the "Save Committee" button
     Then I should be on the author submissions page
     And My committee progress indicator should be updated
+    And I should now be on "step-3" "Upload Format Review files"

@@ -148,6 +148,25 @@ describe SubmissionView do
 
   end
 
+  describe 'step three: upload format review files' do
+    let(:view_on_step_three) { SubmissionView.new submission }
+
+    describe '#step_three_class' do
+      context 'when the submission is nil' do
+        it 'returns an empty string' do
+          expect(view_without_submission.step_three_class).to eq('')
+        end
+      end
+      context 'when the submission status is "collecting format review files"' do
+        before { submission.status = 'collecting format review files' }
+        it 'returns "current"' do
+          expect(view_on_step_three.step_three_class).to eq('current')
+        end
+      end
+    end
+
+  end
+
   def collect_committee(submission)
     create :committee_member, submission: submission,
                               role: Committee.advisor,

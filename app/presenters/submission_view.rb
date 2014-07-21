@@ -53,4 +53,12 @@ class SubmissionView
     submission_with_committee? ? "<a href='" + "#" + "' class='small'>[update]</a>".html_safe : ''
   end
 
+  def step_three_class
+    if submission_status == 'collecting format review files'
+      'current'
+    else
+      ''
+    end
+  end
+
 end

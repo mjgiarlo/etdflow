@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :authors, except: [:index, :show, :destroy]
     resources :submissions, except: [:show] do
       resource :committee, except: [:show, :edit, :update, :destroy]
+      resource :format_review, except: [:show, :edit, :update, :destroy]
     end
     root to: 'submissions#index'
   end
