@@ -56,7 +56,7 @@ class Submission < ActiveRecord::Base
 
   def has_committee?
     if committee_members.any?
-      committee_members.count >= Committee.minimum_number_of_members ? true : false
+      committee_members.count >= Committee.minimum_number_of_members
     else
       false
     end
