@@ -128,4 +128,26 @@ describe Submission do
     end
   end
 
+  describe '#collecting_format_review_files!' do
+    context "when status has been set to 'collecting committee'" do
+      before { submission.status = 'collecting committee' }
+      it "saves status as 'collecting format review files'" do
+        submission.collecting_format_review_files!
+        expect(submission.status).to eq('collecting format review files')
+      end
+    end
+    context "when status has been set to 'collecting format review files'" do
+      before { submission.status = 'collecting format review files' }
+      it "does not change status" do
+        expect(submission.status).to eq('collecting format review files')
+      end
+    end
+    context 'when status has been set to a different valid value' do
+      before { submission.status = nil }
+      it "raises an error" do
+        expect { submission.collecting_format_review_files! }.to raise_error(Submission::InvalidTransition)
+      end
+    end
+  end
+
 end
