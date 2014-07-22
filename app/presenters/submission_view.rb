@@ -1,63 +1,68 @@
-class SubmissionView
-  include Rails.application.routes.url_helpers
+require 'delegate'
 
-  attr_reader :submission
+class SubmissionView < SimpleDelegator
 
-  def initialize(submission=nil)
-    @submission = submission
-  end
-
-  def id
-    @submission ? "submission-#{@submission.id}" : ''
+  # Our submission view should truly pose as the wrapped object,
+  # since some Rails helpers will use this for naming conventions.
+  def class
+    __getobj__.class
   end
 
   def name
-    @submission.program_name + ' ' + @submission.degree_name + ' - ' + @submission.semester + ' ' + @submission.year.to_s
+    program_name + ' ' + degree_name + ' - ' + semester + ' ' + year.to_s
   end
 
-  def submission_status
-    @submission ? @submission.status : nil
-  end
-
-  def submission_with_committee?
-    @submission && @submission.has_committee?
-  end
-
-  def step_one_class
-    @submission ? 'complete' : ''
-  end
-
-  def step_one_status
-    @submission ? "<span class='glyphicon glyphicon-ok-circle'></span> completed on #{@submission.created_on}".html_safe : ''
-  end
-
-  def program_information_link
-    @submission ? "<a href='" + edit_author_submission_path(@submission) + "' class='small'>[update]</a>".html_safe : ''
+  def created_on
+    created_at.strftime('%B %-e, %Y')
   end
 
   def step_two_class
-    if submission_status == 'collecting committee'
-      'current'
-    elsif submission_with_committee?
+    if beyond_collecting_committee?
       'complete'
     else
-        ''
+      'current'
+    end
+  end
+
+  def step_two_description
+    if collecting_committee?
+      ("<a href='" + "/author/submissions/#{id}/committee/new" + "'>Provide committee</a>").html_safe
+    elsif beyond_collecting_committee?
+      ("Provide committee <a href='#' class='small'>[update]</a>").html_safe
+    else
+      'Provide committee'
     end
   end
 
   def step_two_status
-    submission_with_committee? ? "<span class='glyphicon glyphicon-ok-circle'></span> completed".html_safe : ''
+    if beyond_collecting_committee?
+      "<span class='glyphicon glyphicon-ok-circle'></span> completed".html_safe
+    else
+      ''
+    end
   end
 
   def committee_link
-    submission_with_committee? ? "<a href='" + "#" + "' class='small'>[update]</a>".html_safe : ''
+    if beyond_collecting_committee?
+      ("<a href='" + "#" + "' class='small'>[update]</a>").html_safe
+    else
+      ''
+    end
   end
 
   def step_three_class
-    if submission_status == 'collecting format review files'
+    if collecting_format_review_files?
       'current'
     else
       ''
+    end
+  end
+
+  def step_three_description
+    if collecting_format_review_files?
+      ("<a href='" + "/author/submissions/#{id}/format_review/new" + "'>Upload Format Review files</a>").html_safe
+    else
+      'Upload Format Review files'
     end
   end
 

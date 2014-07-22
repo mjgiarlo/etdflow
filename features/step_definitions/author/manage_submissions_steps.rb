@@ -30,6 +30,10 @@ Then(/^I should see that I don't have any submissions yet$/) do
   expect(page).to have_content "You don't have any submissions yet"
 end
 
+Then(/^I should see a preview of the submission process$/) do
+  expect(page).to have_css ".progress-indicator.preview"
+end
+
 Then(/^I should see my new contact information$/) do
   within '#contact-information' do
     expect(page).to have_content "NEW-FIRST-NAME NEW-MIDDLE-NAME NEW-LAST-NAME"

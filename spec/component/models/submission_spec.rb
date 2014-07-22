@@ -50,26 +50,24 @@ describe Submission do
     end
   end
 
-  describe '#created_on' do
-    let(:new_submission) { Submission.new }
-    context 'for a new record' do
-      it 'returns nil' do
-        expect(new_submission.created_on).to be_nil
+  describe '#collecting_program_information?' do
+    context "when status is set to another valid value" do
+      before { submission.status = 'collecting committee' }
+      it "returns false" do
+        expect(submission).to_not be_collecting_program_information
       end
     end
-    context 'when the submission exists' do
-      before do
-        new_submission.created_at = Time.new(2014, 7, 4)
-      end
-      it 'returns the formatted date' do
-        expect(new_submission.created_on).to eq('July 4, 2014')
+    context "when status is set to 'collecting program information'" do
+      before { submission.status = "collecting program information" }
+      it "returns true" do
+        expect(submission).to be_collecting_program_information
       end
     end
   end
 
   describe '#collecting_committee?' do
-    context "when status is not set" do
-      before { submission.status = nil }
+    context "when status is set to another valid value" do
+      before { submission.status = 'collecting program information' }
       it "returns false" do
         expect(submission).to_not be_collecting_committee
       end
@@ -78,6 +76,46 @@ describe Submission do
       before { submission.status = "collecting committee" }
       it "returns true" do
         expect(submission).to be_collecting_committee
+      end
+    end
+  end
+
+  describe '#collecting_format_review_files?' do
+    context "when status is set to another valid value" do
+      before { submission.status = 'collecting program information' }
+      it "returns false" do
+        expect(submission).to_not be_collecting_format_review_files
+      end
+    end
+    context "when status is set to 'collecting format review files'" do
+      before { submission.status = "collecting format review files" }
+      it "returns true" do
+        expect(submission).to be_collecting_format_review_files
+      end
+    end
+  end
+
+  describe '#beyond_collecting_committee?' do
+    context "when status is beyond 'collecting committee'" do
+      context "when status is 'collecting format review files'" do
+        before { submission.status = 'collecting format review files' }
+        it "returns true" do
+          expect(submission).to be_beyond_collecting_committee
+        end
+      end
+    end
+    context "when status is before 'collecting format review files'" do
+      context "when status is 'collecting program information'" do
+        before { submission.status = 'collecting program information' }
+        it "returns false" do
+          expect(submission).to_not be_beyond_collecting_committee
+        end
+      end
+      context "when status is 'collecting committee'" do
+        before { submission.status = 'collecting committee' }
+        it "returns false" do
+          expect(submission).to_not be_beyond_collecting_committee
+        end
       end
     end
   end
@@ -107,8 +145,8 @@ describe Submission do
   end
 
   describe '#collecting_committee!' do
-    context 'when status has been set to nil' do
-      before { submission.status = nil }
+    context "when status is set to 'collecting program information'" do
+      before { submission.status = 'collecting program information' }
       it "saves status as 'collecting committee'" do
         submission.collecting_committee!
         expect(submission.status).to eq('collecting committee')
@@ -143,7 +181,7 @@ describe Submission do
       end
     end
     context 'when status has been set to a different valid value' do
-      before { submission.status = nil }
+      before { submission.status = 'collecting program information' }
       it "raises an error" do
         expect { submission.collecting_format_review_files! }.to raise_error(Submission::InvalidTransition)
       end
