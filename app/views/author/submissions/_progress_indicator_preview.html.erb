@@ -1,25 +1,22 @@
-<div class="progress-indicator">
-  <div class="step step-1 complete">
+<div class="progress-indicator preview">
+  <div class="step step-1">
     <div class="number">1</div>
     <div class="information">
-      <div class="description">Provide program information <%= link_to "[update]", edit_author_submission_path(submission), class: 'small' %></div>
-      <div class="status"><span class="glyphicon glyphicon-ok-circle"></span> completed on <%= @submission_view.created_on %></div>
+      <div class="description">Provide program information</div>
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>
-  <div class="step step-2 <%= @submission_view.step_two_class %>">
+  <div class="step step-2">
     <div class="number">2</div>
     <div class="information">
-      <div class="description"><%= @submission_view.step_two_description %></div>
-      <div class="status"><%= @submission_view.step_two_status %></div>
+      <div class="description">Provide committee</div>
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>
-  <div class="step step-3 <%= @submission_view.step_three_class %>">
+  <div class="step step-3">
     <div class="number">3</div>
     <div class="information">
-      <div class="description"><%= @submission_view.step_three_description %></div>
-      <div class="status"><%# @submission_view.step_three_status %></div>
+      <div class="description">Upload Format Review files</div>
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>
@@ -27,7 +24,6 @@
     <div class="number">4</div>
     <div class="information">
       <div class="description">Graduate school approves Format Review files</div>
-      <div class="status"></div>
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>
@@ -35,7 +31,6 @@
     <div class="number">5</div>
     <div class="information">
       <div class="description">Upload Final Submission files</div>
-      <div class="status"></div>
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>
@@ -43,7 +38,6 @@
     <div class="number">6</div>
     <div class="information">
       <div class="description">Graduate school approves Final Submission files</div>
-      <div class="status"></div>
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>
@@ -51,7 +45,6 @@
     <div class="number">7</div>
     <div class="information">
       <div class="description">Released for publication</div>
-      <div class="status"></div>
     </div>
   </div>
 </div>

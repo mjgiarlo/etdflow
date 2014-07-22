@@ -17,8 +17,9 @@ So that I can eventually graduate
     And I click the "Save" button
     Then I should be on the author submissions page
     And I should see my new contact information
-    And I should see that I don't have any submissions yet
     And There should be a link to "Start a new Submission"
+    And I should see that I don't have any submissions yet
+    And I should see a preview of the submission process
   
   Scenario: Add my program information
     Given I have confirmed my contact information

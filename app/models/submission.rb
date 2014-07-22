@@ -10,6 +10,8 @@ class Submission < ActiveRecord::Base
   delegate :name, to: :program, prefix: :program
   delegate :name, to: :degree, prefix: :degree
 
+  after_initialize :set_status_to_collecting_program_information
+
   validates_presence_of :author_id,
                         :program_id,
                         :degree_id,
@@ -38,21 +40,13 @@ class Submission < ActiveRecord::Base
 
   def self.statuses
     [
-      nil,
+      'collecting program information',
       'collecting committee',
       'collecting format review files'
     ]
   end
 
   validates :status, inclusion: { in: statuses }
-
-  def created_on
-    created_at ? created_at.strftime('%B %-e, %Y') : nil
-  end
-
-  def collecting_committee?
-    status == 'collecting committee' ? true : false
-  end
 
   def has_committee?
     if committee_members.any?
@@ -62,11 +56,27 @@ class Submission < ActiveRecord::Base
     end
   end
 
+  def collecting_program_information?
+    status == 'collecting program information' ? true : false
+  end
+
+  def collecting_committee?
+    status == 'collecting committee' ? true : false
+  end
+
+  def collecting_format_review_files?
+    status == 'collecting format review files' ? true : false
+  end
+
+  def beyond_collecting_committee?
+    collecting_format_review_files?
+  end
+
   def collecting_committee!
-    if status == nil
-      status = 'collecting committee'
-      update_attribute :status, status
-    elsif status == 'collecting committee'
+    new_status = 'collecting committee'
+    if collecting_program_information?
+      update_attribute :status, new_status
+    elsif status == new_status
       return
     else
       raise InvalidTransition
@@ -74,14 +84,19 @@ class Submission < ActiveRecord::Base
   end
 
   def collecting_format_review_files!
-    if status == 'collecting committee'
-      status = 'collecting format review files'
-      update_attribute :status, status
-    elsif status == 'collecting format review files'
+    new_status = 'collecting format review files'
+    if collecting_committee?
+      update_attribute :status, new_status
+    elsif status == new_status
       return
     else
       raise InvalidTransition
     end
   end
 
+  private
+
+  def set_status_to_collecting_program_information
+    self.status = 'collecting program information' if self.new_record? && self.status.nil?
+  end
 end

@@ -7,12 +7,12 @@
 <div id="submissions" class="row">
 
   <% @view.submissions.each do |submission| %>
-    <% @submission_view = SubmissionView.new(submission) %>
+    <% @submission_view = SubmissionView.new submission %>
 
-    <div id="<%= @submission_view.id %>" class="col-xs-12 submission">
+    <div id="submission-<%= submission.id %>" class="col-xs-12 submission">
 
       <h3><%= @submission_view.name %> <span class="small"><%= link_to "[delete]", author_submission_path(submission), class: "text-danger", method: :delete, data: {confirm: "Permanently delete this submission?"} %></span></h3>
-      <%= render 'progress_indicator', submission: @submission_view %>
+      <%= render 'progress_indicator', submission: submission %>
     </div>
   <% end %>
   <div class="col-xs-12 submission">
