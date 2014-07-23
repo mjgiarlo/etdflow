@@ -80,8 +80,7 @@ end
 
 Given(/^I am ready to provide my committee$/) do
   step "I have confirmed my contact information"
-  author = Author.where(access_id: 'etdflow').first
-  create :submission, author: author, status: 'collecting committee'
+  step "I have provided my program information"
 end
 
 When(/^I provide my committee$/) do
@@ -103,4 +102,31 @@ end
 Then /^I should now be on "(.*?)" "(.*?)"$/ do |step, name|
   expect(page).to have_css ".step.#{step}.current"
   expect(page).to have_link name
+end
+
+Given(/^I am ready to upload my Format Review files$/) do
+  step "I have confirmed my contact information"
+  step "I have provided my program information"
+  step "I have provided my committee"
+end
+
+When(/^I have provided my program information$/) do
+  step 'I go to the author submissions page'
+  step 'I click the "Start a new Submission" link'
+  step 'I fill in my program information'
+  step 'I click the "Save Program Information" button'
+end
+
+When(/^I have provided my committee$/) do
+  step 'I click the "Provide committee" link within "#submission-1"'
+  step 'I provide my committee'
+  step 'I click the "Save Committee" button'
+ end
+
+When(/^I choose my Format Review files$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should see that my Format Review is in process$/) do
+  pending # express the regexp above with the code you wish you had
 end

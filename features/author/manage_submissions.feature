@@ -67,3 +67,12 @@ So that I can eventually graduate
     Then I should be on the author submissions page
     And My committee progress indicator should be updated
     And I should now be on "step-3" "Upload Format Review files"
+
+  Scenario: Upload my Format Review files
+    Given I am ready to upload my Format Review files
+    When I go to the author submissions page
+    And I click the "Upload Format Review files" link within "#submission-1"
+    When I choose my Format Review files
+    And I click the "Upload Format Review files" button
+    Then I should be on the author submissions page
+    And I should see that my Format Review is in process
