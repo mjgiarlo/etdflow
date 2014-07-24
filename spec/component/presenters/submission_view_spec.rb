@@ -78,29 +78,26 @@ describe SubmissionView do
         end
       end
     end
-
-    describe '#committee_link' do
-      context 'when the submission has no committee' do
-        before { submission.stub(beyond_collecting_committee?: false) }
-        it 'returns an empty string' do
-          expect(view.committee_link).to eq ''
-        end
-      end
-      context 'when the submission has a committee' do
-        before { submission.stub(beyond_collecting_committee?: true) }
-        it 'returns a link to edit the committee' do
-          expect(view.committee_link).to eq "<a href='#' class='small'>[update]</a>"
-        end
-      end
-    end
   end
 
   describe 'step three: upload format review files' do
     describe '#step_three_class' do
-      context 'when the submission is currently collecting format review files' do
+      context "when the submission is before step three" do
+        before { submission.stub(beyond_collecting_committee?: false) }
+        it "returns an empty string" do
+          expect(view.step_three_class).to eq ''
+        end
+      end
+      context "when step three is the current step" do
         before { submission.status = 'collecting format review files' }
-        it 'returns "current"' do
+        it "returns 'current'" do
           expect(view.step_three_class).to eq 'current'
+        end
+      end
+      context "when step three has been completed" do
+        before { submission.stub(beyond_collecting_format_review_files?: true) }
+        it "returns 'complete'" do
+          expect(view.step_three_class).to eq 'complete'
         end
       end
     end
@@ -118,8 +115,60 @@ describe SubmissionView do
           expect(view.step_three_description).to eq "<a href='#{new_author_submission_format_review_path(submission)}'>Upload Format Review files</a>"
         end
       end
+      context "when step three has been completed" do
+        before { submission.stub(beyond_collecting_format_review_files?: true) }
+        it "returns a link to review the files" do
+          expect(view.step_three_description).to eq "Upload Format Review files <a href='#' class='small'>[review]</a>"
+        end
+      end
     end
 
+    describe '#step_three_status' do
+      context "when the submission is before step three" do
+        before { submission.stub(beyond_collecting_format_review_files?: false) }
+        it 'returns an empty string' do
+          expect(view.step_three_status).to eq ''
+        end
+      end
+      context 'when step three has been completed' do
+        before { submission.stub(beyond_collecting_format_review_files?: true) }
+        it 'returns completed' do
+          expect(view.step_three_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> completed"
+        end
+      end
+    end
+  end
+
+  describe 'step four: Graduate school approves Format Review files' do
+    describe '#step_four_class' do
+      context 'when the submission is currently waiting for format review response' do
+        before { submission.status = 'waiting for format review response' }
+        it 'returns "current"' do
+          expect(view.step_four_class).to eq 'current'
+        end
+      end
+      context 'when the submission is not waiting for format review response' do
+        before { submission.status = 'collecting format review files' }
+        it 'returns an empty string' do
+          expect(view.step_four_class).to eq ''
+        end
+      end
+    end
+
+    describe '#step_four_status' do
+      context 'when the submission is currently waiting for format review response' do
+        before { submission.status = 'waiting for format review response' }
+        it 'returns "in process"' do
+          expect(view.step_four_status).to eq 'in process'
+        end
+      end
+      context 'when the submission is not waiting for format review response' do
+        before { submission.status = 'collecting format review files' }
+        it 'returns an empty string' do
+          expect(view.step_four_status).to eq ''
+        end
+      end
+    end
   end
 
 end

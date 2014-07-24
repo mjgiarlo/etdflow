@@ -42,17 +42,11 @@ class SubmissionView < SimpleDelegator
     end
   end
 
-  def committee_link
-    if beyond_collecting_committee?
-      ("<a href='" + "#" + "' class='small'>[update]</a>").html_safe
-    else
-      ''
-    end
-  end
-
   def step_three_class
     if collecting_format_review_files?
       'current'
+    elsif beyond_collecting_format_review_files?
+      'complete'
     else
       ''
     end
@@ -61,8 +55,34 @@ class SubmissionView < SimpleDelegator
   def step_three_description
     if collecting_format_review_files?
       ("<a href='" + "/author/submissions/#{id}/format_review/new" + "'>Upload Format Review files</a>").html_safe
+    elsif beyond_collecting_format_review_files?
+      ("Upload Format Review files <a href='#' class='small'>[review]</a>").html_safe
     else
       'Upload Format Review files'
+    end
+  end
+
+  def step_three_status
+    if beyond_collecting_format_review_files?
+      "<span class='glyphicon glyphicon-ok-circle'></span> completed".html_safe
+    else
+      ''
+    end
+  end
+
+  def step_four_class
+    if waiting_for_format_review_response?
+      'current'
+    else
+      ''
+    end
+  end
+
+  def step_four_status
+    if waiting_for_format_review_response?
+      'in process'
+    else
+      ''
     end
   end
 

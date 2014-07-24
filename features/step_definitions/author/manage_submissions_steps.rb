@@ -113,20 +113,39 @@ end
 When(/^I have provided my program information$/) do
   step 'I go to the author submissions page'
   step 'I click the "Start a new Submission" link'
+  step 'I should be on the new submission program information page'
   step 'I fill in my program information'
   step 'I click the "Save Program Information" button'
+  step 'I should be on the author submissions page'
+  step 'I should see my new program information'
+  step 'My program information progress indicator should be updated'
+  step 'I should now be on "step-2" "Provide committee"'
 end
 
 When(/^I have provided my committee$/) do
   step 'I click the "Provide committee" link within "#submission-1"'
   step 'I provide my committee'
   step 'I click the "Save Committee" button'
+  step 'I should be on the author submissions page'
+  step 'My committee progress indicator should be updated'
+  step 'I should now be on "step-3" "Upload Format Review files"'
  end
 
 When(/^I choose my Format Review files$/) do
-  pending # express the regexp above with the code you wish you had
+  attach_file 'Files', [fixture('format_review_file_01.pdf'), fixture('format_review_file_02.pdf')]
+end
+
+Then(/^The system should save my files$/) do
+  expect(MockFormatReview.saved_files).to include('format_review_file_01.pdf')
+  expect(MockFormatReview.saved_files).to include('format_review_file_02.pdf')
 end
 
 Then(/^I should see that my Format Review is in process$/) do
-  pending # express the regexp above with the code you wish you had
+  within '.step-3' do
+    expect(page).to have_link '[review]'
+  end
+  within '.step-4' do
+    expect(page).to have_content 'in process'
+  end
+  expect(page).to have_css ".step.step-4.current"
 end
