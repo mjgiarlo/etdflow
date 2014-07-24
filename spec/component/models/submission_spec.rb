@@ -95,6 +95,21 @@ describe Submission do
     end
   end
 
+  describe '#waiting_for_format_review_response?' do
+    context "when status is set to another valid value" do
+      before { submission.status = 'collecting program information' }
+      it "returns false" do
+        expect(submission).to_not be_waiting_for_format_review_response
+      end
+    end
+    context "when status is set to 'waiting for format review response'" do
+      before { submission.status = "waiting for format review response" }
+      it "returns true" do
+        expect(submission).to be_waiting_for_format_review_response
+      end
+    end
+  end
+
   describe '#beyond_collecting_committee?' do
     context "when status is beyond 'collecting committee'" do
       context "when status is 'collecting format review files'" do
@@ -103,7 +118,14 @@ describe Submission do
           expect(submission).to be_beyond_collecting_committee
         end
       end
+      context "when status is 'waiting for format review response'" do
+        before { submission.status = 'waiting for format review response' }
+        it "returns true" do
+          expect(submission).to be_beyond_collecting_committee
+        end
+      end
     end
+
     context "when status is before 'collecting format review files'" do
       context "when status is 'collecting program information'" do
         before { submission.status = 'collecting program information' }
@@ -115,6 +137,39 @@ describe Submission do
         before { submission.status = 'collecting committee' }
         it "returns false" do
           expect(submission).to_not be_beyond_collecting_committee
+        end
+      end
+    end
+
+  end
+
+  describe '#beyond_collecting_format_review_files?' do
+    context "when status is beyond 'collecting format review files'" do
+      context "when status is 'waiting for format review response'" do
+        before { submission.status = 'waiting for format review response' }
+        it "returns true" do
+          expect(submission).to be_beyond_collecting_format_review_files
+        end
+      end
+    end
+
+    context "when status is before 'waiting for format review response'" do
+      context "when status is 'collecting program information'" do
+        before { submission.status = 'collecting program information' }
+        it "returns false" do
+          expect(submission).to_not be_beyond_collecting_format_review_files
+        end
+      end
+      context "when status is 'collecting committee'" do
+        before { submission.status = 'collecting committee' }
+        it "returns false" do
+          expect(submission).to_not be_beyond_collecting_format_review_files
+        end
+      end
+      context "when status is 'collecting format review files'" do
+        before { submission.status = 'collecting format review files' }
+        it "returns false" do
+          expect(submission).to_not be_beyond_collecting_format_review_files
         end
       end
     end
@@ -184,6 +239,28 @@ describe Submission do
       before { submission.status = 'collecting program information' }
       it "raises an error" do
         expect { submission.collecting_format_review_files! }.to raise_error(Submission::InvalidTransition)
+      end
+    end
+  end
+
+  describe '#waiting_for_format_review_response!' do
+    context "when status has been set to 'collecting format review files'" do
+      before { submission.status = 'collecting format review files' }
+      it "saves status as 'waiting for format review response'" do
+        submission.waiting_for_format_review_response!
+        expect(submission.status).to eq('waiting for format review response')
+      end
+    end
+    context "when status has been set to 'waiting for format review response'" do
+      before { submission.status = 'waiting for format review response' }
+      it "does not change status" do
+        expect(submission.status).to eq('waiting for format review response')
+      end
+    end
+    context 'when status has been set to a different valid value' do
+      before { submission.status = 'collecting program information' }
+      it "raises an error" do
+        expect { submission.waiting_for_format_review_response! }.to raise_error(Submission::InvalidTransition)
       end
     end
   end

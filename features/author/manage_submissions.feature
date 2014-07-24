@@ -73,6 +73,7 @@ So that I can eventually graduate
     When I go to the author submissions page
     And I click the "Upload Format Review files" link within "#submission-1"
     When I choose my Format Review files
-    And I click the "Upload Format Review files" button
-    Then I should be on the author submissions page
+    And I click the "Submit files for review" button
+    Then The system should save my files
+    And I should be on the author submissions page
     And I should see that my Format Review is in process
