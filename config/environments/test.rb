@@ -38,5 +38,5 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 end
 
-# Stub out calls to FormatReview
-FormatReview = MockFormatReview
+# Stub out calls to Depositor
+Depositor = MockDepositor

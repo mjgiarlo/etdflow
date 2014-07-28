@@ -1,7 +1,4 @@
-class MockFormatReview
-  include ActiveModel::Model
-
-  attr_reader :submission
+class MockDepositor
 
   @@saved_files = []
 
@@ -9,16 +6,12 @@ class MockFormatReview
     @@saved_files
   end
 
-  def initialize(submission=nil)
-    @submission = submission
-  end
-
-  def save(files)
-    if files.nil? || files.empty?
+  def self.save(submission, files)
+    if submission.nil? || files.nil? || files.empty?
       raise ArgumentError, "files can't be empty"
     end
     files.each do |f|
-      if uploaded_file? f
+      if self.uploaded_file? f
         @@saved_files << f.original_filename
       else
         raise ArgumentError, "argument is not an uploaded file"
@@ -28,7 +21,7 @@ class MockFormatReview
 
   private
 
-  def uploaded_file?(f)
+  def self.uploaded_file?(f)
     ( f.instance_of? Rack::Test::UploadedFile ) || ( f.instance_of? ActionDispatch::Http::UploadedFile )
   end
 
