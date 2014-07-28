@@ -46,3 +46,12 @@ So that I can eventually graduate
     And I click the "Update Program Information" button
     Then I should be on the author submissions page
     And I should see my new program information
+
+  Scenario: Update my committee
+    Given I have started a submission and provided my committee
+    When I go to the author submissions page
+    And I click the "update" link within "#submission-1 .step-2"
+    When I enter my new committee information
+    And I click the "Save Committee" button
+    Then I should be on the author submissions page
+    And my committee should be updated
