@@ -57,8 +57,8 @@ When(/^I choose my Format Review files$/) do
 end
 
 Then(/^The system should save my files$/) do
-  expect(MockFormatReview.saved_files).to include('format_review_file_01.pdf')
-  expect(MockFormatReview.saved_files).to include('format_review_file_02.pdf')
+  expect(MockDepositor.saved_files).to include('format_review_file_01.pdf')
+  expect(MockDepositor.saved_files).to include('format_review_file_02.pdf')
 end
 
 Then(/^I should see that my Format Review is in process$/) do

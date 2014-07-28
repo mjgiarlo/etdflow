@@ -8,8 +8,9 @@ class Author::FormatReviewsController < AuthorController
   def create
     submission = Submission.find(params[:submission_id])
     submission.waiting_for_format_review_response!
-    @format_review = FormatReview.new(submission)
-    @format_review.save(params[:format_review][:files])
+   #@format_review = FormatReview.new(submission)
+   #@format_review.save(params[:format_review][:files])
+    Depositor.save(submission, params[:format_review][:files])
     flash[:notice] = "Your files were uploaded successfully"
     redirect_to author_root_path
   end 

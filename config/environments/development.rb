@@ -36,5 +36,5 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 end
 
-# Use the real FormatReview
-FormatReview = GenuineFormatReview
+# Use the real Depositor
+Depositor = GenuineDepositor
