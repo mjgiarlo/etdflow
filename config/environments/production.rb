@@ -83,4 +83,4 @@ Rails.application.configure do
 end
 
 # Use the real Depositor
-Depositor = GenuineDepositor
+Depositor = ScholarsphereDepositor

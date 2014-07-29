@@ -1,4 +1,4 @@
-class GenuineDepositor
+class ScholarsphereDepositor
 
   def self.save(submission, files)
     if submission.nil? || files.nil? || files.empty?
