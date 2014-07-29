@@ -28,7 +28,7 @@ class SubmissionView < SimpleDelegator
     if collecting_committee?
       ("<a href='" + "/author/submissions/#{id}/committee/new" + "'>Provide committee</a>").html_safe
     elsif beyond_collecting_committee?
-      ("Provide committee <a href='#' class='small'>[update]</a>").html_safe
+      ("Provide committee <a href='" + "/author/submissions/#{id}/committee/edit" + "' class='small'>[update]</a>").html_safe
     else
       'Provide committee'
     end
