@@ -52,6 +52,6 @@ So that I can eventually graduate
     When I go to the author submissions page
     And I click the "update" link within "#submission-1 .step-2"
     When I enter my new committee information
-    And I click the "Save Committee" button
+    And I click the "Update Committee" button
     Then I should be on the author submissions page
     And my committee should be updated

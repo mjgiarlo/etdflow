@@ -45,6 +45,19 @@ class Committee
     end
   end
 
+  def update(params)
+    if is_valid?
+      CommitteeMember.transaction do
+        params[:committee_members_attributes].each do |i, committee_member_params|
+          committee_member = CommitteeMember.find(committee_member_params[:id])
+          committee_member.update_attributes!(committee_member_params)
+        end
+      end
+    else
+      raise InvalidCommitteeError
+    end
+  end
+
   private
 
   def is_valid?

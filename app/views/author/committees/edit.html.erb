@@ -1,17 +1,17 @@
 <div class="row">
   <div class="col-xs-12">
-    <h1>Committee</h1>
+    <h1>Update Committee</h1>
   </div>
 </div>
 
 <div class="row">
   <div class="col-xs-12">
-    <%= simple_form_for @committee, url: author_submission_committee_path, method: :post do |form| %>
+    <%= simple_form_for @committee, url: author_submission_committee_path(@submission), method: :patch do |form| %>
 
       <%= render partial: "form_fields", locals: { form: form } %>
 
       <div class="form-group actions">
-        <%= form.button :submit, class: "btn-primary", value: "Save Committee" %>
+        <%= form.button :submit, class: "btn-primary", value: "Update Committee" %>
         <%= link_to "Cancel", author_root_path %>
       </div>
     <% end %>

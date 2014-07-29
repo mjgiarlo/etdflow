@@ -1,0 +1,7 @@
+<%= form.simple_fields_for :committee_members do |cmf| %>
+  <%= cmf.input :submission_id, as: :hidden %>
+  <%= cmf.input :is_advisor, as: :hidden %>
+  <%= cmf.input :role, label: 'Role', input_html: { readonly: true } %>
+  <%= cmf.input :name, label: 'Name' %>
+  <%= cmf.input :email, label: 'email' %>
+<% end %>
