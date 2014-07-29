@@ -59,7 +59,7 @@ describe SubmissionView do
       context "when step two has been completed" do
         before { submission.stub(beyond_collecting_committee?: true) }
         it "returns a link to edit step two" do
-          expect(view.step_two_description).to eq "Provide committee <a href='#' class='small'>[update]</a>"
+          expect(view.step_two_description).to eq "Provide committee <a href='#{edit_author_submission_committee_path(submission)}' class='small'>[update]</a>"
         end
       end
     end

@@ -91,9 +91,17 @@ Given(/^I have started a submission and provided my committee$/) do
 end
 
 When(/^I enter my new committee information$/) do
-  pending # express the regexp above with the code you wish you had
+  Committee.minimum_number_of_members.times do |i|
+    fill_in "committee_committee_members_attributes_#{i}_name", with: "new_name"
+    fill_in "committee_committee_members_attributes_#{i}_email", with: "new_name@example.com"
+  end
 end
 
 Then(/^my committee should be updated$/) do
-  pending # express the regexp above with the code you wish you had
+  s = Submission.first
+  expect(s.committee_members.count).to eq 4
+  s.committee_members.all.each do |member|
+    expect(member.name).to eq 'new_name'
+    expect(member.email).to eq 'new_name@example.com'
+  end
 end
