@@ -70,3 +70,38 @@ Then(/^I should see that my Format Review is in process$/) do
   end
   expect(page).to have_css ".step.step-4.current"
 end
+
+Given(/^I have started a submission and provided my committee$/) do
+  step 'I have confirmed my contact information'
+  step 'I go to the author submissions page'
+  step 'I click the "Start a new Submission" link'
+  step 'I should be on the new submission program information page'
+  step 'I fill in my program information'
+  step 'I click the "Save Program Information" button'
+  step 'I should be on the author submissions page'
+  step 'I should see my new program information'
+  step 'My program information progress indicator should be updated'
+  step 'I should now be on "step-2" "Provide committee"'
+  step 'I click the "Provide committee" link within "#submission-1"'
+  step 'I provide my committee'
+  step 'I click the "Save Committee" button'
+  step 'I should be on the author submissions page'
+  step 'My committee progress indicator should be updated'
+  step 'I should now be on "step-3" "Upload Format Review files"'
+end
+
+When(/^I enter my new committee information$/) do
+  Committee.minimum_number_of_members.times do |i|
+    fill_in "committee_committee_members_attributes_#{i}_name", with: "new_name"
+    fill_in "committee_committee_members_attributes_#{i}_email", with: "new_name@example.com"
+  end
+end
+
+Then(/^my committee should be updated$/) do
+  s = Submission.first
+  expect(s.committee_members.count).to eq 4
+  s.committee_members.all.each do |member|
+    expect(member.name).to eq 'new_name'
+    expect(member.email).to eq 'new_name@example.com'
+  end
+end
