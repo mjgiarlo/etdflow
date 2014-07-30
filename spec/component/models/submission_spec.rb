@@ -43,6 +43,25 @@ describe Submission do
     end
   end
 
+  describe '#degree_type' do
+    it 'returns the type of the associated degree' do
+      expect(submission.degree_type).to eq(submission.degree.degree_type)
+    end
+  end
+
+  describe '.master_thesis' do
+    let(:dissertation_degree) { create :degree, :dissertation }
+    let(:master_degree) { create :degree, :master_thesis }
+    let(:master_thesis_submission_1) { create :submission, degree: master_degree }
+    let(:master_thesis_submission_2) { create :submission, degree: master_degree }
+    let(:dissertation_submission) { create :submission, degree: dissertation_degree }
+    it "returns only submissions whose degree_type is 'Master Thesis'" do
+     #expect(Submission.master_thesis).to eq [master_thesis_submission_1, master_thesis_submission_2]
+      expect(Submission.master_thesis).to eq Submission.where(degree_type: 'Master Thesis')
+      p "#{Submission.master_thesis.inspect}"
+    end
+  end
+
   describe '.years' do
     it 'Returns an array containing the current year plus 3 more' do
       today = Date.today

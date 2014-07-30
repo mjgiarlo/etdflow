@@ -9,6 +9,7 @@ class Submission < ActiveRecord::Base
 
   delegate :name, to: :program, prefix: :program
   delegate :name, to: :degree, prefix: :degree
+  delegate :degree_type, to: :degree
 
   after_initialize :set_status_to_collecting_program_information
 
@@ -48,6 +49,8 @@ class Submission < ActiveRecord::Base
   end
 
   validates :status, inclusion: { in: statuses }
+
+  scope :master_thesis, -> { where(degree_type: 'Master Thesis') }
 
   def has_committee?
     if committee_members.any?
