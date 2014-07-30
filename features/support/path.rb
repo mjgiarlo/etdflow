@@ -10,6 +10,7 @@ module NavigationHelper
       when 'the author submissions page' then author_root_path
       when 'the new author page' then new_author_author_path
       when 'the new submission program information page' then new_author_submission_path
+      when 'the admin dashboard page' then admin_dashboard_path
       else
         raise ArgumentError, 'Cannot find path mapping for page called #{page_name.inspect}'
     end
