@@ -43,22 +43,23 @@ describe Submission do
     end
   end
 
-  describe '#degree_type' do
-    it 'returns the type of the associated degree' do
-      expect(submission.degree_type).to eq(submission.degree.degree_type)
+  describe "Scopes:" do
+    Degree.degree_types.each do |type|
+      symbol_name = type.parameterize.underscore.to_sym
+      let!(symbol_name) { create :submission, symbol_name }
     end
-  end
 
-  describe '.master_thesis' do
-    let(:dissertation_degree) { create :degree, :dissertation }
-    let(:master_degree) { create :degree, :master_thesis }
-    let(:master_thesis_submission_1) { create :submission, degree: master_degree }
-    let(:master_thesis_submission_2) { create :submission, degree: master_degree }
-    let(:dissertation_submission) { create :submission, degree: dissertation_degree }
-    it "returns only submissions whose degree_type is 'Master Thesis'" do
-     #expect(Submission.master_thesis).to eq [master_thesis_submission_1, master_thesis_submission_2]
-      expect(Submission.master_thesis).to eq Submission.where(degree_type: 'Master Thesis')
-      p "#{Submission.master_thesis.inspect}"
+    Degree.degree_types.each do |type|
+      method_name = type.parameterize.underscore
+      describe "." + method_name do
+        it "returns only submissions whose degree type is #{type}" do
+          degrees_of_this_type = Degree.where(degree_type: type)
+          expect(degrees_of_this_type.count).to eq 1
+          only_degree_of_this_type = degrees_of_this_type.first
+          expected_relation = Submission.where(degree: only_degree_of_this_type)
+          expect(Submission.send method_name).to match_array(expected_relation)
+        end
+      end
     end
   end
 
