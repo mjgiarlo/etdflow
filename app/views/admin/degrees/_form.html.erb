@@ -1,7 +1,7 @@
 <%= simple_form_for [:admin, @degree] do |f| %>
   <%= f.input :name %>
   <%= f.input :description %>
-  <%= f.input :degree_type, collection: Etdflow::Application.config.degree_types, prompt: "Please Select" %>
+  <%= f.input :degree_type, collection: Degree.degree_types, prompt: "Please Select" %>
   <%= f.input :is_active, wrapper: :checkbox %>
   <div class="form-group actions">
     <%= f.button :submit %>
