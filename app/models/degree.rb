@@ -6,7 +6,11 @@ class Degree <  ActiveRecord::Base
   validates_presence_of :description
   validates_presence_of :degree_type
 
-  validates_inclusion_of :degree_type,  in: Etdflow::Application.config.degree_types
+  def self.degree_types
+    Etdflow::Application.config.degree_types
+  end
+
+  validates_inclusion_of :degree_type,  in: Degree.degree_types
 
   validates_uniqueness_of :name
 
