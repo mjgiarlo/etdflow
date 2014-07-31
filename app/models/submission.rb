@@ -9,7 +9,6 @@ class Submission < ActiveRecord::Base
 
   delegate :name, to: :program, prefix: :program
   delegate :name, to: :degree, prefix: :degree
-  delegate :degree_type, to: :degree
 
   after_initialize :set_status_to_collecting_program_information
 
@@ -50,7 +49,12 @@ class Submission < ActiveRecord::Base
 
   validates :status, inclusion: { in: statuses }
 
-  scope :master_thesis, -> { where(degree_type: 'Master Thesis') }
+  Degree.degree_types.each do |type|
+    symbol_name = type.parameterize.underscore.to_sym
+    scope symbol_name, -> {
+      joins(:degree).where('degrees.degree_type' => type)
+    }
+  end
 
   def has_committee?
     if committee_members.any?
