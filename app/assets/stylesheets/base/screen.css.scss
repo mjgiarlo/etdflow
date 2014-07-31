@@ -1,3 +1,4 @@
+@import '_declarations';
 @import 'bootstrap';
 
 html, body, #body-container {
@@ -6,10 +7,37 @@ html, body, #body-container {
 }
 
 #header-row {
+  background-color: $dark-blue;
+
+
+  #shield-and-logo {
+    padding: 10px 0px;
+    min-height: 60px;
+
+    #psu-shield {
+      display: block;
+      float: left;
+      margin-right: 10px;
+    }
+
+    #logo {
+      a {
+        color: #fff;
+        font-size: $font-size-h3;
+        line-height: 1;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+
+  }
 
   #account-navigation {
     margin: 0px;
     min-height: 38px;
+    border-radius: 0px;
 
     @media (min-width: 768px) {
       .navbar-text.small {
@@ -25,7 +53,7 @@ html, body, #body-container {
   }
 }
 
-#content-row {
+#content-container, #content-row {
   min-height: 100%;
   height: auto !important;
   height: 100%;
@@ -33,16 +61,18 @@ html, body, #body-container {
 
 #main-navigation {
   margin-top: 20px;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid $gray-lighter;
+
+  .nav {
+    padding-bottom: 20px;
+    border-bottom: 1px solid $gray-lighter;
+  }
 }
 
 #contact-information {
   @extend .small;
 
   @media (min-width: 768px) {
-    padding: 0px 15px 20px;
+    padding: 10px 15px 20px;
   }
 }
 
@@ -51,6 +81,8 @@ html, body, #body-container {
   #courtesy-navigation {
     min-height: 40px;
     margin-bottom: 0px;
+    border: 0px;
+    border-radius: 0px;
 
     a {
       padding-top: 10px;

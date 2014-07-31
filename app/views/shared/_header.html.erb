@@ -1,24 +1,32 @@
 <div id="header-row" class="row">
   <header>
-    <div class="header-image">
-      <%= link_to root_path do %>
-        <%= image_tag 'https://etda.libraries.psu.edu/media/img/grad.png', class: 'img-responsive center-block' %>
-      <% end %>
+    <div id="shield-and-logo">
+      <div class="container">
+        <a id="psu-shield" href="http://psu.edu/">
+          <%= image_tag 'penn-state-mark.svg', alt: 'PSU logo', height: '60px' %>
+        </a>
+        <span id="logo">
+          <a href="/">Electronic Theses and Dissertations</a>
+        </span>
+      </div>
     </div>
 
     <nav id="account-navigation" class="navbar navbar-default" role="navigation">
-      <div class="col-xs-12">
-        <button type="button" class="navbar-toggle pull-left" data-toggle="collapse" data-target="#main-navigation">
-          <span class="sr-only">Toggle Navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <div class="pull-right">
-          <span class="navbar-text small">Logged in as Joe Example</span>
-          <button type="button" class="btn btn-default btn-sm navbar-btn">Log Out</button>
+      <div class="container">
+        <div class="col-xs-12">
+          <button type="button" class="navbar-toggle pull-left" data-toggle="collapse" data-target="#main-navigation">
+            <span class="sr-only">Toggle Navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="pull-right">
+            <span class="navbar-text small">Logged in as Joe Example</span>
+            <button type="button" class="btn btn-default btn-sm navbar-btn">Log Out</button>
+          </div>
         </div>
-      </div><!-- /.col-* -->
+        <!-- /.col-* -->
+      </div>
     </nav>
 
     <% if flash %>

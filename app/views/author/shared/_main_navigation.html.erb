@@ -1,19 +1,23 @@
-<nav id="main-navigation" class="collapse navbar-collapse">
-  <ul class="nav nav-pills nav-stacked" role="navigation">
-    <li class="<%= 'active' if controller_name == 'submissions' %>" >
-      <%= link_to 'Submissions', author_root_path %>
-    </li>
-    <li>
-      <%= link_to 'Technical Tips', '#' %>
-    </li>
-    <li>
-      <%= link_to 'Search eTD', '#' %>
-    </li>
-    <li>
-      <%= link_to 'Browse eTD', '#' %>
-    </li>
-  </ul>
-</nav>
+<div class="row">
+  <nav id="main-navigation" class="collapse navbar-collapse">
+    <ul class="nav nav-pills nav-stacked" role="navigation">
+      <li class="<%= 'active' if controller_name == 'submissions' %>">
+        <%= link_to 'Submissions', author_root_path %>
+      </li>
+      <li>
+        <%= link_to 'Technical Tips', '#' %>
+      </li>
+      <li>
+        <%= link_to 'Search eTD', '#' %>
+      </li>
+      <li>
+        <%= link_to 'Browse eTD', '#' %>
+      </li>
+    </ul>
+  </nav>
+</div>
 
-<!-- Hide this until the author confirms contact information-->
-<%= render '/author/shared/contact_sidebar' unless @author.new_record? %>
+<div class="row">
+  <!-- Hide this until the author confirms contact information-->
+  <%= render '/author/shared/contact_sidebar' unless @author.new_record? %>
+</div>
