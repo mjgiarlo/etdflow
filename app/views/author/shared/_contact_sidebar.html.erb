@@ -1,18 +1,17 @@
-<div id="contact-information" class="row">
-  <div class="col-xs-12">
-    <h4>My Contact Information <span class="small"><a href=<%=edit_author_author_path(@author)%>>[update]</a></span></h4>
-  </div>
-  <div class="col-xs-12">
-    <p>
-      <%= @author.full_name %><br />
-      <%= @author.address_1%><br />
-      <%= @author.address_2%><br />
-      <%= @author.city %>, <%= @author.state %> <%= @author.zip %><br />
-    </p>
-    <p>
-      <strong>Phone:</strong> <%= @author.phone_number %> <br />
-      <strong>Alternate email:</strong> <%= @author.alternate_email_address %><br />
-      <strong>Publish my alternate email?</strong> <%= @author.is_alternate_email_public ? 'Yes' : 'No' %><br />
-    </p>
-  </div>
+<div id="contact-information" class="col-xs-12">
+  <h4>My Contact Information
+      <span class="small"><a href=<%= edit_author_author_path(@author) %>>[update]</a></span>
+  </h4>
+
+  <p>
+    <%= @author.full_name %><br />
+    <%= @author.address_1 %><br />
+    <%= @author.address_2 %><br />
+    <%= @author.city %>, <%= @author.state %> <%= @author.zip %><br />
+  </p>
+
+  <p>
+    <strong>Phone:</strong> <%= @author.phone_number %> <br />
+    <strong>Alternate email:</strong> <%= @author.alternate_email_address %><br />
+  </p>
 </div>

@@ -5,8 +5,8 @@
 
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0">
 
-  <%= stylesheet_link_tag    'base', media: 'all', 'data-turbolinks-track' => true %>
-  <%= stylesheet_link_tag    'author', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'base', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'author', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'base', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'author', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -18,14 +18,16 @@
 
     <%= render 'shared/header' %>
 
-    <div id="content-row" class="row">
-      <div class="col-xs-12 col-sm-3">
-        <%= render 'author/shared/main_navigation' %>
-      </div>
-      <div class="col-xs-12 col-sm-9">
+    <div id="content-container" class="container">
+      <div id="content-row" class="row">
+        <div class="col-xs-12 col-sm-4">
+          <%= render 'author/shared/main_navigation' %>
+        </div>
+        <div class="col-xs-12 col-sm-8">
 
-        <%= yield %>
+          <%= yield %>
 
+        </div>
       </div>
     </div>
 
