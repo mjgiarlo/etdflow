@@ -1,9 +1,11 @@
 <div class="row">
   <nav id="main-navigation" class="collapse navbar-collapse">
     <ul class="nav nav-pills nav-stacked" role="navigation">
-      <li class="<%= 'active' if current_page? admin_dashboard_path %>">
-        <%= link_to 'Dashboard', admin_dashboard_path %>
-      </li>
+      <% Degree.degree_types_json.each do |type| %>
+        <li class="<%= 'active' if current_page? admin_submissions_dashboard_path(type["parameter"]) %>">
+          <%= link_to type["plural"], admin_submissions_dashboard_path(type["parameter"]) %>
+        </li>
+      <% end %>
       <li class="<%= 'active' if controller_name == 'authors' %>">
         <%= link_to 'Authors', admin_authors_path %>
       </li>
