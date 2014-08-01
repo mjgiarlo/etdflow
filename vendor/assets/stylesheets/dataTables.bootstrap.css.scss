@@ -293,6 +293,11 @@ div.FixedHeader_Cloned table {
 
 .dataTables_wrapper {
   .dataTables_paginate {
+
+    ul.pagination {
+      white-space: inherit;
+    }
+
     .paginate_button {
       padding: 0px;
 
@@ -336,19 +341,7 @@ div.FixedHeader_Cloned table {
     background: #fefefe;
     margin: 0;
     width: auto;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
     opacity: 0.9;
-  }
-
-  .dataTables_filter {
-    max-width: 100%;
-
-    input {
-      width: 285px;
-      max-width: 100%;
-      margin-left: 0px;
-    }
   }
 }
 

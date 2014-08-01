@@ -1,11 +1,11 @@
 /* Set the defaults for DataTables initialisation */
 $.extend( true, $.fn.dataTable.defaults, {
 	"dom":
-		"<'row'<'col-xs-6 col-sm-4'i><'col-xs-6 col-sm-4'l><'col-xs-12 col-sm-4'f>>"+
-		"<'row'<'col-xs-12'tr>>"+
+		"<'row'<'col-xs-12 col-sm-6'i><'col-xs-12 col-sm-3'l><'col-xs-12 col-sm-3'f>>"+
+		"<'row'<'col-xs-12'<'table-responsive'tr>>>"+
 		"<'row'<'col-xs-12'p>>",
 	"language": {
-		"lengthMenu": "_MENU_ records per page",
+		"lengthMenu": "_MENU_ per page",
         "info": "Showing <strong>_START_</strong> to <strong>_END_</strong> of <strong>_TOTAL_</strong> records",
         "search": "_INPUT_",
         "searchPlaceholder": "Search results..."
