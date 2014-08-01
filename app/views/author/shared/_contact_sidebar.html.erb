@@ -1,17 +1,22 @@
 <div id="contact-information" class="col-xs-12">
   <h4>My Contact Information
-      <span class="small"><a href=<%= edit_author_author_path(@author) %>>[update]</a></span>
+    <span class="small"><a href=<%= edit_author_author_path(@author) %>>[update]</a></span>
   </h4>
 
-  <p>
-    <%= @author.full_name %><br />
-    <%= @author.address_1 %><br />
-    <%= @author.address_2 %><br />
-    <%= @author.city %>, <%= @author.state %> <%= @author.zip %><br />
-  </p>
-
-  <p>
-    <strong>Phone:</strong> <%= @author.phone_number %> <br />
-    <strong>Alternate email:</strong> <%= @author.alternate_email_address %><br />
-  </p>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-12">
+      <p>
+        <%= @author.full_name %><br />
+        <%= @author.address_1 %><br />
+        <%= @author.address_2 %><br />
+        <%= @author.city %>, <%= @author.state %> <%= @author.zip %><br />
+      </p>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-12">
+      <p>
+        <strong>Phone:</strong> <%= @author.phone_number %> <br />
+        <strong>Alternate email:</strong> <%= @author.alternate_email_address %><br />
+      </p>
+    </div>
+  </div>
 </div>
