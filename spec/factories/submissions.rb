@@ -8,10 +8,10 @@ FactoryGirl.define do
     year Date.today.year
   end
 
-  Degree.degree_types.each do |type|
-    trait_name = type.parameterize.underscore.to_sym
+  Degree.degree_types_json.each do |type|
+    trait_name = type["parameter"].to_sym
     trait trait_name do
-      association :degree, factory: :degree, degree_type: type
+      association :degree, factory: :degree, degree_type: type["singular"]
     end
   end
 

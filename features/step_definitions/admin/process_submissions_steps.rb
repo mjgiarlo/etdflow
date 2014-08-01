@@ -1,9 +1,9 @@
 Given(/^some dissertation submissions exist$/) do
-  create :submission, :dissertation
+  create :submission, :dissertations
 end
 
 Given(/^some master thesis submissions exist$/) do
-  create :submission, :master_thesis
+  create :submission, :master_theses
 end
 
 Then(/^I should see all of the dissertation submissions$/) do

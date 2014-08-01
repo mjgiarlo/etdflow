@@ -49,10 +49,10 @@ class Submission < ActiveRecord::Base
 
   validates :status, inclusion: { in: statuses }
 
-  Degree.degree_types.each do |type|
-    symbol_name = type.parameterize.underscore.to_sym
+  Degree.degree_types_json.each do |type|
+    symbol_name = type["parameter"].to_sym
     scope symbol_name, -> {
-      joins(:degree).where('degrees.degree_type' => type)
+      joins(:degree).where('degrees.degree_type' => type["singular"])
     }
   end
 
