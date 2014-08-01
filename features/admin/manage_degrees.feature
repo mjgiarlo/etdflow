@@ -13,7 +13,7 @@ Feature: Manage degrees
 
   Scenario: Create a new degree
     Given I am on the admin degrees page
-    When I click the "Add a New Degree" link
+    When I click the "New Degree" link
     Then I should be on the new admin degree page
     When I fill in "Name" with "MArch"
     When I fill in "Description" with "Master of Architecture"
