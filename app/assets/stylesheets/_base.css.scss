@@ -1,0 +1,130 @@
+@import '_declarations';
+@import 'bootstrap';
+
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+header {
+  background-color: $dark-blue;
+
+
+  #shield-and-logo {
+    padding: 10px 0px;
+    min-height: 60px;
+
+    #psu-shield {
+      display: block;
+      float: left;
+      margin-right: 10px;
+    }
+
+    #logo {
+      a {
+        color: #fff;
+        font-size: $font-size-h3;
+        line-height: 1;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+
+  }
+
+  #account-navigation {
+    margin: 0px;
+    min-height: 38px;
+    border-radius: 0px;
+
+    @media (min-width: 768px) {
+      .navbar-text.small {
+        margin-top: 10px;
+        margin-bottom: 9px;
+      }
+
+      .navbar-btn.btn-sm {
+        margin-top: 3px;
+        margin-bottom: 3px;
+      }
+    }
+  }
+
+  .alert {
+    border-radius: 0px;
+    padding: 15px 0px;
+
+    .col-xs-12 {
+      padding-right: 50px;
+    }
+  }
+}
+
+#body-container {
+  margin-bottom: 61px;
+}
+
+#content-container {
+  padding-bottom: 20px;
+}
+
+#main-navigation {
+  margin-top: 20px;
+
+  .nav {
+    padding-bottom: 20px;
+    border-bottom: 1px solid $gray-lighter;
+  }
+}
+
+#contact-information {
+  @extend .small;
+
+  @media (min-width: 768px) {
+    padding: 10px 15px 20px;
+  }
+}
+
+footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  padding-top: 20px;
+
+  #courtesy-navigation {
+    min-height: 40px;
+    margin-bottom: 0px;
+    border-bottom: 0px;
+    border-radius: 0px;
+
+    a {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
+}
+
+table {
+  tr {
+    &.odd {
+      td {
+        background-color: $table-bg-accent;
+      }
+    }
+
+    &.inactive {
+      td {
+        color: $gray-light;
+      }
+    }
+  }
+}
+
+form {
+  .actions {
+    margin-top: 30px;
+  }
+}
