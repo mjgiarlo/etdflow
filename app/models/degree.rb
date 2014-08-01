@@ -30,6 +30,10 @@ class Degree <  ActiveRecord::Base
     types
   end
 
+  def self.default_degree_type
+    Degree.degree_types_json.first["parameter"]
+  end
+
   validates_inclusion_of :degree_type,  in: Degree.degree_types
 
   validates_uniqueness_of :name
