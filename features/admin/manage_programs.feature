@@ -13,7 +13,7 @@ Feature: Manage programs
 
   Scenario: Create a new program
     Given I am on the admin programs page
-    When I click the "Add a New Program" link
+    When I click the "New Program" link
     Then I should be on the new admin program page
     When I fill in "Name" with "Acoustics"
     And I check "Is active"
