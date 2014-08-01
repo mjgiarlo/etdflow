@@ -57,4 +57,10 @@ describe Degree do
       end
     end
   end
+
+  describe '.default_degree_type' do
+    it 'returns the parameter of the first configured degree type' do
+      expect(Degree.default_degree_type).to eq Etdflow::Application.config.degree_types[0][:plural].parameterize.underscore
+    end
+  end
 end
