@@ -11,6 +11,7 @@ module NavigationHelper
       when 'the new author page' then new_author_author_path
       when 'the new submission program information page' then new_author_submission_path
       when 'the admin dashboard page' then admin_dashboard_path
+      when 'the admin master thesis submissions page' then admin_submissions_dashboard_path('master_theses')
       else
         raise ArgumentError, 'Cannot find path mapping for page called #{page_name.inspect}'
     end

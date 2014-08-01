@@ -7,9 +7,19 @@ Given(/^some master thesis submissions exist$/) do
 end
 
 Then(/^I should see all of the dissertation submissions$/) do
-  pending # express the regexp above with the code you wish you had
+  Submission.dissertations.each do |dissertation|
+    expect(page).to have_content dissertation.program_name
+    expect(page).to have_content dissertation.degree_name
+    expect(page).to have_content dissertation.semester
+    expect(page).to have_content dissertation.year
+  end
 end
 
 Then(/^I should see all of the master thesis submissions$/) do
-  pending # express the regexp above with the code you wish you had
+  Submission.master_theses.each do |thesis|
+    expect(page).to have_content thesis.program_name
+    expect(page).to have_content thesis.degree_name
+    expect(page).to have_content thesis.semester
+    expect(page).to have_content thesis.year
+  end
 end
