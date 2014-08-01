@@ -1,18 +1,22 @@
-<div id="header-row" class="row">
-  <header>
-    <div id="shield-and-logo">
-      <div class="container">
-        <a id="psu-shield" href="http://psu.edu/">
-          <%= image_tag 'penn-state-mark.svg', alt: 'PSU logo', height: '60px' %>
-        </a>
+<header>
+  <div id="shield-and-logo">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <a id="psu-shield" href="http://psu.edu/">
+            <%= image_tag 'penn-state-mark.svg', alt: 'PSU logo', height: '60px' %>
+          </a>
         <span id="logo">
           <a href="/">Electronic Theses and Dissertations</a>
         </span>
+        </div>
       </div>
     </div>
+  </div>
 
-    <nav id="account-navigation" class="navbar navbar-default" role="navigation">
-      <div class="container">
+  <nav id="account-navigation" class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="row">
         <div class="col-xs-12">
           <button type="button" class="navbar-toggle pull-left" data-toggle="collapse" data-target="#main-navigation">
             <span class="sr-only">Toggle Navigation</span>
@@ -27,11 +31,11 @@
         </div>
         <!-- /.col-* -->
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <% if flash %>
-      <%= render partial: 'shared/flash_messages' %>
-    <% end %>
+  <% if flash %>
+    <%= render partial: 'shared/flash_messages' %>
+  <% end %>
 
-  </header>
-</div>
+</header>
