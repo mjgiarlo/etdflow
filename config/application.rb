@@ -18,7 +18,7 @@ module Etdflow
 
     # Precompile additional assets.
     # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-    config.assets.precompile += %w( base.css author.css admin.css base.js author.js admin.js )
+    config.assets.precompile += %w( author.css admin.css base.js author.js admin.js )
 
     config.autoload_paths += [
       Rails.root.join('app/presenters')
