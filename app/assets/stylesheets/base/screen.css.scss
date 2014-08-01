@@ -52,6 +52,15 @@ header {
       }
     }
   }
+
+  .alert {
+    border-radius: 0px;
+    padding: 15px 0px;
+
+    .col-xs-12 {
+      padding-right: 50px;
+    }
+  }
 }
 
 #body-container {
