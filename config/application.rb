@@ -56,8 +56,14 @@ module Etdflow
 
     # Supply the types of degrees available within your institution:
     config.degree_types = [
-                           "Dissertation",
-                           "Master Thesis"
+                            {
+                              singular: "Dissertation",
+                              plural:   "Dissertations"
+                            },
+                            {
+                              singular: "Master Thesis",
+                              plural:   "Master Theses"
+                            }
                           ].freeze
 
     # Supply the structure of the committee

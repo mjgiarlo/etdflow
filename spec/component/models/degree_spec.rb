@@ -15,7 +15,7 @@ describe Degree do
   specify { expect(subject).to validate_presence_of :description }
   specify { expect(subject).to validate_presence_of :degree_type }
 
-  specify { expect(subject).to ensure_inclusion_of(:degree_type).in_array(Etdflow::Application.config.degree_types) }
+  specify { expect(subject).to ensure_inclusion_of(:degree_type).in_array Degree.degree_types }
 
   specify { expect(subject).to validate_uniqueness_of :name }
 
@@ -45,6 +45,16 @@ describe Degree do
   describe '#set_is_active_to_true' do
     it "Sets activation status to true for new instances" do
       expect(degree.is_active).to be_true
+    end
+  end
+
+  describe '.degree_types_json' do
+    it 'returns a set of key-value pairs that represent each configured degree type' do
+      Degree.degree_types_json.each_with_index do |type, i|
+          expect(type["singular"]).to eq Etdflow::Application.config.degree_types[i][:singular]
+          expect(type["plural"]).to eq Etdflow::Application.config.degree_types[i][:plural]
+          expect(type["parameter"]).to eq Etdflow::Application.config.degree_types[i][:plural].parameterize.underscore
+      end
     end
   end
 end

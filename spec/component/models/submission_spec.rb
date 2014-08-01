@@ -44,16 +44,16 @@ describe Submission do
   end
 
   describe "Scopes:" do
-    Degree.degree_types.each do |type|
-      symbol_name = type.parameterize.underscore.to_sym
+    Degree.degree_types_json.each do |type|
+      symbol_name = type["parameter"].to_sym
       let!(symbol_name) { create :submission, symbol_name }
     end
 
-    Degree.degree_types.each do |type|
-      method_name = type.parameterize.underscore
+    Degree.degree_types_json.each do |type|
+      method_name = type["parameter"]
       describe "." + method_name do
-        it "returns only submissions whose degree type is #{type}" do
-          degrees_of_this_type = Degree.where(degree_type: type)
+        it "returns only submissions whose degree type is #{type["singular"]}" do
+          degrees_of_this_type = Degree.where(degree_type: type["singular"])
           expect(degrees_of_this_type.count).to eq 1
           only_degree_of_this_type = degrees_of_this_type.first
           expected_relation = Submission.where(degree: only_degree_of_this_type)
