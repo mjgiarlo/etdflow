@@ -8,7 +8,9 @@
       <p>
         <%= @author.full_name %><br />
         <%= @author.address_1 %><br />
-        <%= @author.address_2 %><br />
+        <% if @author.address_2.present? %>
+          <%= @author.address_2 %><br />
+        <% end %>
         <%= @author.city %>, <%= @author.state %> <%= @author.zip %><br />
       </p>
     </div>
