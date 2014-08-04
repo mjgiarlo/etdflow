@@ -1,7 +1,17 @@
 <%= form.simple_fields_for :committee_members do |cmf| %>
-  <%= cmf.input :submission_id, as: :hidden %>
-  <%= cmf.input :is_advisor, as: :hidden %>
-  <%= cmf.input :role, label: 'Role', input_html: { readonly: true } %>
-  <%= cmf.input :name, label: 'Name' %>
-  <%= cmf.input :email, label: 'email' %>
+  <fieldset class="committee-member-fields">
+    <%= cmf.input :submission_id, as: :hidden %>
+    <%= cmf.input :is_advisor, as: :hidden %>
+    <div class="row ">
+      <div class="col-xs-12">
+        <%= cmf.input :role, label: false, input_html: { readonly: true } %>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <%= cmf.input :name, label: 'Name' %>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <%= cmf.input :email, label: 'Email' %>
+      </div>
+    </div>
+  </fieldset>
 <% end %>
