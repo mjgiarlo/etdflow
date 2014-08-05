@@ -5,11 +5,9 @@ Feature: Manage submissions
 
   Background:
     Given I am a partner admin
-    And some dissertation submissions exist
-    And some master thesis submissions exist
+    And some submissions exist for each type
 
   Scenario: List existing submissions by type
     When I go to the admin dashboard page
-    Then I should see all of the dissertation submissions
-    When I go to the admin master thesis submissions page
-    Then I should see all of the master thesis submissions
+    Then I should see all of the default degree type submissions
+    And I should be able to navigate to all degree type submissions

@@ -1,25 +1,31 @@
-Given(/^some dissertation submissions exist$/) do
-  create :submission, :dissertations
-end
-
-Given(/^some master thesis submissions exist$/) do
-  create :submission, :master_theses
-end
-
-Then(/^I should see all of the dissertation submissions$/) do
-  Submission.dissertations.each do |dissertation|
-    expect(page).to have_content dissertation.program_name
-    expect(page).to have_content dissertation.degree_name
-    expect(page).to have_content dissertation.semester
-    expect(page).to have_content dissertation.year
+Given(/^some submissions exist for each type$/) do
+  Degree.degree_types_json.each do |type|
+    symbol_name = type["parameter"].to_sym
+    create :submission, symbol_name
   end
 end
 
-Then(/^I should see all of the master thesis submissions$/) do
-  Submission.master_theses.each do |thesis|
-    expect(page).to have_content thesis.program_name
-    expect(page).to have_content thesis.degree_name
-    expect(page).to have_content thesis.semester
-    expect(page).to have_content thesis.year
+Then(/^I should see all of the default degree type submissions$/) do
+  default_degree_scope = Degree.default_degree_type
+  Submission.send(default_degree_scope).each do |submission|
+    expect(page).to have_content submission.program_name
+    expect(page).to have_content submission.degree_name
+    expect(page).to have_content submission.semester
+    expect(page).to have_content submission.year
+  end
+end
+
+Then(/^I should be able to navigate to all degree type submissions$/) do
+  Degree.degree_types_json.each do |type|
+    link_label = type['plural']
+    degree_scope = type['parameter']
+
+    click_link link_label
+    Submission.send(degree_scope).each do |submission|
+      expect(page).to have_content submission.program_name
+      expect(page).to have_content submission.degree_name
+      expect(page).to have_content submission.semester
+      expect(page).to have_content submission.year
+    end
   end
 end
