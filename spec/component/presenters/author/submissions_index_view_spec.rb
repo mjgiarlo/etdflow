@@ -1,11 +1,11 @@
 require 'component/presenters/component_presenters_spec_helper'
 
-describe Author::SubmissionsDashboardView do
+describe Author::SubmissionsIndexView do
 
   let(:existing_author) { create :author }
-  let(:view_for_existing_author) { Author::SubmissionsDashboardView.new existing_author }
+  let(:view_for_existing_author) { Author::SubmissionsIndexView.new existing_author }
   let(:new_author) { Author.new }
-  let(:view_for_new_author) { Author::SubmissionsDashboardView.new new_author }
+  let(:view_for_new_author) { Author::SubmissionsIndexView.new new_author }
 
   describe '#new_author?' do
     it 'returns true for a remote user that is not in our database' do
