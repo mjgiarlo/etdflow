@@ -1,8 +1,7 @@
 class Admin::SubmissionsController < AdminController
 
   def dashboard
-    degree_type_scope = params[:degree_type]
-    @submissions = Submission.send degree_type_scope
+    @view = Admin::SubmissionsDashboardView.new(params[:degree_type])
   end
 
 end
