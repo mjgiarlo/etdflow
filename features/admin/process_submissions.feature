@@ -15,7 +15,7 @@ Feature: Manage submissions
   Scenario: Delete an incomplete format review
     Given an incomplete format review exists
     And I go to the admin dashboard page
-    When I click on the "Format Review is Incomplete" link
+    When I click the "Format Review is Incomplete" link
     Then I should see the submission listed
     When I click the "Select All" link
     Then I should see a button to delete all selected submissions

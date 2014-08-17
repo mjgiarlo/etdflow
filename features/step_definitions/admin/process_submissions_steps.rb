@@ -28,11 +28,7 @@ Then(/^I should be able to navigate to all submissions by degree type/) do
 end
 
 Given(/^an incomplete format review exists$/) do
-  pending # express the regexp above with the code you wish you had
-end
-
-When(/^I click on the "(.*?)" link$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
+  create :submission, status: 'collecting committee'
 end
 
 Then(/^I should see the submission listed$/) do
