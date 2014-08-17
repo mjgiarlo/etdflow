@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :degrees,  except: [:show, :destroy]
     resources :authors,  except: [:new, :create, :show, :destroy]
     get '/:degree_type', to: 'submissions#dashboard', as: :submissions_dashboard
+    get '/:degree_type/format_review_incomplete', to: 'submissions#format_review_incomplete', as: :submissions_format_review_incomplete
     root to: redirect(path: "/admin/#{Degree.default_degree_type}"), as: :dashboard
   end
 

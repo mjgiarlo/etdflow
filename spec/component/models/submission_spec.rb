@@ -72,7 +72,7 @@ describe Submission do
     end
   end
 
-  describe "Scopes:" do
+  describe "Degree type scopes:" do
     Degree.degree_types_json.each do |type|
       symbol_name = type["parameter"].to_sym
       let!(symbol_name) { create :submission, symbol_name }
@@ -89,6 +89,23 @@ describe Submission do
           expect(Submission.send method_name).to match_array(expected_relation)
         end
       end
+    end
+
+  end
+
+  describe '.format_review_is_incomplete' do
+    before do
+      [
+        'collecting program information',
+        'collecting committee',
+        'collecting format review files',
+        'waiting for format review response'
+      ].each do |status|
+        create :submission, status: status 
+      end
+    end
+    it "returns submissions whose format reviews have not yet been approved" do
+      expect(Submission.format_review_is_incomplete.count).to eq 4
     end
   end
 

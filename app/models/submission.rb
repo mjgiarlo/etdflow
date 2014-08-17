@@ -63,6 +63,8 @@ class Submission < ActiveRecord::Base
     }
   end
 
+  scope :format_review_is_incomplete, -> { }
+
   def has_committee?
     if committee_members.any?
       committee_members.count >= Committee.minimum_number_of_members
