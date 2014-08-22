@@ -159,6 +159,7 @@ GEM
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
     fastercsv (1.5.5)
+    ffaker (1.25.0)
     ffi (1.9.3)
     foreigner (1.6.1)
       activerecord (>= 3.0.0)
@@ -533,6 +534,7 @@ DEPENDENCIES
   database_cleaner
   devise
   factory_girl_rails
+  ffaker
   jbuilder
   jettywrapper
   jquery-rails
