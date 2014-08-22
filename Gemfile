@@ -56,6 +56,9 @@ group :development do
   # Useful recipes for generalizing deployment behavior
   gem 'capistrano-helpers'
 
+  # Used to seed the development database
+  gem 'ffaker'
+
 end
 
 group :test do
