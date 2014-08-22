@@ -21,7 +21,6 @@ describe Author do
   specify { expect(subject).to validate_presence_of :access_id }
   specify { expect(subject).to validate_presence_of :first_name }
   specify { expect(subject).to validate_presence_of :last_name }
-  specify { expect(subject).to validate_presence_of :middle_name }
   specify { expect(subject).to validate_presence_of :alternate_email_address }
   specify { expect(subject).to validate_presence_of :psu_email_address }
   specify { expect(subject).to validate_presence_of :phone_number }
