@@ -529,6 +529,7 @@ DEPENDENCIES
   capistrano-ext
   capistrano-helpers
   capybara
+  carrierwave
   coffee-rails
   cucumber-rails
   database_cleaner
@@ -539,6 +540,7 @@ DEPENDENCIES
   jettywrapper
   jquery-rails
   launchy
+  mini_magick
   mysql2
   poltergeist
   rabl

@@ -43,6 +43,11 @@ gem 'simple_form', '3.1.0.rc1'
 # Ruby templating system for generating JSON
 gem 'rabl'
 
+# File uploads
+gem 'carrierwave'
+
+# For image resizing
+gem 'mini_magick'
 
 group :development do
 
