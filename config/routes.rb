@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     resources :authors, except: [:index, :show, :destroy]
     resources :submissions, except: [:show] do
       get '/format_review', to: 'submissions#format_review', as: :format_review
+      patch '/format_review', to: 'submissions#update_format_review', as: :update_format_review
       resource :committee, except: [:show, :destroy]
     end
     root to: 'submissions#index'
