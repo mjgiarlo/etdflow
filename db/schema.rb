@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140716155356) do
+ActiveRecord::Schema.define(version: 20140825130655) do
 
   create_table "authors", force: true do |t|
     t.string   "access_id"
@@ -58,6 +58,13 @@ ActiveRecord::Schema.define(version: 20140716155356) do
     t.string   "description"
     t.string   "degree_type"
     t.boolean  "is_active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "format_review_files", force: true do |t|
+    t.integer  "submission_id"
+    t.text     "filename"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

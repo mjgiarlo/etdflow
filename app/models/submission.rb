@@ -6,6 +6,7 @@ class Submission < ActiveRecord::Base
   belongs_to :degree
 
   has_many :committee_members
+  has_many :format_review_files
 
   delegate :name, to: :program, prefix: :program
   delegate :name, to: :degree, prefix: :degree
