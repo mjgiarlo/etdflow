@@ -30,6 +30,8 @@ describe Submission do
 
   specify { expect(subject).to ensure_inclusion_of(:status).in_array(Submission.statuses) }
 
+  specify { expect(subject).to accept_nested_attributes_for :format_review_files }
+
   let(:submission) { create :submission }
 
   describe '#program_name' do

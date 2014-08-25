@@ -54,7 +54,7 @@ class SubmissionView < SimpleDelegator
 
   def step_three_description
     if collecting_format_review_files?
-      ("<a href='" + "/author/submissions/#{id}/format_review/new" + "'>Upload Format Review files</a>").html_safe
+      ("<a href='" + "/author/submissions/#{id}/format_review" + "'>Upload Format Review files</a>").html_safe
     elsif beyond_collecting_format_review_files?
       ("Upload Format Review files <a href='#' class='small'>[review]</a>").html_safe
     else

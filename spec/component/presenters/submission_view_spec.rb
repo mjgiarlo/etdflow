@@ -112,7 +112,7 @@ describe SubmissionView do
       context "when step three is the current step" do
         before { submission.status = 'collecting format review files' }
         it "returns a link to complete step three" do
-          expect(view.step_three_description).to eq "<a href='#{new_author_submission_format_review_path(submission)}'>Upload Format Review files</a>"
+          expect(view.step_three_description).to eq "<a href='#{author_submission_format_review_path(submission)}'>Upload Format Review files</a>"
         end
       end
       context "when step three has been completed" do
