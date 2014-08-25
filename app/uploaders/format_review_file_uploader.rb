@@ -1,10 +1,6 @@
 class FormatReviewFileUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
-  version :thumbnail do
-    process :resize_to_fill => [120, 120]
-  end 
-
   storage :file
   add_config :base_dir
   self.base_dir = Rails.root.join('public/uploads')
