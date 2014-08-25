@@ -12,7 +12,9 @@
           <%= render 'format_review_file_fields', f: format_review_file %>
         <% end %>
         <div class="links">
-          <%= link_to_add_association 'add file', f, :format_review_files %>
+          <%= link_to_add_association f, :format_review_files, class: 'btn btn-default btn-sm' do %>
+            <span class="glyphicon glyphicon-plus"></span> Add File
+          <% end %>
         </div>
       </div>
       <div class="form-group actions">

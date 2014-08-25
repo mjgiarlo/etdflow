@@ -1,4 +1,4 @@
-<div class="nested-fields format_review_file_fields">
-  <%= f.input :filename, as: :file %>
-  <%= link_to_remove_association 'remove file', f %>
+<div class="nested-fields">
+  <%= f.input :filename, as: :file, label: false %>
+  <%= link_to_remove_association "&times;".html_safe, f, class: 'btn btn-default btn-sm btn-danger' %>
 </div>
