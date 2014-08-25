@@ -42,6 +42,10 @@ class Author::SubmissionsController < AuthorController
     redirect_to author_root_path
   end
 
+  def format_review
+    @submission = Submission.find(params[:submission_id])
+  end
+
   private
 
   def submission_params

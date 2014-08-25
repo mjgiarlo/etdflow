@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   namespace :author do
     resources :authors, except: [:index, :show, :destroy]
     resources :submissions, except: [:show] do
+      get '/format_review', to: 'submissions#format_review', as: :format_review
       resource :committee, except: [:show, :destroy]
     end
     root to: 'submissions#index'

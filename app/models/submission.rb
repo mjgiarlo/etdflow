@@ -19,6 +19,8 @@ class Submission < ActiveRecord::Base
                         :semester,
                         :year
 
+  accepts_nested_attributes_for :format_review_files
+
   SEMESTERS = [
                 'Fall',
                 'Spring',

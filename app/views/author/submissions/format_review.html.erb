@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h1>Upload Format Review files</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <%= simple_form_for [:author, @submission] do |f| %>
+      <div id="format_review_files">
+        <%= f.simple_fields_for :format_review_files do |format_review_file| %>
+          <%= render 'format_review_file_fields', f: format_review_file %>
+        <% end %>
+        <div class="links">
+          <%= link_to_add_association 'add file', f, :format_review_files %>
+        </div>
+      </div>
+      <div class="form-group actions">
+        <%= f.button :submit, class: "btn-primary", value: "Submit files for review" %>
+        <%= link_to "Cancel", author_root_path %>
+      </div>
+    <% end %>
+  </div>
+</div>
