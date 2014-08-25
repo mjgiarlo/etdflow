@@ -9,7 +9,7 @@ class Author::SubmissionsController < AuthorController
   end
 
   def create
-    @submission = Submission.new(submission_params)
+    @submission = Submission.new(program_information_params)
     @submission.save!
     @submission.collecting_committee!
     redirect_to author_root_path
@@ -24,12 +24,12 @@ class Author::SubmissionsController < AuthorController
 
   def update
     @submission = Submission.find(params[:id])
-    @submission.update_attributes!(submission_params)
+    @submission.update_attributes!(program_information_params)
     redirect_to author_root_path
     flash[:notice] = 'Program information updated successfully'
   rescue ActiveRecord::RecordInvalid => e
     redirect_to edit_author_submission_path(@submission)
-    flash[:notice] = e.message
+    flash[:alert] = e.message
   end
 
   def destroy
@@ -38,7 +38,7 @@ class Author::SubmissionsController < AuthorController
     flash[:notice] = "Submission deleted successfully."
     redirect_to author_root_path
   rescue
-    flash[:notice] = "Can not delete submission."
+    flash[:alert] = "Can not delete submission."
     redirect_to author_root_path
   end
 
@@ -46,14 +46,28 @@ class Author::SubmissionsController < AuthorController
     @submission = Submission.find(params[:submission_id])
   end
 
+  def update_format_review
+    @submission = Submission.find(params[:submission_id])
+    @submission.update_attributes!(format_review_params)
+    redirect_to author_root_path
+    flash[:notice] = 'Format review files uploaded succcessfully.'
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to author_submission_format_review_path(@submission)
+    flash[:alert] = e.message
+  end
+
   private
 
-  def submission_params
+  def program_information_params
     params.require(:submission).permit(:semester,
                                        :year,
                                        :author_id,
                                        :program_id,
                                        :degree_id)
+  end
+
+  def format_review_params
+    params.require(:submission).permit(format_review_files_attributes: [:filename, :submission_id])
   end
 
 end

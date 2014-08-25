@@ -53,12 +53,14 @@ Then /^I should now be on "(.*?)" "(.*?)"$/ do |step, name|
 end
 
 When(/^I choose my Format Review files$/) do
-  attach_file 'Files', [fixture('format_review_file_01.pdf'), fixture('format_review_file_02.pdf')]
+  click_link 'Add File'
+  expect(page).to have_css '.file.required.form-control'
+  first_input_id = first('input[type="file"]')[:id]
+  attach_file first_input_id, fixture('format_review_file_01.pdf')
 end
 
 Then(/^The system should save my files$/) do
-  expect(MockDepositor.saved_files).to include('format_review_file_01.pdf')
-  expect(MockDepositor.saved_files).to include('format_review_file_02.pdf')
+  expect(FormatReviewFile.count).to eq 1
 end
 
 Then(/^I should see that my Format Review is in process$/) do
