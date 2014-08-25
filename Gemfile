@@ -49,6 +49,9 @@ gem 'carrierwave'
 # For image resizing
 gem 'mini_magick'
 
+# Easily handle nested forms
+gem 'cocoon'
+
 group :development do
 
   # Spring speeds up development by keeping your application running in the background.
