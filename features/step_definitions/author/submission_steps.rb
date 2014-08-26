@@ -56,10 +56,14 @@ When(/^I choose my Format Review files$/) do
   expect(page).to have_css '#format-review-file-fields .nested-fields:first-child input[type="file"]'
   first_input_id = first('#format-review-file-fields .nested-fields:first-child input[type="file"]')[:id]
   attach_file first_input_id, fixture('format_review_file_01.pdf')
+  click_link 'Additional File'
+  expect(page).to have_css '#format-review-file-fields .nested-fields:first-child + .nested-fields input[type="file"]'
+  second_input_id = first('#format-review-file-fields .nested-fields:first-child + .nested-fields input[type="file"]')[:id]
+  attach_file second_input_id, fixture('format_review_file_02.pdf')
 end
 
 Then(/^The system should save my files$/) do
-  expect(FormatReviewFile.count).to eq 1
+  expect(FormatReviewFile.count).to eq 2
 end
 
 Then(/^I should see that my Format Review is in process$/) do
