@@ -28,7 +28,8 @@ end
 Given(/^I have started a submission$/) do
   step "I have confirmed my contact information"
   author = Author.where(access_id: 'etdflow').first
-  create :submission, author: author
+  s = create :submission, author: author
+  s.update_attribute :status, "collecting committee"
 end
 
 When(/^I provide my committee$/) do
