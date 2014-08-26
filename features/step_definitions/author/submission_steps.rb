@@ -53,9 +53,8 @@ Then /^I should now be on "(.*?)" "(.*?)"$/ do |step, name|
 end
 
 When(/^I choose my Format Review files$/) do
-  click_link 'Additional File'
-  expect(page).to have_css '.file.required.form-control'
-  first_input_id = first('input[type="file"]')[:id]
+  expect(page).to have_css '#format-review-file-fields .nested-fields:first-child input[type="file"]'
+  first_input_id = first('#format-review-file-fields .nested-fields:first-child input[type="file"]')[:id]
   attach_file first_input_id, fixture('format_review_file_01.pdf')
 end
 
