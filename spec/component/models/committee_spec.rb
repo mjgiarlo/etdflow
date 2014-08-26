@@ -39,7 +39,7 @@ describe Committee do
 
   describe '#save' do
     let(:invalid_committee) { Committee.new(committee_members: Committee.members(submission)) }
-    let(:valid_committee) { Committee.new(committee_members: valid_committee_members)}
+    let(:valid_committee) { committee(submission) }
     it 'saves a valid committee' do
       valid_committee.save
       expect(CommitteeMember.count).to eq Committee.additional_roles.count + 1
@@ -48,15 +48,5 @@ describe Committee do
       expect{ invalid_committee.save }.to raise_error Committee::InvalidCommitteeError
       expect(CommitteeMember.count).to eq 0
     end
-
-    def valid_committee_members
-      members = []
-      members << ( create :committee_member, :advisor, submission: submission )
-      Committee.additional_roles.count.times do
-        members << ( create :committee_member, submission: submission )
-      end
-      members
-    end
   end
-
 end
