@@ -44,11 +44,16 @@ class Author::SubmissionsController < AuthorController
 
   def format_review
     @submission = Submission.find(params[:submission_id])
+    @submission.collecting_format_review_files!
+  rescue Submission::InvalidTransition
+    redirect_to author_root_path
+    flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
   end
 
   def update_format_review
     @submission = Submission.find(params[:submission_id])
     @submission.update_attributes!(format_review_params)
+    @submission.waiting_for_format_review_response!
     redirect_to author_root_path
     flash[:notice] = 'Format review files uploaded succcessfully.'
   rescue ActiveRecord::RecordInvalid => e
