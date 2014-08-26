@@ -7,9 +7,10 @@ class Author::CommitteesController < AuthorController
 
   def create
     submission = Submission.find(params[:submission_id])
-    submission.collecting_format_review_files!
     @committee = Committee.new(params[:committee])
     @committee.save
+    status_giver = SubmissionStatusGiver.new(submission)
+    status_giver.collecting_format_review_files!
     flash[:notice] = 'Committee saved successfully'
     redirect_to author_root_path
   rescue Committee::InvalidCommitteeError

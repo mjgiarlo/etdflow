@@ -11,7 +11,8 @@ class Author::SubmissionsController < AuthorController
   def create
     @submission = Submission.new(program_information_params)
     @submission.save!
-    @submission.collecting_committee!
+    status_giver = SubmissionStatusGiver.new(@submission)
+    status_giver.collecting_committee!
     redirect_to author_root_path
     flash[:notice] = 'Program information saved successfully'
   rescue ActiveRecord::RecordInvalid
@@ -25,6 +26,8 @@ class Author::SubmissionsController < AuthorController
   def update
     @submission = Submission.find(params[:id])
     @submission.update_attributes!(program_information_params)
+    status_giver = SubmissionStatusGiver.new(@submission)
+    status_giver.collecting_committee!
     redirect_to author_root_path
     flash[:notice] = 'Program information updated successfully'
   rescue ActiveRecord::RecordInvalid => e
@@ -44,7 +47,8 @@ class Author::SubmissionsController < AuthorController
 
   def format_review
     @submission = Submission.find(params[:submission_id])
-    @submission.collecting_format_review_files!
+    status_giver = SubmissionStatusGiver.new(@submission)
+    status_giver.collecting_format_review_files!
   rescue Submission::InvalidTransition
     redirect_to author_root_path
     flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
@@ -53,7 +57,8 @@ class Author::SubmissionsController < AuthorController
   def update_format_review
     @submission = Submission.find(params[:submission_id])
     @submission.update_attributes!(format_review_params)
-    @submission.waiting_for_format_review_response!
+    status_giver = SubmissionStatusGiver.new(@submission)
+    status_giver.waiting_for_format_review_response!
     redirect_to author_root_path
     flash[:notice] = 'Format review files uploaded succcessfully.'
   rescue ActiveRecord::RecordInvalid => e
