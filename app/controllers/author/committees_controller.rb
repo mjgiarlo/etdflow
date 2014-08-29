@@ -2,6 +2,8 @@ class Author::CommitteesController < AuthorController
 
   def new 
     submission = Submission.find(params[:submission_id])
+    status_giver = SubmissionStatusGiver.new(submission)
+    status_giver.collecting_committee!
     @committee = Committee.new(committee_members: Committee.members(submission))
   end 
 

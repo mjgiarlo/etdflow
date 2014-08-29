@@ -1,6 +1,6 @@
 module CommitteeFactory
 
-  def committee(submission)
+  def create_committee(submission)
     Committee.new(committee_members: committee_members)
   end
 

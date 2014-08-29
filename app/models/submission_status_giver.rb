@@ -33,7 +33,7 @@ class SubmissionStatusGiver
   def collecting_format_review_files!
     s = @submission
     new_status = 'collecting format review files'
-    if ( s.collecting_program_information? && s.has_committee? ) || s.collecting_committee? || s.waiting_for_format_review_response?
+    if ( s.collecting_program_information? && s.has_committee? ) || ( s.collecting_committee? && s.has_committee? ) || s.waiting_for_format_review_response?
       s.update_attribute :status, new_status
     elsif s.status == new_status
       return
