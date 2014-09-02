@@ -65,7 +65,7 @@ describe 'Submission status transitions' do
           expect(submission.status).to eq 'collecting committee'
         end
         specify "the current page should be the 'My Submissions' page" do
-          expect(current_url).to eq author_root_url
+          expect(current_path).to eq author_root_path
         end
       end
     end
