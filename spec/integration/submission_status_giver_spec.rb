@@ -86,13 +86,12 @@ describe 'Submission status transitions', js: true do
     context "submitting the 'Upload Format Review Files' form" do
       before do
         visit author_submission_format_review_path(submission)
-       #expect(page).to have_css '#format-review-file-fields .nested-fields:first-child input[type="file"]'
-       #first_input_id = first('#format-review-file-fields .nested-fields:first-child input[type="file"]')[:id]
-       #attach_file first_input_id, fixture('format_review_file_01.pdf')
-       #click_button 'Submit files for review'
+        expect(page).to have_css '#format-review-file-fields .nested-fields:first-child input[type="file"]'
+        first_input_id = first('#format-review-file-fields .nested-fields:first-child input[type="file"]')[:id]
+        attach_file first_input_id, fixture('format_review_file_01.pdf')
+        click_button 'Submit files for review'
       end
       specify "submission status updates to 'waiting for format review response'" do
-        pending "We need to attach a file to the form without using javascript"
         submission.reload
         expect(submission.status).to eq 'waiting for format review response'
       end
