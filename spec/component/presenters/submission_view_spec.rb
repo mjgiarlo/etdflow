@@ -1,5 +1,4 @@
-require 'component/component_spec_helper'
-  include Rails.application.routes.url_helpers
+require 'component/presenters/component_presenters_spec_helper'
 
 describe SubmissionView do
 
