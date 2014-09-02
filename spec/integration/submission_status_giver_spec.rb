@@ -81,7 +81,10 @@ describe 'Submission status transitions', js: true do
   end
 
   describe "When status is 'collecting format review files'" do
-    before { submission.update_attribute :status, 'collecting format review files' }
+    before do
+      submission.update_attribute :status, 'collecting format review files'
+      create_committee(submission)
+    end
 
     context "submitting the 'Upload Format Review Files' form" do
       before do
@@ -94,6 +97,22 @@ describe 'Submission status transitions', js: true do
       specify "submission status updates to 'waiting for format review response'" do
         submission.reload
         expect(submission.status).to eq 'waiting for format review response'
+      end
+    end
+
+    context "visiting the 'Update Program Information' page" do
+      before { visit edit_author_submission_path(submission) }
+      specify "submission status updates to 'collecting program information'" do
+        submission.reload
+        expect(submission.status).to eq 'collecting program information'
+      end
+    end
+
+    context "visiting the 'Update Committee' page" do
+      before { visit edit_author_submission_committee_path(submission) }
+      specify "submission status updates to 'collecting committee'" do
+        submission.reload
+        expect(submission.status).to eq 'collecting committee'
       end
     end
   end
