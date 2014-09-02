@@ -1,6 +1,6 @@
 require 'integration/integration_spec_helper'
 
-describe 'Submission status transitions' do
+describe 'Submission status transitions', js: true do
 
   let(:submission) { create :submission }
 
