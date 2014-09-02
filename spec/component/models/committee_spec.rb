@@ -39,7 +39,7 @@ describe Committee do
 
   describe '#save' do
     let(:invalid_committee) { Committee.new(committee_members: Committee.members(submission)) }
-    let(:valid_committee) { committee(submission) }
+    let(:valid_committee) { create_committee(submission) }
     it 'saves a valid committee' do
       valid_committee.save
       expect(CommitteeMember.count).to eq Committee.additional_roles.count + 1
