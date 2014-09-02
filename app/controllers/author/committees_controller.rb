@@ -22,6 +22,8 @@ class Author::CommitteesController < AuthorController
   def edit
     @submission = Submission.find(params[:submission_id])
     @committee = Committee.new(committee_members: @submission.committee_members)
+    status_giver = SubmissionStatusGiver.new(@submission)
+    status_giver.collecting_committee!
   end
 
   def update
