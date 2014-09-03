@@ -2,7 +2,8 @@ require 'integration/integration_spec_helper'
 
 describe 'Submission status transitions', js: true do
 
-  let(:submission) { create :submission }
+  let(:submission) { create :submission, author: author }
+  let(:author) { create :author, access_id: "etdflow" }
 
   before do
     basic_auth_and_visit root_path
