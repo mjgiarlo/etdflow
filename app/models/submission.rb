@@ -1,5 +1,4 @@
 class Submission < ActiveRecord::Base
- #class InvalidTransition < Exception; end
 
   belongs_to :author
   belongs_to :program
