@@ -79,6 +79,36 @@ describe 'Submission status transitions', js: true do
       end
     end
 
+    context "submitting the 'Update Program Information' form" do
+      before do
+        visit edit_author_submission_path(submission)
+        click_button 'Update Program Information'
+      end
+      specify "status updates to 'collecting committee'" do
+        submission.reload
+        expect(submission.status).to eq 'collecting committee'
+      end
+      specify "progress indicator has a link to provide committee" do
+        expect(page).to have_link 'Provide committee'
+      end
+    end
+
+    context "cancelling the 'Update Program Information' form" do
+      before do
+        visit edit_author_submission_path(submission)
+        click_link 'Cancel'
+      end
+      specify "status updates to 'collecting committee'" do
+        pending "We need a method to determine status"
+        submission.reload
+        expect(submission.status).to eq 'collecting committee'
+      end
+      specify "progress indicator has a link to provide committee" do
+        pending "We need a method to determine status"
+        expect(page).to have_link 'Provide Committee'
+      end
+    end
+
   end
 
   describe "When status is 'collecting format review files'" do
@@ -109,6 +139,36 @@ describe 'Submission status transitions', js: true do
       end
     end
 
+    context "submitting the 'Update Program Information' form" do
+      before do
+        visit edit_author_submission_path(submission)
+        click_button 'Update Program Information'
+      end
+      specify "status updates to 'collecting format review files'" do
+        submission.reload
+        expect(submission.status).to eq 'collecting format review files'
+      end
+      specify "progress indicator has a link to upload format review files" do
+        expect(page).to have_link 'Upload Format Review files'
+      end
+    end
+
+    context "cancelling the 'Update Program Information' form" do
+      before do
+        visit edit_author_submission_path(submission)
+        click_link 'Cancel'
+      end
+      specify "status updates to 'collecting format review files'" do
+        pending "We need a method to determine status"
+        submission.reload
+        expect(submission.status).to eq 'collecting format review files'
+      end
+      specify "progress indicator has a link to upload format review files" do
+        pending "We need a method to determine status"
+        expect(page).to have_link 'Upload Format Review files'
+      end
+    end
+
     context "visiting the 'Update Committee' page" do
       before { visit edit_author_submission_committee_path(submission) }
       specify "submission status updates to 'collecting committee'" do
@@ -116,5 +176,36 @@ describe 'Submission status transitions', js: true do
         expect(submission.status).to eq 'collecting committee'
       end
     end
+
+    context "submitting the 'Update Committee' form" do
+      before do
+        visit edit_author_submission_committee_path(submission)
+        click_button 'Update Committee'
+      end
+      specify "status updates to 'collecting format review files'" do
+        submission.reload
+        expect(submission.status).to eq 'collecting format review files'
+      end
+      specify "progress indicator has a link to upload format review files" do
+        expect(page).to have_link 'Upload Format Review files'
+      end
+    end
+
+    context "cancelling the 'Update Committee' form" do
+      before do
+        visit edit_author_submission_committee_path(submission)
+        click_link 'Cancel'
+      end
+      specify "status updates to 'collecting format review files'" do
+        pending "We need a method to determine status"
+        submission.reload
+        expect(submission.status).to eq 'collecting format review files'
+      end
+      specify "progress indicator has a link to upload format review files" do
+        pending "We need a method to determine status"
+        expect(page).to have_link 'Upload Format Review files'
+      end
+    end
   end
+
 end
