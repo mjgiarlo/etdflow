@@ -20,7 +20,7 @@ Then(/^My program information progress indicator should be updated$/) do
   within '#submission-1' do
     within '.step.step-1' do
       expect(page).to have_link '[update]'
-      expect(page).to have_content "completed on #{Date.today.strftime('%B %e, %Y')}"
+      expect(page).to have_content "completed on #{Time.zone.now.strftime('%B %e, %Y')}"
     end
   end
 end
