@@ -3,8 +3,11 @@ class Author::CommitteesController < AuthorController
   def new 
     submission = Submission.find(params[:submission_id])
     status_giver = SubmissionStatusGiver.new(submission)
-    status_giver.collecting_committee!
+    status_giver.can_provide_new_committee?
     @committee = Committee.new(committee_members: Committee.members(submission))
+  rescue SubmissionStatusGiver::AccessForbidden
+    redirect_to author_root_path
+    flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
   end 
 
   def create
@@ -23,7 +26,10 @@ class Author::CommitteesController < AuthorController
     @submission = Submission.find(params[:submission_id])
     @committee = Committee.new(committee_members: @submission.committee_members)
     status_giver = SubmissionStatusGiver.new(@submission)
-    status_giver.collecting_committee!
+    status_giver.can_update_committee?
+  rescue SubmissionStatusGiver::AccessForbidden
+    redirect_to author_root_path
+    flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
   end
 
   def update

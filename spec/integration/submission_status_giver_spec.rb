@@ -12,200 +12,84 @@ describe 'Submission status transitions', js: true do
   describe "When status is 'collecting program information'" do
     before { submission.update_attribute :status, 'collecting program information' }
 
+    context "visiting the 'Provide Program Information' page" do
+      before { visit new_author_submission_path }
+      specify "loads the page" do
+        expect(current_path).to eq new_author_submission_path
+      end
+    end
+
+    context "visiting the 'Update Program Information' page" do
+      before { visit edit_author_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
     context "visiting the 'Provide Committee' page" do
       before { visit new_author_submission_committee_path(submission) }
-      specify "submission status updates to 'collecting committee'" do
-        submission.reload
-        expect(submission.status).to eq 'collecting committee'
-      end
-    end
-
-    context "visiting the 'Upload Format Review Files' page" do
-      context 'when there is a committee' do
-        before do
-          create_committee(submission) 
-          visit author_submission_format_review_path(submission)
-        end
-        specify "submission status updates to 'collecting format review files'" do
-          submission.reload
-          expect(submission.status).to eq 'collecting format review files'
-        end
-      end
-      context 'when there is no committee' do
-        before do
-          visit author_submission_format_review_path(submission)
-        end
-        specify "submission status remains 'collecting program information'" do
-          submission.reload
-          expect(submission.status).to eq 'collecting program information'
-        end
-      end
-    end
-  end
-
-  describe "When status is 'collecting committee'" do
-    before { submission.update_attribute :status, 'collecting committee' }
-
-    context "visiting the 'Upload Format Review Files' page" do
-      context 'when there is a committee' do
-        before do
-          create_committee(submission) 
-          visit author_submission_format_review_path(submission)
-        end
-        specify "submission status updates to 'collecting format review files'" do
-          submission.reload
-          expect(submission.status).to eq 'collecting format review files'
-        end
-      end
-      context 'when there is no committee' do
-        before do
-          visit author_submission_format_review_path(submission)
-        end
-        specify "submission status remains 'collecting committee'" do
-          submission.reload
-          expect(submission.status).to eq 'collecting committee'
-        end
-        specify "the current page should be the 'My Submissions' page" do
-          expect(current_path).to eq author_root_path
-        end
-      end
-    end
-
-    context "visiting the 'Update Program Information' page" do
-      before { visit edit_author_submission_path(submission) }
-      specify "submission status updates to 'collecting program information'" do
-        submission.reload
-        expect(submission.status).to eq 'collecting program information'
-      end
-    end
-
-    context "submitting the 'Update Program Information' form" do
-      before do
-        visit edit_author_submission_path(submission)
-        click_button 'Update Program Information'
-      end
-      specify "status updates to 'collecting committee'" do
-        submission.reload
-        expect(submission.status).to eq 'collecting committee'
-      end
-      specify "progress indicator has a link to provide committee" do
-        expect(page).to have_link 'Provide committee'
-      end
-    end
-
-    context "cancelling the 'Update Program Information' form" do
-      before do
-        visit edit_author_submission_path(submission)
-        click_link 'Cancel'
-      end
-      specify "status updates to 'collecting committee'" do
-        pending "We need a method to determine status"
-        submission.reload
-        expect(submission.status).to eq 'collecting committee'
-      end
-      specify "progress indicator has a link to provide committee" do
-        pending "We need a method to determine status"
-        expect(page).to have_link 'Provide Committee'
-      end
-    end
-
-  end
-
-  describe "When status is 'collecting format review files'" do
-    before do
-      submission.update_attribute :status, 'collecting format review files'
-      create_committee(submission)
-    end
-
-    context "submitting the 'Upload Format Review Files' form" do
-      before do
-        visit author_submission_format_review_path(submission)
-        expect(page).to have_css '#format-review-file-fields .nested-fields:first-child input[type="file"]'
-        first_input_id = first('#format-review-file-fields .nested-fields:first-child input[type="file"]')[:id]
-        attach_file first_input_id, fixture('format_review_file_01.pdf')
-        click_button 'Submit files for review'
-      end
-      specify "submission status updates to 'waiting for format review response'" do
-        submission.reload
-        expect(submission.status).to eq 'waiting for format review response'
-      end
-    end
-
-    context "visiting the 'Update Program Information' page" do
-      before { visit edit_author_submission_path(submission) }
-      specify "submission status updates to 'collecting program information'" do
-        submission.reload
-        expect(submission.status).to eq 'collecting program information'
-      end
-    end
-
-    context "submitting the 'Update Program Information' form" do
-      before do
-        visit edit_author_submission_path(submission)
-        click_button 'Update Program Information'
-      end
-      specify "status updates to 'collecting format review files'" do
-        submission.reload
-        expect(submission.status).to eq 'collecting format review files'
-      end
-      specify "progress indicator has a link to upload format review files" do
-        expect(page).to have_link 'Upload Format Review files'
-      end
-    end
-
-    context "cancelling the 'Update Program Information' form" do
-      before do
-        visit edit_author_submission_path(submission)
-        click_link 'Cancel'
-      end
-      specify "status updates to 'collecting format review files'" do
-        pending "We need a method to determine status"
-        submission.reload
-        expect(submission.status).to eq 'collecting format review files'
-      end
-      specify "progress indicator has a link to upload format review files" do
-        pending "We need a method to determine status"
-        expect(page).to have_link 'Upload Format Review files'
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
       end
     end
 
     context "visiting the 'Update Committee' page" do
       before { visit edit_author_submission_committee_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Provide Format Review Files' page" do
+      before { visit author_submission_format_review_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    pending "visiting the 'Update Format Review Files' page" do
+      before { visit author_submission_edit_format_review_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    pending "visiting the 'Provide Final Submission Files' page" do
+      before { visit author_submission_final_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    pending "visiting the 'Update Final Submission Files' page" do
+      before { visit author_submission_edit_final_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "when I submit the 'Provide Program Information' form" do
+      let!(:program) { create :program, name: 'Information Sciences and Technology' }
+      let!(:degree) { create :degree, name: 'Master of Science' }
+      before do
+        visit new_author_submission_path
+        select program.name, from: 'Program'
+        select degree.name, from: 'Degree'
+        select 'Fall', from: 'Semester Intending to Graduate'
+        select Time.zone.now.year.to_s, from: 'Graduation Year'
+        click_button 'Save Program Information'
+      end
       specify "submission status updates to 'collecting committee'" do
-        submission.reload
-        expect(submission.status).to eq 'collecting committee'
-      end
-    end
-
-    context "submitting the 'Update Committee' form" do
-      before do
-        visit edit_author_submission_committee_path(submission)
-        click_button 'Update Committee'
-      end
-      specify "status updates to 'collecting format review files'" do
-        submission.reload
-        expect(submission.status).to eq 'collecting format review files'
-      end
-      specify "progress indicator has a link to upload format review files" do
-        expect(page).to have_link 'Upload Format Review files'
-      end
-    end
-
-    context "cancelling the 'Update Committee' form" do
-      before do
-        visit edit_author_submission_committee_path(submission)
-        click_link 'Cancel'
-      end
-      specify "status updates to 'collecting format review files'" do
-        pending "We need a method to determine status"
-        submission.reload
-        expect(submission.status).to eq 'collecting format review files'
-      end
-      specify "progress indicator has a link to upload format review files" do
-        pending "We need a method to determine status"
-        expect(page).to have_link 'Upload Format Review files'
+        new_submission = Submission.where(program: program, degree: degree).first
+        expect(new_submission.status).to eq 'collecting committee'
       end
     end
   end
-
 end

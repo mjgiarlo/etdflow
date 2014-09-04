@@ -22,7 +22,10 @@ class Author::SubmissionsController < AuthorController
   def edit
     @submission = Submission.find(params[:id])
     status_giver = SubmissionStatusGiver.new(@submission)
-    status_giver.collecting_program_information!
+    status_giver.can_update_program_information?
+  rescue SubmissionStatusGiver::AccessForbidden
+    redirect_to author_root_path
+    flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
   end
 
   def update
