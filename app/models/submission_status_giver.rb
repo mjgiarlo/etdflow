@@ -1,9 +1,64 @@
 class SubmissionStatusGiver
-  class InvalidTransition < Exception; end
+  class AccessForbidden < StandardError; end
+  class InvalidTransition < StandardError; end
   attr_reader :submission
 
   def initialize(submission)
     @submission = submission
+  end
+
+  def can_provide_new_program_information?
+    s = @submission
+    if s.status.nil? || s.collecting_program_information?
+      return
+    else
+      raise AccessForbidden
+    end
+  end
+
+  def can_update_program_information?
+    s = @submission
+    if s.collecting_committee? || s.collecting_format_review_files?
+      return
+    else
+      raise AccessForbidden
+    end
+  end
+
+  def can_provide_new_committee?
+    s = @submission
+    if s.collecting_committee?
+      return
+    else
+      raise AccessForbidden
+    end
+  end
+
+  def can_update_committee?
+    s = @submission
+    if s.collecting_format_review_files?
+      return
+    else
+      raise AccessForbidden
+    end
+  end
+
+  def can_collect_format_review_files?
+    s = @submission
+    if ( s.collecting_program_information? && s.has_committee? ) || ( s.collecting_committee? && s.has_committee? ) || s.waiting_for_format_review_response? || s.collecting_format_review_files?
+      return
+    else
+      raise AccessForbidden
+    end
+  end
+
+  def can_wait_for_format_review_response?
+    s = @submission
+    if s.collecting_format_review_files? || s.waiting_for_format_review_response?
+      return
+    else
+      raise AccessForbidden
+    end
   end
 
   def collecting_program_information!
@@ -15,7 +70,7 @@ class SubmissionStatusGiver
       return
     else
       raise InvalidTransition
-    end 
+    end
   end
 
   def collecting_committee!
@@ -27,7 +82,7 @@ class SubmissionStatusGiver
       return
     else
       raise InvalidTransition
-    end 
+    end
   end
 
   def collecting_format_review_files!
