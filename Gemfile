@@ -61,8 +61,11 @@ group :development do
   # Deploy to multiple environments
   gem 'capistrano-ext'
 
-  # Useful recipes for generalizing deployment behavior
-  gem 'capistrano-helpers'
+  # rbenv support for capistrano
+  gem 'capistrano-rbenv'
+
+  # Mention deployment on IRC
+  gem 'capistrano-notification'
 
   # Used to seed the development database
   gem 'ffaker'
