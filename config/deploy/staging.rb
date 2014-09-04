@@ -1,11 +1,4 @@
-# The directory that we're deploying to on the remote host.
-set :deploy_to, "/var/www/sites/staging.etdflow.westarete.com"
-
-# Tell capistrano to use the staging environment. This is key for running 
-# the database migrations via "cap staging deploy:migrations".
-set :rails_env, "staging"
-
-# The hosts that we're deploying to.
-role :app, "staging.etdflow.westarete.com"
-role :web, "staging.etdflow.westarete.com"
-role :db,  "staging.etdflow.westarete.com", :primary => true
+role :web,  "etda1stage.dlt.psu.edu"
+role :app,  "etda1stage.dlt.psu.edu"
+role :solr, "etda1stage.dlt.psu.edu" # This is where resolrize will run
+role :db,   "etda1stage.dlt.psu.edu", primary: true # This is where Rails migrations will run
