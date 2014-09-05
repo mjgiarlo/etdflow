@@ -43,7 +43,7 @@ describe 'Submission status transitions', js: true do
       end
     end
 
-    context "visiting the 'Provide Format Review Files' page" do
+    context "visiting the 'Upload Format Review Files' page" do
       before { visit author_submission_format_review_path(submission) }
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
@@ -51,24 +51,8 @@ describe 'Submission status transitions', js: true do
       end
     end
 
-    pending "visiting the 'Update Format Review Files' page" do
-      before { visit author_submission_edit_format_review_path(submission) }
-      specify "raises a forbidden access error" do
-        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
-        expect(current_path).to eq author_root_path
-      end
-    end
-
-    pending "visiting the 'Provide Final Submission Files' page" do
+    pending "visiting the 'Upload Final Submission Files' page" do
       before { visit author_submission_final_submission_path(submission) }
-      specify "raises a forbidden access error" do
-        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
-        expect(current_path).to eq author_root_path
-      end
-    end
-
-    pending "visiting the 'Update Final Submission Files' page" do
-      before { visit author_submission_edit_final_submission_path(submission) }
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
         expect(current_path).to eq author_root_path
