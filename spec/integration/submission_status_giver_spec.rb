@@ -80,14 +80,6 @@ describe 'Submission status transitions', js: true do
   describe "When status is 'collecting committee'" do
     before { submission.update_attribute :status, 'collecting committee' }
 
-    context "visiting the 'Provide Program Information' page" do
-      before { visit new_author_submission_path }
-      specify "raises a forbidden access error" do
-        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
-        expect(current_path).to eq author_root_path
-      end
-    end
-
     context "visiting the 'Update Program Information' page" do
       before { visit edit_author_submission_path(submission) }
       specify "loads the page" do
