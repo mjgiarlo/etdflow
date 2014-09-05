@@ -135,7 +135,8 @@ describe 'Submission status transitions', js: true do
         end
         click_button 'Save Committee'
       end
-      specify "submission status updates to 'collecting committee'" do
+      specify "submission status updates to 'collecting format review files'" do
+        submission.reload
         expect(submission.status).to eq 'collecting format review files'
       end
     end
