@@ -177,6 +177,7 @@ describe 'Submission status transitions', js: true do
     context "when I submit the 'Upload Format Review Files' form" do
       before do
         visit author_submission_format_review_path(submission)
+        fill_in 'Title', with: 'Test Title'
         expect(page).to have_css '#format-review-file-fields .nested-fields:first-child input[type="file"]'
         first_input_id = first('#format-review-file-fields .nested-fields:first-child input[type="file"]')[:id]
         attach_file first_input_id, fixture('format_review_file_01.pdf')
