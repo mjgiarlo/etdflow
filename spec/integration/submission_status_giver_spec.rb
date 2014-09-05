@@ -76,4 +76,69 @@ describe 'Submission status transitions', js: true do
       end
     end
   end
+
+  describe "When status is 'collecting committee'" do
+    before { submission.update_attribute :status, 'collecting committee' }
+
+    context "visiting the 'Provide Program Information' page" do
+      before { visit new_author_submission_path }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Update Program Information' page" do
+      before { visit edit_author_submission_path(submission) }
+      specify "loads the page" do
+        expect(current_path).to eq new_author_submission_path
+      end
+    end
+
+    context "visiting the 'Provide Committee' page" do
+      before { visit new_author_submission_committee_path(submission) }
+      specify "loads the page" do
+        expect(current_path).to eq new_author_submission_path
+      end
+    end
+
+    context "visiting the 'Update Committee' page" do
+      before { visit edit_author_submission_committee_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Upload Format Review Files' page" do
+      before { visit author_submission_format_review_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    pending "visiting the 'Upload Final Submission Files' page" do
+      before { visit author_submission_final_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "when I submit the 'Provide Committee' form" do
+      before do
+        visit new_author_submission_committee_path(submission)
+        Committee.minimum_number_of_members.times do |i|
+          fill_in "committee_committee_members_attributes_#{i}_name", with: "name_#{i}"
+          fill_in "committee_committee_members_attributes_#{i}_email", with: "name_#{i}@example.com"
+        end
+        click_button 'Save Committee'
+      end
+      specify "submission status updates to 'collecting committee'" do
+        expect(submission.status).to eq 'collecting format review files'
+      end
+    end
+  end
+
 end
