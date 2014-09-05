@@ -17,6 +17,9 @@ class Author::SubmissionsController < AuthorController
     flash[:notice] = 'Program information saved successfully'
   rescue ActiveRecord::RecordInvalid
     render :new
+  rescue SubmissionStatusGiver::InvalidTransition
+    redirect_to author_root_path
+    flash[:alert] = 'Oops! You may have submitted invalid program information data. Please check that your program information is correct.'
   end
 
   def edit
@@ -30,12 +33,17 @@ class Author::SubmissionsController < AuthorController
 
   def update
     @submission = Submission.find(params[:id])
+    status_giver = SubmissionStatusGiver.new(@submission)
+    status_giver.can_update_program_information?
     @submission.update_attributes!(program_information_params)
     redirect_to author_root_path
     flash[:notice] = 'Program information updated successfully'
   rescue ActiveRecord::RecordInvalid => e
     redirect_to edit_author_submission_path(@submission)
     flash[:alert] = e.message
+  rescue SubmissionStatusGiver::AccessForbidden
+    redirect_to author_root_path
+    flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
   end
 
   def destroy
@@ -59,6 +67,8 @@ class Author::SubmissionsController < AuthorController
 
   def update_format_review
     @submission = Submission.find(params[:submission_id])
+    status_giver = SubmissionStatusGiver.new(@submission)
+    status_giver.can_upload_format_review_files?
     @submission.update_attributes!(format_review_params)
     status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.waiting_for_format_review_response!
@@ -67,6 +77,12 @@ class Author::SubmissionsController < AuthorController
   rescue ActiveRecord::RecordInvalid => e
     redirect_to author_submission_format_review_path(@submission)
     flash[:alert] = e.message
+  rescue SubmissionStatusGiver::AccessForbidden
+    redirect_to author_root_path
+    flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
+  rescue SubmissionStatusGiver::InvalidTransition
+    redirect_to author_root_path
+    flash[:alert] = 'Oops! You may have submitted invalid format review data. Please check that your format review information is correct.'
   end
 
   private
