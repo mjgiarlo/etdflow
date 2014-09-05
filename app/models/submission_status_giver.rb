@@ -43,18 +43,6 @@ class SubmissionStatusGiver
     end
   end
 
-  def collecting_program_information!
-    s = @submission
-    new_status = 'collecting program information'
-    if s.status.nil?
-      s.update_attribute :status, new_status
-    elsif s.status == new_status
-      return
-    else
-      raise InvalidTransition
-    end
-  end
-
   def collecting_committee!
     s = @submission
     new_status = 'collecting committee'
@@ -70,7 +58,7 @@ class SubmissionStatusGiver
   def collecting_format_review_files!
     s = @submission
     new_status = 'collecting format review files'
-    if ( s.collecting_committee? && s.has_committee? ) || s.waiting_for_format_review_response?
+    if s.collecting_committee? || s.waiting_for_format_review_response?
       s.update_attribute :status, new_status
     elsif s.status == new_status
       return
