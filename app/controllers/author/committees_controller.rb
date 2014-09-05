@@ -37,8 +37,6 @@ class Author::CommitteesController < AuthorController
     @committee = Committee.new(params[:committee])
     @committee.update(params[:committee])
     flash[:notice] = 'Committee updated successfully'
-    status_giver = SubmissionStatusGiver.new(@submission)
-    status_giver.collecting_format_review_files!
     redirect_to author_root_path
   rescue Committee::InvalidCommitteeError
     render :edit

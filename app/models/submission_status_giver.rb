@@ -7,15 +7,6 @@ class SubmissionStatusGiver
     @submission = submission
   end
 
-  def can_provide_new_program_information?
-    s = @submission
-    if s.status.nil? || s.collecting_program_information?
-      return
-    else
-      raise AccessForbidden
-    end
-  end
-
   def can_update_program_information?
     s = @submission
     if s.collecting_committee? || s.collecting_format_review_files?
