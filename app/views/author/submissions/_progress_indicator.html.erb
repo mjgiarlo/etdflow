@@ -2,7 +2,7 @@
   <div class="step step-1 complete">
     <div class="number">1</div>
     <div class="information">
-      <div class="description">Provide program information <%= link_to "[update]", edit_author_submission_path(submission), class: 'small' %></div>
+      <div class="description"><%= @submission_view.step_one_description %></div>
       <div class="status"><span class="glyphicon glyphicon-ok-circle"></span> completed on <%= @submission_view.created_on %></div>
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>

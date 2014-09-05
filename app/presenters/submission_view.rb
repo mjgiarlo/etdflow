@@ -16,6 +16,14 @@ class SubmissionView < SimpleDelegator
     created_at.strftime('%B %-e, %Y')
   end
 
+  def step_one_description
+    if beyond_collecting_format_review_files?
+      ("Provide program information <a href='#' class='small'>[review]</a>").html_safe
+    else
+      ("Provide program information <a href='" + "/author/submissions/#{id}/edit" + "' class='small'>[update]</a>").html_safe
+    end
+  end
+
   def step_two_class
     if beyond_collecting_committee?
       'complete'
@@ -27,8 +35,10 @@ class SubmissionView < SimpleDelegator
   def step_two_description
     if collecting_committee?
       ("<a href='" + "/author/submissions/#{id}/committee/new" + "'>Provide committee</a>").html_safe
-    elsif beyond_collecting_committee?
+    elsif collecting_format_review_files?
       ("Provide committee <a href='" + "/author/submissions/#{id}/committee/edit" + "' class='small'>[update]</a>").html_safe
+    elsif beyond_collecting_format_review_files?
+      ("Provide committee <a href='#' class='small'>[review]</a>").html_safe
     else
       'Provide committee'
     end
