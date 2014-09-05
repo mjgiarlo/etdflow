@@ -1,5 +1,4 @@
 class Submission < ActiveRecord::Base
-  class InvalidTransition < Exception; end
 
   belongs_to :author
   belongs_to :program
@@ -46,7 +45,8 @@ class Submission < ActiveRecord::Base
       'collecting program information',
       'collecting committee',
       'collecting format review files',
-      'waiting for format review response'
+      'waiting for format review response',
+      'collecting final submission files'
     ]
   end
 
@@ -89,39 +89,6 @@ class Submission < ActiveRecord::Base
 
   def beyond_collecting_format_review_files?
     waiting_for_format_review_response?
-  end
-
-  def collecting_committee!
-    new_status = 'collecting committee'
-    if collecting_program_information?
-      update_attribute :status, new_status
-    elsif status == new_status
-      return
-    else
-      raise InvalidTransition
-    end
-  end
-
-  def collecting_format_review_files!
-    new_status = 'collecting format review files'
-    if collecting_committee?
-      update_attribute :status, new_status
-    elsif status == new_status
-      return
-    else
-      raise InvalidTransition
-    end
-  end
-
-  def waiting_for_format_review_response!
-    new_status = 'waiting for format review response'
-    if collecting_format_review_files?
-      update_attribute :status, new_status
-    elsif status == new_status
-      return
-    else
-      raise InvalidTransition
-    end
   end
 
   private

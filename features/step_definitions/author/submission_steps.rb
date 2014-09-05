@@ -20,7 +20,7 @@ Then(/^My program information progress indicator should be updated$/) do
   within '#submission-1' do
     within '.step.step-1' do
       expect(page).to have_link '[update]'
-      expect(page).to have_content "completed on #{Date.today.strftime('%B %e, %Y')}"
+      expect(page).to have_content "completed on #{Time.zone.now.strftime('%B %e, %Y')}"
     end
   end
 end
@@ -28,7 +28,8 @@ end
 Given(/^I have started a submission$/) do
   step "I have confirmed my contact information"
   author = Author.where(access_id: 'etdflow').first
-  create :submission, author: author
+  s = create :submission, author: author
+  s.update_attribute :status, "collecting committee"
 end
 
 When(/^I provide my committee$/) do

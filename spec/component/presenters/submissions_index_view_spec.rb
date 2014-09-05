@@ -1,4 +1,4 @@
-require 'component/component_spec_helper'
+require 'component/presenters/component_presenters_spec_helper'
 
 describe SubmissionsIndexView do
 
