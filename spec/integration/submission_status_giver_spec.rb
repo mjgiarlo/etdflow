@@ -182,9 +182,71 @@ describe 'Submission status transitions', js: true do
         attach_file first_input_id, fixture('format_review_file_01.pdf')
         click_button 'Submit files for review'
       end
-      specify "submission status updates to 'collecting format review files'" do
+      specify "submission status updates to 'waiting for format review response'" do
         submission.reload
         expect(submission.status).to eq 'waiting for format review response'
+      end
+    end
+  end
+
+  describe "When status is 'waiting for format review response'" do
+    before { submission.update_attribute :status, 'waiting for format review response' }
+
+    context "visiting the 'Update Program Information' page" do
+      before { visit edit_author_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Provide Committee' page" do
+      before { visit new_author_submission_committee_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Update Committee' page" do
+      before { visit edit_author_submission_committee_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Upload Format Review Files' page" do
+      before { visit author_submission_format_review_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    pending "visiting the 'Upload Final Submission Files' page" do
+      before { visit author_submission_final_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    pending "when an admin rejects the format review files" do
+      before do
+      end
+      specify "submission status updates to 'collecting format review files'" do
+        submission.reload
+        expect(submission.status).to eq 'collecting format review files'
+      end
+    end
+
+    pending "when an admin accepts the format review files" do
+      before do
+      end
+      specify "submission status updates to 'collecting final submission files'" do
+        submission.reload
+        expect(submission.status).to eq 'collecting final submission files'
       end
     end
   end
