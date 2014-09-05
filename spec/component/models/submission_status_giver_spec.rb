@@ -26,20 +26,18 @@ describe SubmissionStatusGiver do
 
     context "when status is 'collecting committee'" do
       before { submission.status = 'collecting committee' }
-      it "updates status to 'collecting program information'" do
+      it "raises an exception" do
         giver = SubmissionStatusGiver.new(submission)
-        giver.collecting_program_information!
-        expect(submission.status).to eq 'collecting program information'
-      end 
+        expect {giver.collecting_program_information!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
+      end
     end
 
     context "when status is 'collecting format review files'" do
       before { submission.status = 'collecting format review files' }
-      it "updates status to 'collecting program information'" do
+      it "raises an exception" do
         giver = SubmissionStatusGiver.new(submission)
-        giver.collecting_program_information!
-        expect(submission.status).to eq 'collecting program information'
-      end 
+        expect {giver.collecting_program_information!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
+      end
     end
 
     context "when status is beyond 'collecting format review files'" do
@@ -81,11 +79,10 @@ describe SubmissionStatusGiver do
 
     context "when status is 'collecting format review files'" do
       before { submission.status = 'collecting format review files' }
-      it "updates status to 'collecting committee'" do
+      it "raises an exception" do
         giver = SubmissionStatusGiver.new(submission)
-        giver.collecting_committee!
-        expect(submission.status).to eq 'collecting committee'
-      end 
+        expect {giver.collecting_committee!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
+      end
     end
 
     context "when status is beyond 'collecting format review files'" do
@@ -109,19 +106,9 @@ describe SubmissionStatusGiver do
 
     context "when status is 'collecting program information'" do
       before { submission.status = 'collecting program information' }
-      context "when there is a committee" do
-        before { create_committee(submission) }
-        it "updates status to 'collecting format review files'" do
-          giver = SubmissionStatusGiver.new(submission)
-          giver.collecting_format_review_files!
-          expect(submission.status).to eq 'collecting format review files'
-        end 
-      end
-      context "when there is no committee" do
-        it "raises an exception" do
-          giver = SubmissionStatusGiver.new(submission)
-          expect {giver.collecting_format_review_files!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
-        end
+      it "raises an exception" do
+        giver = SubmissionStatusGiver.new(submission)
+        expect {giver.collecting_format_review_files!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
       end
     end
 

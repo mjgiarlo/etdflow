@@ -46,7 +46,7 @@ class SubmissionStatusGiver
   def collecting_program_information!
     s = @submission
     new_status = 'collecting program information'
-    if s.status.nil? || s.collecting_committee? || s.collecting_format_review_files?
+    if s.status.nil?
       s.update_attribute :status, new_status
     elsif s.status == new_status
       return
@@ -58,7 +58,7 @@ class SubmissionStatusGiver
   def collecting_committee!
     s = @submission
     new_status = 'collecting committee'
-    if s.collecting_program_information? || s.collecting_format_review_files?
+    if s.collecting_program_information?
       s.update_attribute :status, new_status
     elsif s.status == new_status
       return
@@ -70,7 +70,7 @@ class SubmissionStatusGiver
   def collecting_format_review_files!
     s = @submission
     new_status = 'collecting format review files'
-    if ( s.collecting_program_information? && s.has_committee? ) || ( s.collecting_committee? && s.has_committee? ) || s.waiting_for_format_review_response?
+    if ( s.collecting_committee? && s.has_committee? ) || s.waiting_for_format_review_response?
       s.update_attribute :status, new_status
     elsif s.status == new_status
       return
