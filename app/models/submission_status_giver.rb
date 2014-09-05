@@ -34,9 +34,9 @@ class SubmissionStatusGiver
     end
   end
 
-  def can_collect_format_review_files?
+  def can_upload_format_review_files?
     s = @submission
-    if ( s.collecting_program_information? && s.has_committee? ) || ( s.collecting_committee? && s.has_committee? ) || s.waiting_for_format_review_response? || s.collecting_format_review_files?
+    if s.collecting_format_review_files?
       return
     else
       raise AccessForbidden
