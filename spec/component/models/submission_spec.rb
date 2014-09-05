@@ -10,6 +10,7 @@ describe Submission do
   specify { expect(subject).to have_db_column :created_at }
   specify { expect(subject).to have_db_column :updated_at }
   specify { expect(subject).to have_db_column :status }
+  specify { expect(subject).to have_db_column :title }
 
   specify { expect(subject).to validate_presence_of :author_id }
   specify { expect(subject).to validate_presence_of :program_id }
