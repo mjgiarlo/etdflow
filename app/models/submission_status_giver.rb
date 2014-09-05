@@ -43,15 +43,6 @@ class SubmissionStatusGiver
     end
   end
 
-  def can_wait_for_format_review_response?
-    s = @submission
-    if s.collecting_format_review_files? || s.waiting_for_format_review_response?
-      return
-    else
-      raise AccessForbidden
-    end
-  end
-
   def collecting_program_information!
     s = @submission
     new_status = 'collecting program information'
