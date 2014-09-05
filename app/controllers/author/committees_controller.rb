@@ -12,14 +12,21 @@ class Author::CommitteesController < AuthorController
 
   def create
     submission = Submission.find(params[:submission_id])
+    status_giver = SubmissionStatusGiver.new(submission)
+    status_giver.can_provide_new_committee?
     @committee = Committee.new(params[:committee])
     @committee.save
-    status_giver = SubmissionStatusGiver.new(submission)
     status_giver.collecting_format_review_files!
     flash[:notice] = 'Committee saved successfully'
     redirect_to author_root_path
   rescue Committee::InvalidCommitteeError
     render :new
+  rescue SubmissionStatusGiver::AccessForbidden
+    redirect_to author_root_path
+    flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
+  rescue SubmissionStatusGiver::InvalidTransition
+    redirect_to author_root_path
+    flash[:alert] = 'Oops! You may have submitted invalid committee information. Please double check your committee.'
   end 
 
   def edit
@@ -34,12 +41,17 @@ class Author::CommitteesController < AuthorController
 
   def update
     @submission = Submission.find(params[:submission_id])
+    status_giver = SubmissionStatusGiver.new(@submission)
+    status_giver.can_update_committee?
     @committee = Committee.new(params[:committee])
     @committee.update(params[:committee])
     flash[:notice] = 'Committee updated successfully'
     redirect_to author_root_path
   rescue Committee::InvalidCommitteeError
     render :edit
+  rescue SubmissionStatusGiver::AccessForbidden
+    redirect_to author_root_path
+    flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
   end
 
 end
