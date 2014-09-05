@@ -7,7 +7,9 @@
 <div class="row">
   <div class="col-xs-12">
     <%= simple_form_for [:author, @submission], url: author_submission_update_format_review_path do |f| %>
+      <%= f.input :title %>
       <div class="links cocoon-links">
+        <label>Files<span class="required-astrisk">*</span></label>
         <%= link_to_add_association f, :format_review_files,
                                        class: 'btn btn-default btn-sm',
                                        data: { association_insertion_node: '#format-review-file-fields', association_insertion_method: 'append' },

@@ -35,6 +35,31 @@ describe Submission do
 
   let(:submission) { create :submission }
 
+  describe 'validates presence of title' do
+    context 'when collecting format review files' do
+      before { submission.status = 'collecting format review files' }
+      context 'when there is a title' do
+        before { submission.title = 'title' }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there is no title' do
+        it 'is not valid' do
+          expect(submission).to_not be_valid
+        end
+      end
+    end
+    context 'when collecting program information' do
+      before { submission.status = 'collecting program information' }
+      context 'when there is no title' do
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+    end
+  end
+
   describe '#program_name' do
     it 'returns the name of the associated program' do
       expect(submission.program_name).to eq(submission.program.name)

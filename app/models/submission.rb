@@ -18,6 +18,10 @@ class Submission < ActiveRecord::Base
                         :semester,
                         :year
 
+  validates :title,
+      presence: true,
+      if: Proc.new { |s| s.collecting_format_review_files? }
+
   accepts_nested_attributes_for :format_review_files
 
   SEMESTERS = [

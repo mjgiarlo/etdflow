@@ -96,7 +96,8 @@ class Author::SubmissionsController < AuthorController
   end
 
   def format_review_params
-    params.require(:submission).permit(format_review_files_attributes: [:filename, :submission_id])
+    params.require(:submission).permit(:title,
+                                       format_review_files_attributes: [:filename, :submission_id])
   end
 
 end
