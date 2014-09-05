@@ -91,14 +91,14 @@ describe 'Submission status transitions', js: true do
     context "visiting the 'Update Program Information' page" do
       before { visit edit_author_submission_path(submission) }
       specify "loads the page" do
-        expect(current_path).to eq new_author_submission_path
+        expect(current_path).to eq edit_author_submission_path(submission)
       end
     end
 
     context "visiting the 'Provide Committee' page" do
       before { visit new_author_submission_committee_path(submission) }
       specify "loads the page" do
-        expect(current_path).to eq new_author_submission_path
+        expect(current_path).to eq new_author_submission_committee_path(submission)
       end
     end
 
