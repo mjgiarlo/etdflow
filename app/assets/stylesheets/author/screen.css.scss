@@ -145,11 +145,18 @@
 }
 
 .committee-member-fields {
-  border-bottom: 1px dotted $gray-lighter;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 
-  .role-label {
-    @extend .h4;
+  .input-group {
+    margin-bottom: 10px;
+
+    .input-group-addon {
+      background-color: #f6f6f6;
+    }
+
+    .form-control {
+      border-bottom-right-radius: $border-radius-base;
+      border-top-right-radius: $border-radius-base;
+    }
   }
 }
