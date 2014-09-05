@@ -31,8 +31,6 @@ class Author::SubmissionsController < AuthorController
   def update
     @submission = Submission.find(params[:id])
     @submission.update_attributes!(program_information_params)
-    status_giver = SubmissionStatusGiver.new(@submission)
-    @submission.has_committee? ? status_giver.collecting_format_review_files! : status_giver.collecting_committee!
     redirect_to author_root_path
     flash[:notice] = 'Program information updated successfully'
   rescue ActiveRecord::RecordInvalid => e
