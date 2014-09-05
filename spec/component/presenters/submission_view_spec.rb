@@ -26,6 +26,27 @@ describe SubmissionView do
     end
   end
 
+  describe '#step_one_description' do
+    context "when step two is the current step" do
+      before { submission.status = 'collecting committee' }
+      it "returns a link to edit step one" do
+        expect(view.step_one_description).to eq "Provide program information <a href='#{edit_author_submission_path(submission)}' class='small'>[update]</a>"
+      end
+    end
+    context "when step three is the current step" do
+      before { submission.status = 'collecting format review files' }
+      it "returns a link to edit step one" do
+        expect(view.step_one_description).to eq "Provide program information <a href='#{edit_author_submission_path(submission)}' class='small'>[update]</a>"
+      end
+    end
+    context "when the submission is beyond step three" do
+      before { submission.stub(beyond_collecting_format_review_files?: true) }
+      it "returns a link to review step two" do
+        expect(view.step_one_description).to eq "Provide program information <a href='#' class='small'>[review]</a>"
+      end
+    end
+  end
+
   describe 'step two: committee' do
     describe '#step_two_class' do
       context 'when the submission has no committee' do
@@ -50,15 +71,21 @@ describe SubmissionView do
         end
       end
       context "when step two is the current step" do
-        before { submission.stub(collecting_committee?: true) }
+        before { submission.status = 'collecting committee' }
         it "returns a link to complete step two" do
           expect(view.step_two_description).to eq "<a href='#{new_author_submission_committee_path(submission)}'>Provide committee</a>"
         end
       end
-      context "when step two has been completed" do
-        before { submission.stub(beyond_collecting_committee?: true) }
+      context "when step three is the current step" do
+        before { submission.status = 'collecting format review files' }
         it "returns a link to edit step two" do
           expect(view.step_two_description).to eq "Provide committee <a href='#{edit_author_submission_committee_path(submission)}' class='small'>[update]</a>"
+        end
+      end
+      context "when the submission is beyond step three" do
+        before { submission.stub(beyond_collecting_format_review_files?: true) }
+        it "returns a link to review step two" do
+          expect(view.step_two_description).to eq "Provide committee <a href='#' class='small'>[review]</a>"
         end
       end
     end
