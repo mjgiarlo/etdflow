@@ -6,6 +6,7 @@ FactoryGirl.define do
     degree
     semester "Spring"
     year Date.today.year
+    title
   end
 
   Degree.degree_types_json.each do |type|

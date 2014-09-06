@@ -39,12 +39,12 @@ describe Submission do
     context 'when collecting format review files' do
       before { submission.status = 'collecting format review files' }
       context 'when there is a title' do
-        before { submission.title = 'title' }
         it 'is valid' do
           expect(submission).to be_valid
         end
       end
       context 'when there is no title' do
+        before { submission.title = nil }
         it 'is not valid' do
           expect(submission).to_not be_valid
         end
@@ -53,6 +53,7 @@ describe Submission do
     context 'when collecting program information' do
       before { submission.status = 'collecting program information' }
       context 'when there is no title' do
+        before { submission.title = nil }
         it 'is valid' do
           expect(submission).to be_valid
         end
