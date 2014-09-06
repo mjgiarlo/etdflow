@@ -10,7 +10,7 @@ class Admin::SubmissionsDashboardView
 
   def filters
     [
-      ("<a href='" + "#{@degree_type}/format_review_incomplete" + "'> Format Review is Incomplete <span>2</span></a>").html_safe
+      ("<a href='" + "/admin/#{@degree_type}/format_review_incomplete" + "'> Format Review is Incomplete <span>2</span></a>").html_safe
     ]
   end
 

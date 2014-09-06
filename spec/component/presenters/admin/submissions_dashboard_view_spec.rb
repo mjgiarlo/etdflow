@@ -1,4 +1,4 @@
-require 'component/component_spec_helper'
+require 'component/presenters/component_presenters_spec_helper'
 
 describe Admin::SubmissionsDashboardView do
 
@@ -16,7 +16,7 @@ describe Admin::SubmissionsDashboardView do
       2.times { create :submission, status: 'collecting committee' }
     end
     it "returns a set of links according to submission status" do
-      expect(view.filters).to eq ["<a href='something'> Format Review is Incomplete <span>2</span></a>"]
+      expect(view.filters).to eq ["<a href='#{admin_submissions_format_review_incomplete_path(degree_type)}'> Format Review is Incomplete <span>2</span></a>"]
     end 
   end
 
