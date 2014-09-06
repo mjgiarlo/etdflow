@@ -9,4 +9,8 @@ FactoryGirl.define do
     "description #{n}"
   end
 
+  sequence :title, 1000 do |n|
+    "title #{n}"
+  end
+
 end
