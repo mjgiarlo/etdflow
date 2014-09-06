@@ -105,8 +105,8 @@ describe Submission do
         create :submission, status: status 
       end
     end
-    it "returns submissions whose format reviews have not yet been approved" do
-      expect(Submission.format_review_is_incomplete.count).to eq 4
+    it "returns submissions whose format reviews have not yet been submitted or are currently rejected" do
+      expect(Submission.format_review_is_incomplete.count).to eq 3
     end
   end
 
