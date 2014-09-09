@@ -4,11 +4,13 @@ class Submission < ActiveRecord::Base
   belongs_to :program
   belongs_to :degree
 
-  has_many :committee_members
-  has_many :format_review_files
+  has_many :committee_members, dependent: :destroy
+  has_many :format_review_files, dependent: :destroy
 
   delegate :name, to: :program, prefix: :program
   delegate :name, to: :degree, prefix: :degree
+  delegate :first_name, to: :author, prefix: :author
+  delegate :last_name, to: :author, prefix: :author
 
   after_initialize :set_status_to_collecting_program_information
 
@@ -63,7 +65,9 @@ class Submission < ActiveRecord::Base
     }
   end
 
-  scope :format_review_is_incomplete, -> { }
+  scope :format_review_is_incomplete, -> {
+      where('status = ? OR status = ? OR status = ?', 'collecting program information', 'collecting committee', 'collecting format review files')
+  }
 
   def has_committee?
     if committee_members.any?

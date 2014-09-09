@@ -73,6 +73,18 @@ describe Submission do
     end
   end
 
+  describe '#author_first_name' do
+    it 'returns the first name of the associated author' do
+      expect(submission.author_first_name).to eq(submission.author.first_name)
+    end
+  end
+
+  describe '#author_last_name' do
+    it 'returns the last name of the associated author' do
+      expect(submission.author_last_name).to eq(submission.author.last_name)
+    end
+  end
+
   describe "Degree type scopes:" do
     Degree.degree_types_json.each do |type|
       symbol_name = type["parameter"].to_sym

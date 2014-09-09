@@ -27,18 +27,28 @@ Then(/^I should be able to navigate to all submissions by degree type/) do
   end
 end
 
-Given(/^an incomplete format review exists$/) do
-  create :submission, status: 'collecting committee'
+Given(/^two incomplete format review exists$/) do
+  @submissions = Array.new(2) { create :submission, status: 'collecting committee' }
 end
 
-Then(/^I should see the submission listed$/) do
-  pending # express the regexp above with the code you wish you had
+Then(/^I should see the submissions listed$/) do
+  @submissions.each do |submission|
+    expect(page).to have_content submission.title
+    expect(page).to have_content submission.author_last_name
+    expect(page).to have_content submission.author_first_name
+  end
 end
 
-Then(/^I should see a button to delete all selected submissions$/) do
-  pending # express the regexp above with the code you wish you had
+Then(/^I should see a button to delete selected$/) do
+  expect(page).to have_button 'Delete selected'
 end
 
-Then(/^I should no longer see my submission$/) do
-  pending # express the regexp above with the code you wish you had
+Then(/^I should no longer see the submissions$/) do
+  @submissions.each do |submission|
+    within '.admin-submissions-index' do
+      expect(page).to_not have_content submission.title
+      expect(page).to_not have_content submission.author_last_name
+      expect(page).to_not have_content submission.author_first_name
+    end
+  end
 end
