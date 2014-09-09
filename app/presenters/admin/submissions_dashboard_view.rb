@@ -10,8 +10,15 @@ class Admin::SubmissionsDashboardView
 
   def filters
     [
-      ("<a href='" + "/admin/#{@degree_type}/format_review_incomplete" + "'> Format Review is Incomplete <span>2</span></a>").html_safe
+      format_review_is_incomplete_filter
     ]
+  end
+
+  private
+
+  def format_review_is_incomplete_filter
+    submissions = Submission.send(@degree_type).format_review_is_incomplete
+    ("<a href='" + "/admin/#{@degree_type}/format_review_incomplete" + "'> Format Review is Incomplete <span>" + submissions.count.to_s + "</span></a>").html_safe unless submissions.empty?
   end
 
 end

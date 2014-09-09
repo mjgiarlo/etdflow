@@ -13,12 +13,12 @@ Feature: Manage submissions
     And I should be able to navigate to all submissions by degree type
 
   Scenario: Delete an incomplete format review
-    Given an incomplete format review exists
+    Given two incomplete format review exists
     And I go to the admin dashboard page
     When I click the "Format Review is Incomplete" link
-    Then I should see the submission listed
-    When I click the "Select All" link
-    Then I should see a button to delete all selected submissions
-    When I click the "Delete all selected submissions" button
+    Then I should see the submissions listed
+    When I click the "Select All" button
+    Then I should see a button to delete selected
+    When I click the "Delete selected" button
     Then I should be on the admin default type incomplete format review submissions page
-    And I should no longer see my submission
+    And I should no longer see the submissions
