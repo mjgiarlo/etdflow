@@ -31,7 +31,7 @@ Given(/^two incomplete format review exists$/) do
   @submissions = Array.new(2) { create :submission, status: 'collecting committee' }
 end
 
-Then(/^I should see the submissions listed$/) do
+Then(/^I should see the submission(?:s)? listed$/) do
   @submissions.each do |submission|
     expect(page).to have_content submission.title
     expect(page).to have_content submission.author_last_name
@@ -43,7 +43,7 @@ Then(/^I should see a button to delete selected$/) do
   expect(page).to have_button 'Delete selected'
 end
 
-Then(/^I should no longer see the submissions$/) do
+Then(/^I should no longer see the submission(?:s)?$/) do
   @submissions.each do |submission|
     within '.admin-submissions-index' do
       expect(page).to_not have_content submission.title
@@ -51,4 +51,25 @@ Then(/^I should no longer see the submissions$/) do
       expect(page).to_not have_content submission.author_first_name
     end
   end
+end
+
+Given(/^a submitted format review exists$/) do
+  @submissions = Array.new(1) {
+    submission = create :submission, :waiting_for_format_review_response
+    create_committee submission
+    create :format_review_file, submission: submission
+  }
+end
+
+When(/^I click the title of the submitted format review$/) do
+  click_link @submissions.first.title
+end
+
+Then(/^I should receive the format review PDF file$/) do
+  file = "attachment; filename=\"#{@submissions.first.filename}\""
+  expect(page.response_headers["Content-Disposition"]).to eq file
+end
+
+When(/^the file looks good$/) do
+  # Admin thinks the file is acceptable
 end
