@@ -22,3 +22,17 @@ Feature: Manage submissions
     When I click the "Delete selected" button
     Then I should be on the admin default type incomplete format review submissions page
     And I should no longer see the submissions
+
+  Scenario: Approve a submitted format review
+    Given a submitted format review exists
+    And I go to the admin dashboard page
+    And I click the "Format Review is Submitted" link
+    Then I should see the submission listed
+    When I click the title of the submitted format review
+    And I click the "format_review_file_01.pdf" link
+    Then I should receive the format review PDF file
+    And the file looks good
+    And I fill in "Format Review Notes to Student" with "It looks good"
+    And I click the "Approve Format Review" button
+    Then I should be on the format review submitted page
+    And I should no longer see the submission

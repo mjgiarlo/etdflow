@@ -15,6 +15,4 @@ module CommitteeFactory
 
 end
 
-RSpec.configure do |config|
-  config.include CommitteeFactory
-end
+World CommitteeFactory
