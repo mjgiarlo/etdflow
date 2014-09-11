@@ -11,6 +11,13 @@ describe Submission do
   specify { expect(subject).to have_db_column :updated_at }
   specify { expect(subject).to have_db_column :status }
   specify { expect(subject).to have_db_column :title }
+  specify { expect(subject).to have_db_column :format_review_notes }
+  specify { expect(subject).to have_db_column :final_submission_notes }
+  specify { expect(subject).to have_db_column :defended_at }
+  specify { expect(subject).to have_db_column :abstract }
+  specify { expect(subject).to have_db_column :keywords }
+  specify { expect(subject).to have_db_column :access_level }
+  specify { expect(subject).to have_db_column :has_agreed_to_terms }
 
   specify { expect(subject).to validate_presence_of :author_id }
   specify { expect(subject).to validate_presence_of :program_id }
