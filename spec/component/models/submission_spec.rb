@@ -81,6 +81,12 @@ describe Submission do
     end
   end
 
+  describe '#degree_type' do
+    it 'returns the degree_type of the associated degree' do
+      expect(submission.degree_type).to eq(submission.degree.degree_type)
+    end
+  end
+
   describe '#author_first_name' do
     it 'returns the first name of the associated author' do
       expect(submission.author_first_name).to eq(submission.author.first_name)
@@ -111,7 +117,14 @@ describe Submission do
         end
       end
     end
+  end
 
+  describe '#parameterized_degree_type' do
+    degree_type_symbol = Degree.default_degree_type.to_sym
+    let(:submission) { create :submission, degree_type_symbol }
+    it 'returns the parameterized version of the associated degrees degree type' do
+      expect(submission.parameterized_degree_type).to eq Degree.default_degree_type
+    end
   end
 
   describe '.format_review_is_incomplete' do

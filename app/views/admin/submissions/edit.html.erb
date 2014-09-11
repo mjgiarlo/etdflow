@@ -28,7 +28,7 @@
   </div>
 </div>
 
-<%= simple_form_for @submission, url: '#' do |f| %>
+<%= simple_form_for @submission, url: admin_submissions_format_review_response_path do |f| %>
 
   <div class="form-section-heading">Program Information
     <span class="hide-show-link" data-toggle="collapse" data-target="#program-information">[hide]</span>
@@ -90,6 +90,13 @@
         <%= render 'format_review_file_fields', file_fields: format_review_file %>
       <% end %>
     </div>
+  </div>
+
+  <%= f.input :format_review_notes, as: :text, label: 'Format Review Notes to Student' %>
+
+  <div class="form-group actions">
+    <%= f.button :submit, name: 'approved', class: "btn-primary", value: "Approve Format Review" %>
+    <%= link_to "Cancel", admin_submissions_format_review_submitted_path(@submission.degree_type) %>
   </div>
 
 <% end %>
