@@ -5,7 +5,7 @@ node(:data) do
     row = [
         submission.id,
         "<input type='checkbox' class='row-checkbox' />",
-        submission.title,
+        "<a href=#{admin_edit_submission_path(submission)}>#{submission.title}</a>",
         submission.author_last_name,
         submission.author_first_name
     ]

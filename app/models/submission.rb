@@ -68,6 +68,7 @@ class Submission < ActiveRecord::Base
   scope :format_review_is_incomplete, -> {
       where('status = ? OR status = ? OR status = ?', 'collecting program information', 'collecting committee', 'collecting format review files')
   }
+  scope :format_review_is_submitted, -> { where(status: 'waiting for format review response') }
 
   def has_committee?
     if committee_members.any?

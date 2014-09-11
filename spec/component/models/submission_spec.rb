@@ -122,6 +122,22 @@ describe Submission do
     end
   end
 
+  describe '.format_review_is_submitted' do
+    before do
+      [
+          'collecting program information',
+          'collecting committee',
+          'collecting format review files',
+          'waiting for format review response'
+      ].each do |status|
+        create :submission, status: status
+      end
+    end
+    it "returns submissions whose format reviews have been submitted for review" do
+      expect(Submission.format_review_is_submitted.count).to eq 1
+    end
+  end
+
   describe '.years' do
     it 'Returns an array containing the current year plus 3 more' do
       today = Date.today
