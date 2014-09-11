@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140905204616) do
+ActiveRecord::Schema.define(version: 20140911171644) do
 
   create_table "authors", force: true do |t|
     t.string   "access_id"
@@ -96,6 +96,13 @@ ActiveRecord::Schema.define(version: 20140905204616) do
     t.datetime "updated_at"
     t.string   "status"
     t.string   "title"
+    t.text     "format_review_notes"
+    t.text     "final_submission_notes"
+    t.datetime "defended_at"
+    t.text     "abstract"
+    t.text     "keywords"
+    t.string   "access_level"
+    t.boolean  "has_agreed_to_terms"
   end
 
   create_table "users", force: true do |t|
