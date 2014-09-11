@@ -10,6 +10,7 @@ describe Submission do
   specify { expect(subject).to have_db_column :created_at }
   specify { expect(subject).to have_db_column :updated_at }
   specify { expect(subject).to have_db_column :status }
+  specify { expect(subject).to have_db_column :title }
 
   specify { expect(subject).to validate_presence_of :author_id }
   specify { expect(subject).to validate_presence_of :program_id }
@@ -22,6 +23,7 @@ describe Submission do
   specify { expect(subject).to belong_to :program }
 
   specify { expect(subject).to have_many :committee_members }
+  specify { expect(subject).to have_many :format_review_files }
 
   specify { expect(subject).to ensure_inclusion_of(:semester).in_array(Submission::SEMESTERS) }
 
@@ -29,7 +31,35 @@ describe Submission do
 
   specify { expect(subject).to ensure_inclusion_of(:status).in_array(Submission.statuses) }
 
+  specify { expect(subject).to accept_nested_attributes_for :format_review_files }
+
   let(:submission) { create :submission }
+
+  describe 'validates presence of title' do
+    context 'when collecting format review files' do
+      before { submission.status = 'collecting format review files' }
+      context 'when there is a title' do
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there is no title' do
+        before { submission.title = nil }
+        it 'is not valid' do
+          expect(submission).to_not be_valid
+        end
+      end
+    end
+    context 'when collecting program information' do
+      before { submission.status = 'collecting program information' }
+      context 'when there is no title' do
+        before { submission.title = nil }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+    end
+  end
 
   describe '#program_name' do
     it 'returns the name of the associated program' do
@@ -43,7 +73,19 @@ describe Submission do
     end
   end
 
-  describe "Scopes:" do
+  describe '#author_first_name' do
+    it 'returns the first name of the associated author' do
+      expect(submission.author_first_name).to eq(submission.author.first_name)
+    end
+  end
+
+  describe '#author_last_name' do
+    it 'returns the last name of the associated author' do
+      expect(submission.author_last_name).to eq(submission.author.last_name)
+    end
+  end
+
+  describe "Degree type scopes:" do
     Degree.degree_types_json.each do |type|
       symbol_name = type["parameter"].to_sym
       let!(symbol_name) { create :submission, symbol_name }
@@ -60,6 +102,23 @@ describe Submission do
           expect(Submission.send method_name).to match_array(expected_relation)
         end
       end
+    end
+
+  end
+
+  describe '.format_review_is_incomplete' do
+    before do
+      [
+        'collecting program information',
+        'collecting committee',
+        'collecting format review files',
+        'waiting for format review response'
+      ].each do |status|
+        create :submission, status: status 
+      end
+    end
+    it "returns submissions whose format reviews have not yet been submitted or are currently rejected" do
+      expect(Submission.format_review_is_incomplete.count).to eq 3
     end
   end
 
@@ -215,72 +274,6 @@ describe Submission do
       end
       it 'returns true' do
         expect(submission.has_committee?).to be_true
-      end
-    end
-  end
-
-  describe '#collecting_committee!' do
-    context "when status is set to 'collecting program information'" do
-      before { submission.status = 'collecting program information' }
-      it "saves status as 'collecting committee'" do
-        submission.collecting_committee!
-        expect(submission.status).to eq('collecting committee')
-      end
-    end
-    context "when status has been set to 'collecting committee'" do
-      before { submission.status = 'collecting committee' }
-      it "does not change status" do
-        expect(submission.status).to eq('collecting committee')
-      end
-    end
-    context 'when status has been set to a different valid value' do
-      before { submission.status = 'collecting format review papers' }
-      it "raises an error" do
-        expect { submission.collecting_committee! }.to raise_error(Submission::InvalidTransition)
-      end
-    end
-  end
-
-  describe '#collecting_format_review_files!' do
-    context "when status has been set to 'collecting committee'" do
-      before { submission.status = 'collecting committee' }
-      it "saves status as 'collecting format review files'" do
-        submission.collecting_format_review_files!
-        expect(submission.status).to eq('collecting format review files')
-      end
-    end
-    context "when status has been set to 'collecting format review files'" do
-      before { submission.status = 'collecting format review files' }
-      it "does not change status" do
-        expect(submission.status).to eq('collecting format review files')
-      end
-    end
-    context 'when status has been set to a different valid value' do
-      before { submission.status = 'collecting program information' }
-      it "raises an error" do
-        expect { submission.collecting_format_review_files! }.to raise_error(Submission::InvalidTransition)
-      end
-    end
-  end
-
-  describe '#waiting_for_format_review_response!' do
-    context "when status has been set to 'collecting format review files'" do
-      before { submission.status = 'collecting format review files' }
-      it "saves status as 'waiting for format review response'" do
-        submission.waiting_for_format_review_response!
-        expect(submission.status).to eq('waiting for format review response')
-      end
-    end
-    context "when status has been set to 'waiting for format review response'" do
-      before { submission.status = 'waiting for format review response' }
-      it "does not change status" do
-        expect(submission.status).to eq('waiting for format review response')
-      end
-    end
-    context 'when status has been set to a different valid value' do
-      before { submission.status = 'collecting program information' }
-      it "raises an error" do
-        expect { submission.waiting_for_format_review_response! }.to raise_error(Submission::InvalidTransition)
       end
     end
   end

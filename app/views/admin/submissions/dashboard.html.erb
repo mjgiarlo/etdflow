@@ -1,16 +1,13 @@
 <div class="row">
   <div class="col-xs-12">
-    <h1>Admin Dashboard</h1>
+    <h1><%= @view.title %></h1>
   </div>
 </div>
 
 <div class="row">
   <div class="col-xs-12">
-    <ul>
-      <% @submissions.each do |submission| %>
-        <% submission_view = SubmissionView.new submission %>
-        <li><%= submission_view.name %></li>
-      <% end %>
-    </ul>
+    <% @view.filters.each do |filter| %>
+      <%= filter %>
+    <% end %>
   </div>
 </div>

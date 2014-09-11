@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h1 id="format-review-files-heading">Upload Format Review Files</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <%= simple_form_for [:author, @submission], url: author_submission_update_format_review_path do |f| %>
+      <%= f.input :title %>
+      <div class="links cocoon-links">
+        <label>Files<span class="required-astrisk">*</span></label>
+        <%= link_to_add_association f, :format_review_files,
+                                       class: 'btn btn-default btn-sm',
+                                       data: { association_insertion_node: '#format-review-file-fields', association_insertion_method: 'append' },
+                                       form_name: 'file_fields' do %>
+          <span class="glyphicon glyphicon-plus"></span> Additional File
+        <% end %>
+      </div>
+      <div id="format-review-file-fields">
+        <%= f.simple_fields_for :format_review_files do |format_review_file| %>
+          <%= render 'format_review_file_fields', file_fields: format_review_file %>
+        <% end %>
+      </div>
+
+      <div class="form-group actions">
+        <%= f.button :submit, class: "btn-primary", value: "Submit files for review" %>
+        <%= link_to "Cancel", author_root_path %>
+      </div>
+    <% end %>
+  </div>
+</div>

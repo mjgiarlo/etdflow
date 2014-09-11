@@ -110,7 +110,8 @@ Author.first(50).each do |author|
     degree: Degree.all.sample,
     semester: Submission::SEMESTERS.sample,
     year: Submission.years.sample,
-    status: 'collecting committee'
+    status: 'collecting committee',
+    title: Faker::Company.catch_phrase
   )
   @counter += 1
 end
