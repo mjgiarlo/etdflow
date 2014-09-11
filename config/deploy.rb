@@ -10,7 +10,7 @@ require 'capistrano-rbenv'
 require 'capistrano/ext/multistage'
 require 'capistrano-notification'
 
-set :application, "etdflow"
+set :application, "etda"
 
 set :scm, :git
 set :deploy_via, :remote_cache
