@@ -1,9 +1,10 @@
 Given(/^submissions exist for each type and status$/) do
   Degree.degree_types_json.each do |type|
     symbol_name = type["parameter"].to_sym
-    Submission.statuses.each do |status|
-      create :submission, symbol_name, status: status
-    end
+    create :submission, symbol_name, :collecting_program_information
+    create :submission, symbol_name, :collecting_committee
+    create :submission, symbol_name, :collecting_format_review_files
+    create :submission, symbol_name, :waiting_for_format_review_response
   end
 end
 

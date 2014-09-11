@@ -25,6 +25,10 @@ class Submission < ActiveRecord::Base
       presence: true,
       if: Proc.new { |s| s.collecting_format_review_files? }
 
+  validates :format_review_notes,
+      presence: true,
+      if: Proc.new { |s| s.beyond_collecting_format_review_files? }
+
   accepts_nested_attributes_for :committee_members
   accepts_nested_attributes_for :format_review_files
 
@@ -101,12 +105,20 @@ class Submission < ActiveRecord::Base
     status == 'waiting for format review response' ? true : false
   end
 
+  def collecting_final_submission_files?
+    status == 'collecting final submission files' ? true : false
+  end
+
   def beyond_collecting_committee?
     collecting_format_review_files? || beyond_collecting_format_review_files?
   end
 
   def beyond_collecting_format_review_files?
-    waiting_for_format_review_response?
+    waiting_for_format_review_response? || beyond_waiting_for_format_review_response?
+  end
+
+  def beyond_waiting_for_format_review_response?
+    collecting_final_submission_files?
   end
 
   private
