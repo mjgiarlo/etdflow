@@ -80,6 +80,12 @@ header {
   }
 }
 
+@media (min-width: 768px) {
+  #main-navigation {
+    margin-top: 28px;
+  }
+}
+
 #contact-information {
   @extend .small;
 
