@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     resources :programs, except: [:show, :destroy]
     resources :degrees,  except: [:show, :destroy]
     resources :authors,  except: [:new, :create, :show, :destroy]
+
+    get '/submissions/:id/edit', to: 'submissions#edit', as: :edit_submission
+
     get '/:degree_type', to: 'submissions#dashboard', as: :submissions_dashboard
 
     get '/:degree_type/format_review_incomplete', to: 'submissions#format_review_incomplete', as: :submissions_format_review_incomplete

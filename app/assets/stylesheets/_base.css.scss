@@ -135,6 +135,23 @@ form {
   }
 }
 
+.committee-member-fields {
+  margin-bottom: 5px;
+
+  .input-group {
+    margin-bottom: 10px;
+
+    .input-group-addon {
+      background-color: #fafafa;
+    }
+
+    .form-control {
+      border-bottom-right-radius: $border-radius-base;
+      border-top-right-radius: $border-radius-base;
+    }
+  }
+}
+
 #format-review-files-heading {
   padding-right: 120px;
 }

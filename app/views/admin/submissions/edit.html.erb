@@ -1,0 +1,95 @@
+<h2><%# @submission_form.page_title %></h2>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="form-section-heading">Author Information
+      <span class="hide-show-link" data-toggle="collapse" data-target="#author-information">[hide]</span>
+    </div>
+    <div id="author-information" class="form-section-body collapse in">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <p>
+            <%= @submission.author.full_name %><br />
+            <%= @submission.author.address_1 %><br />
+            <% if @submission.author.address_2.present? %>
+              <%= @submission.author.address_2 %><br />
+            <% end %>
+            <%= @submission.author.city %>, <%= @submission.author.state %> <%= @submission.author.zip %><br />
+          </p>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <p>
+            <strong>Phone:</strong> <%= @submission.author.phone_number %> <br />
+            <strong>Alternate email:</strong> <%= @submission.author.alternate_email_address %><br />
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= simple_form_for @submission, url: '#' do |f| %>
+
+  <div class="form-section-heading">Program Information
+    <span class="hide-show-link" data-toggle="collapse" data-target="#program-information">[hide]</span>
+  </div>
+  <div id="program-information" class="form-section-body collapse in">
+    <%= f.input :program_id, label: 'Program', collection: Program.all, prompt: "Please Select" %>
+    <%= f.input :degree_id, label: 'Degree', collection: Degree.all, prompt: "Please Select" %>
+    <%= f.input :semester, label: 'Semester Intending to Graduate', collection: Submission::SEMESTERS, prompt: "Please Select" %>
+    <%= f.input :year, label: 'Graduation Year', collection: Submission.years, prompt: "Please Select" %>
+  </div>
+
+  <div class="form-section-heading">Committee
+    <span class="hide-show-link" data-toggle="collapse" data-target="#committee">[hide]</span>
+  </div>
+  <div id="committee" class="form-section-body collapse in">
+    <%= f.simple_fields_for :committee_members do |cmf| %>
+      <fieldset class="committee-member-fields">
+        <%= cmf.input :is_advisor, as: :hidden %>
+        <%= cmf.input :role, as: :hidden %>
+        <div class="row ">
+          <div class="col-xs-12">
+            <label class="role-label"><%= cmf.object.role %>
+              <span title="require" class="required-asterisk">*</span></label>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="input-group">
+              <span class="input-group-addon">Name</span>
+              <%= cmf.input :name, label: false %>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="input-group">
+              <span class="input-group-addon">Email</span>
+              <%= cmf.input :email, label: false %>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
+
+  <div class="form-section-heading">Format Review Files
+    <span class="hide-show-link" data-toggle="collapse" data-target="#format-review-file">[hide]</span>
+  </div>
+  <div id="format-review-file" class="form-section-body collapse in">
+    <%= f.input :title %>
+
+    <div class="links cocoon-links">
+      <label>Files<span class="required-astrisk">*</span></label>
+      <%= link_to_add_association f, :format_review_files,
+          class: 'btn btn-default btn-sm',
+          data: { association_insertion_node: '#format-review-file-fields', association_insertion_method: 'append' },
+          form_name: 'file_fields' do %>
+        <span class="glyphicon glyphicon-plus"></span> Additional File
+      <% end %>
+    </div>
+    <div id="format-review-file-fields">
+      <%= f.simple_fields_for :format_review_files do |format_review_file| %>
+        <%= render 'format_review_file_fields', file_fields: format_review_file %>
+      <% end %>
+    </div>
+  </div>
+
+<% end %>
