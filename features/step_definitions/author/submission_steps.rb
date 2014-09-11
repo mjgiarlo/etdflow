@@ -20,7 +20,7 @@ Then(/^My program information progress indicator should be updated$/) do
   within '#submission-1' do
     within '.step.step-1' do
       expect(page).to have_link '[update]'
-      expect(page).to have_content "completed on #{Date.today.strftime('%B %e, %Y')}"
+      expect(page).to have_content "completed on #{Time.zone.now.strftime('%B %e, %Y')}"
     end
   end
 end
@@ -28,7 +28,8 @@ end
 Given(/^I have started a submission$/) do
   step "I have confirmed my contact information"
   author = Author.where(access_id: 'etdflow').first
-  create :submission, author: author
+  s = create :submission, author: author
+  s.update_attribute :status, "collecting committee"
 end
 
 When(/^I provide my committee$/) do
@@ -53,12 +54,17 @@ Then /^I should now be on "(.*?)" "(.*?)"$/ do |step, name|
 end
 
 When(/^I choose my Format Review files$/) do
-  attach_file 'Files', [fixture('format_review_file_01.pdf'), fixture('format_review_file_02.pdf')]
+  expect(page).to have_css '#format-review-file-fields .nested-fields:first-child input[type="file"]'
+  first_input_id = first('#format-review-file-fields .nested-fields:first-child input[type="file"]')[:id]
+  attach_file first_input_id, fixture('format_review_file_01.pdf')
+  click_link 'Additional File'
+  expect(page).to have_css '#format-review-file-fields .nested-fields:first-child + .nested-fields input[type="file"]'
+  second_input_id = first('#format-review-file-fields .nested-fields:first-child + .nested-fields input[type="file"]')[:id]
+  attach_file second_input_id, fixture('format_review_file_02.pdf')
 end
 
 Then(/^The system should save my files$/) do
-  expect(MockDepositor.saved_files).to include('format_review_file_01.pdf')
-  expect(MockDepositor.saved_files).to include('format_review_file_02.pdf')
+  expect(FormatReviewFile.count).to eq 2
 end
 
 Then(/^I should see that my Format Review is in process$/) do

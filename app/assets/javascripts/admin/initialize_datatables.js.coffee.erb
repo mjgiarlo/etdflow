@@ -49,6 +49,22 @@ setup_datatables = () ->
     common_options
   )
 
+  $('.admin-submissions-index.datatable').dataTable(
+      admin_submission_options = {
+        "columns": [
+          { "orderable": false },
+          { "orderable": false },
+          null,
+          null,
+          null
+        ],
+        rowCallback: (row, submission_data) ->
+          id = submission_data[0]
+          $(row).attr('data-submission-id', id)
+      }
+      $.extend(admin_submission_options, common_options)
+  )
+
   $('div.dataTables_filter input').attr('placeholder', 'Search records...')
 
 $(document).on('page:load ready', setup_datatables)

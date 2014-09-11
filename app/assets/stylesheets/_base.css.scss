@@ -128,3 +128,42 @@ form {
     margin-top: 30px;
   }
 }
+
+#format-review-files-heading {
+  padding-right: 120px;
+}
+
+.cocoon-links {
+  @extend .clearfix;
+
+  .add_fields {
+    margin-bottom: 10px;
+    float: right;
+  }
+}
+
+.nested-fields {
+  position: relative;
+
+  .form-group {
+    padding-right: 40px;
+  }
+
+  .remove_fields {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+  }
+}
+
+@media (max-width: 400px) {
+  #format-review-files-heading {
+    padding-right: 0px;
+  }
+  .cocoon-links {
+    .add_fields {
+      margin-top: 0px;
+      float: none;
+    }
+  }
+}

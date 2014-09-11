@@ -145,23 +145,18 @@
 }
 
 .committee-member-fields {
-  border-bottom: 1px dotted $gray-lighter;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 
-  .committee_committee_members_role {
-    @extend .clearfix;
-    margin: 0px;
+  .input-group {
+    margin-bottom: 10px;
+
+    .input-group-addon {
+      background-color: #f6f6f6;
+    }
 
     .form-control {
-      width: auto;
-      height: auto;
-      background: rgba(0, 0, 0, 0);
-      border: 0px;
-      box-shadow: none;
-      padding: 0px;
-      cursor: text;
-      @extend .h4;
+      border-bottom-right-radius: $border-radius-base;
+      border-top-right-radius: $border-radius-base;
     }
   }
 }

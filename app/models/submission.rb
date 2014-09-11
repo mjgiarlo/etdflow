@@ -1,14 +1,16 @@
 class Submission < ActiveRecord::Base
-  class InvalidTransition < Exception; end
 
   belongs_to :author
   belongs_to :program
   belongs_to :degree
 
-  has_many :committee_members
+  has_many :committee_members, dependent: :destroy
+  has_many :format_review_files, dependent: :destroy
 
   delegate :name, to: :program, prefix: :program
   delegate :name, to: :degree, prefix: :degree
+  delegate :first_name, to: :author, prefix: :author
+  delegate :last_name, to: :author, prefix: :author
 
   after_initialize :set_status_to_collecting_program_information
 
@@ -17,6 +19,12 @@ class Submission < ActiveRecord::Base
                         :degree_id,
                         :semester,
                         :year
+
+  validates :title,
+      presence: true,
+      if: Proc.new { |s| s.collecting_format_review_files? }
+
+  accepts_nested_attributes_for :format_review_files
 
   SEMESTERS = [
                 'Fall',
@@ -43,7 +51,8 @@ class Submission < ActiveRecord::Base
       'collecting program information',
       'collecting committee',
       'collecting format review files',
-      'waiting for format review response'
+      'waiting for format review response',
+      'collecting final submission files'
     ]
   end
 
@@ -55,6 +64,10 @@ class Submission < ActiveRecord::Base
       joins(:degree).where('degrees.degree_type' => type["singular"])
     }
   end
+
+  scope :format_review_is_incomplete, -> {
+      where('status = ? OR status = ? OR status = ?', 'collecting program information', 'collecting committee', 'collecting format review files')
+  }
 
   def has_committee?
     if committee_members.any?
@@ -86,39 +99,6 @@ class Submission < ActiveRecord::Base
 
   def beyond_collecting_format_review_files?
     waiting_for_format_review_response?
-  end
-
-  def collecting_committee!
-    new_status = 'collecting committee'
-    if collecting_program_information?
-      update_attribute :status, new_status
-    elsif status == new_status
-      return
-    else
-      raise InvalidTransition
-    end
-  end
-
-  def collecting_format_review_files!
-    new_status = 'collecting format review files'
-    if collecting_committee?
-      update_attribute :status, new_status
-    elsif status == new_status
-      return
-    else
-      raise InvalidTransition
-    end
-  end
-
-  def waiting_for_format_review_response!
-    new_status = 'waiting for format review response'
-    if collecting_format_review_files?
-      update_attribute :status, new_status
-    elsif status == new_status
-      return
-    else
-      raise InvalidTransition
-    end
   end
 
   private

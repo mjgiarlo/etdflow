@@ -13,3 +13,6 @@
 
 # Ignore jetty directory (development fedora and solr environment)
 /jetty
+
+# Files that have been uploaded via the web interface
+/public/uploads

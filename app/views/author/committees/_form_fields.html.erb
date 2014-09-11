@@ -2,15 +2,22 @@
   <fieldset class="committee-member-fields">
     <%= cmf.input :submission_id, as: :hidden %>
     <%= cmf.input :is_advisor, as: :hidden %>
+    <%= cmf.input :role, as: :hidden %>
     <div class="row ">
       <div class="col-xs-12">
-        <%= cmf.input :role, label: false, input_html: { readonly: true } %>
+        <label class="role-label"><%= cmf.object.role %><span title="require" class="required-asterisk">*</span></label>
       </div>
       <div class="col-xs-12 col-sm-6">
-        <%= cmf.input :name, label: 'Name' %>
+        <div class="input-group">
+          <span class="input-group-addon">Name</span>
+          <%= cmf.input :name, label: false %>
+        </div>
       </div>
       <div class="col-xs-12 col-sm-6">
-        <%= cmf.input :email, label: 'Email' %>
+        <div class="input-group">
+          <span class="input-group-addon">Email</span>
+          <%= cmf.input :email, label: false %>
+        </div>
       </div>
     </div>
   </fieldset>

@@ -9,6 +9,11 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
+  config.before(:each, :js => true) do
+    # Use truncation so that other processes (e.g. phantomjs) see the same thing
+    DatabaseCleaner.strategy = :truncation
+  end
+
   config.before(:each) do
     # Begin transaction
     DatabaseCleaner.start

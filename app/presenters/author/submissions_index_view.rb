@@ -1,4 +1,4 @@
-class SubmissionsIndexView
+class Author::SubmissionsIndexView
   attr_reader :submissions
 
   def initialize(author)

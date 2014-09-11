@@ -43,6 +43,14 @@ gem 'simple_form', '3.1.0.rc1'
 # Ruby templating system for generating JSON
 gem 'rabl'
 
+# File uploads
+gem 'carrierwave'
+
+# For image resizing
+gem 'mini_magick'
+
+# Easily handle nested forms
+gem 'cocoon'
 
 group :development do
 
@@ -53,8 +61,11 @@ group :development do
   # Deploy to multiple environments
   gem 'capistrano-ext'
 
-  # Useful recipes for generalizing deployment behavior
-  gem 'capistrano-helpers'
+  # rbenv support for capistrano
+  gem 'capistrano-rbenv'
+
+  # Mention deployment on IRC
+  gem 'capistrano-notification'
 
   # Used to seed the development database
   gem 'ffaker'

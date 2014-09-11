@@ -74,3 +74,40 @@ table {
     }
   }
 }
+
+table.dataTable {
+  &.admin-submissions-index {
+    tbody {
+      tr {
+        td:first-child {
+          display: none;
+        }
+      }
+    }
+    thead {
+      tr {
+        th:first-child {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+#bulk-actions {
+  display: none;
+  border-top: 1px solid $gray-lighter;
+  border-bottom: 1px solid $gray-lighter;
+  background: #fcfcfc;
+  padding: 5px 10px 15px;
+  margin-bottom: 15px;
+}
+
+#row-selection-buttons {
+  margin-bottom: 10px;
+
+  .btn:focus {
+    background-color: #fff;
+    outline: 0;
+  }
+}
