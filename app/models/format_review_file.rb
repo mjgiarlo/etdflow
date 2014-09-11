@@ -1,6 +1,6 @@
 class FormatReviewFile < ActiveRecord::Base
 
-  validates :submission_id, :filename, Presence: true
+  validates :submission_id, :filename, presence: true
 
   belongs_to :submission
 
