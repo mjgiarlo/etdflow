@@ -111,3 +111,57 @@ table.dataTable {
     outline: 0;
   }
 }
+
+.panel {
+
+  &.filter {
+    display: block;
+    color: $text-color;
+
+    .panel-heading {
+      background-color: $navbar-default-bg;
+      border-color: $link-color;
+
+      .panel-title {
+        color: $link-color;
+
+        .badge {
+          background-color: $link-color;
+          color: #fff;
+        }
+      }
+    }
+
+    &:hover {
+      color: $gray;
+      text-decoration: none;
+      box-shadow: 0px 1px 4px rgba(0,0,0,0.3);
+
+      .panel-heading {
+        background-color: #e6e6e6;
+        border-color: $link-hover-color;
+
+        .panel-title {
+          color: $link-hover-color;
+        }
+      }
+    }
+  }
+
+  &.no-submissions {
+    color: #ccc;
+
+    .panel-heading {
+      background-color: #fff;
+
+      .panel-title {
+        color: #ccc;
+
+        .badge {
+          background-color: #ccc;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
