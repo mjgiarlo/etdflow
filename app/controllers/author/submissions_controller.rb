@@ -70,7 +70,6 @@ class Author::SubmissionsController < AuthorController
     status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.can_upload_format_review_files?
     @submission.update_attributes!(format_review_params)
-    status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.waiting_for_format_review_response!
     redirect_to author_root_path
     flash[:notice] = 'Format review files uploaded succcessfully.'
