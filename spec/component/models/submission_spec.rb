@@ -69,6 +69,33 @@ describe Submission do
     end
   end
 
+  describe 'validates presence of format review notes' do
+    context 'when beyond collecting format review files' do
+      before { submission.stub(beyond_collecting_format_review_files?: true) }
+      context 'when there are format review notes' do
+        before { submission.format_review_notes = "Looks good!" }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there are no format review notes' do
+        before { submission.format_review_notes = nil }
+        it 'is not valid' do
+          expect(submission).to_not be_valid
+        end
+      end
+    end
+    context 'when collecting program information' do
+      before { submission.status = 'collecting program information' }
+      context 'when there are no format review notes' do
+        before { submission.format_review_notes = nil }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+    end
+  end
+
   describe '#program_name' do
     it 'returns the name of the associated program' do
       expect(submission.program_name).to eq(submission.program.name)
@@ -129,14 +156,10 @@ describe Submission do
 
   describe '.format_review_is_incomplete' do
     before do
-      [
-        'collecting program information',
-        'collecting committee',
-        'collecting format review files',
-        'waiting for format review response'
-      ].each do |status|
-        create :submission, status: status 
-      end
+      create :submission, :collecting_program_information
+      create :submission, :collecting_committee
+      create :submission, :collecting_format_review_files
+      create :submission, :waiting_for_format_review_response
     end
     it "returns submissions whose format reviews have not yet been submitted or are currently rejected" do
       expect(Submission.format_review_is_incomplete.count).to eq 3
@@ -145,14 +168,10 @@ describe Submission do
 
   describe '.format_review_is_submitted' do
     before do
-      [
-          'collecting program information',
-          'collecting committee',
-          'collecting format review files',
-          'waiting for format review response'
-      ].each do |status|
-        create :submission, status: status
-      end
+      create :submission, :collecting_program_information
+      create :submission, :collecting_committee
+      create :submission, :collecting_format_review_files
+      create :submission, :waiting_for_format_review_response
     end
     it "returns submissions whose format reviews have been submitted for review" do
       expect(Submission.format_review_is_submitted.count).to eq 1
@@ -226,6 +245,21 @@ describe Submission do
     end
   end
 
+  describe '#collecting_final_submission_files?' do
+    context "when status is set to another valid value" do
+      before { submission.status = 'collecting program information' }
+      it "returns false" do
+        expect(submission).to_not be_collecting_final_submission_files
+      end
+    end
+    context "when status is set to 'collecting final submission files'" do
+      before { submission.status = "collecting final submission files" }
+      it "returns true" do
+        expect(submission).to be_collecting_final_submission_files
+      end
+    end
+  end
+
   describe '#beyond_collecting_committee?' do
     context "when status is beyond 'collecting committee'" do
       context "when status is 'collecting format review files'" do
@@ -236,6 +270,30 @@ describe Submission do
       end
       context "when status is 'waiting for format review response'" do
         before { submission.status = 'waiting for format review response' }
+        it "returns true" do
+          expect(submission).to be_beyond_collecting_committee
+        end
+      end
+      context "when status is 'collecting final submission files'" do
+        before { submission.status = 'collecting final submission files' }
+        it "returns true" do
+          expect(submission).to be_beyond_collecting_committee
+        end
+      end
+      pending "when status is 'waiting for final submission response'" do
+        before { submission.status = 'waiting for final submission response' }
+        it "returns true" do
+          expect(submission).to be_beyond_collecting_committee
+        end
+      end
+      pending "when status is 'waiting for publication release'" do
+        before { submission.status = 'waiting for publication release' }
+        it "returns true" do
+          expect(submission).to be_beyond_collecting_committee
+        end
+      end
+      pending "when status is 'released for publication'" do
+        before { submission.status = 'waiting for final submission response' }
         it "returns true" do
           expect(submission).to be_beyond_collecting_committee
         end
@@ -263,6 +321,30 @@ describe Submission do
     context "when status is beyond 'collecting format review files'" do
       context "when status is 'waiting for format review response'" do
         before { submission.status = 'waiting for format review response' }
+        it "returns true" do
+          expect(submission).to be_beyond_collecting_format_review_files
+        end
+      end
+      context "when status is 'collecting final submission files'" do
+        before { submission.status = 'collecting final submission files' }
+        it "returns true" do
+          expect(submission).to be_beyond_collecting_format_review_files
+        end
+      end
+      pending "when status is 'waiting for final submission response'" do
+        before { submission.status = 'waiting for final submission response' }
+        it "returns true" do
+          expect(submission).to be_beyond_collecting_format_review_files
+        end
+      end
+      pending "when status is 'waiting for publication release'" do
+        before { submission.status = 'waiting for publication release' }
+        it "returns true" do
+          expect(submission).to be_beyond_collecting_format_review_files
+        end
+      end
+      pending "when status is 'released for publication'" do
+        before { submission.status = 'waiting for final submission response' }
         it "returns true" do
           expect(submission).to be_beyond_collecting_format_review_files
         end

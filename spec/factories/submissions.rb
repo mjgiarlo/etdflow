@@ -29,6 +29,7 @@ FactoryGirl.define do
 
     trait :waiting_for_format_review_response do
       status "waiting for format review response"
+      format_review_notes "Format review notes"
     end
 
   end
