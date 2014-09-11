@@ -1,4 +1,10 @@
 <div class="nested-fields">
-  <%= file_fields.input :filename, as: :file, label: false %>
-  <%= link_to_remove_association "&times;".html_safe, file_fields, class: 'btn btn-default btn-sm btn-danger' %>
+  <div class="nested-fields">
+    <% if file_fields.object.filename? %>
+      <%= link_to file_fields.object.filename_identifier, file_fields.object.filename_url  %>
+    <% else %>
+      <%= file_fields.input :filename, as: :file, label: false %>
+    <% end %>
+    <%= link_to_remove_association "&times;".html_safe, file_fields, class: 'btn btn-default btn-sm btn-danger' %>
+  </div>
 </div>
