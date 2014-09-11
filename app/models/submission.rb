@@ -24,6 +24,7 @@ class Submission < ActiveRecord::Base
       presence: true,
       if: Proc.new { |s| s.collecting_format_review_files? }
 
+  accepts_nested_attributes_for :committee_members
   accepts_nested_attributes_for :format_review_files
 
   SEMESTERS = [
