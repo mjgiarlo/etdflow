@@ -55,21 +55,19 @@ end
 
 Given(/^a submitted format review exists$/) do
   def make_submission
-    submission = create :submission, :waiting_for_format_review_response
-    create_committee submission
-    create :format_review_file, submission: submission
-    submission
+    create :submission, :waiting_for_format_review_response
   end
   @submissions = [make_submission]
+  @committee = create_committee @submissions.first
+  @file = create :format_review_file, submission: @submissions.first
 end
 
 When(/^I click the title of the submitted format review$/) do
   click_link @submissions.first.title
 end
 
-Then(/^I should receive the format review PDF file$/) do
-  file = "attachment; filename=\"#{@submissions.first.filename}\""
-  expect(page.response_headers["Content-Disposition"]).to eq file
+Then(/^I should see a link to view the PDF file/) do
+  expect(page).to have_link(@file.filename_identifier, { href: @file.filename_url })
 end
 
 When(/^the file looks good$/) do

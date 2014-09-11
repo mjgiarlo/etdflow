@@ -79,4 +79,16 @@ class SubmissionStatusGiver
     end
   end
 
+  def collecting_final_submission_files!
+    s = @submission
+    new_status = 'collecting final submission files'
+    if s.waiting_for_format_review_response?
+      s.update_attribute :status, new_status
+    elsif s.status == new_status
+      return
+    else
+      raise InvalidTransition
+    end
+  end
+
 end

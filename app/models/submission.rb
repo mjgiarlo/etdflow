@@ -9,6 +9,7 @@ class Submission < ActiveRecord::Base
 
   delegate :name, to: :program, prefix: :program
   delegate :name, to: :degree, prefix: :degree
+  delegate :degree_type, to: :degree
   delegate :first_name, to: :author, prefix: :author
   delegate :last_name, to: :author, prefix: :author
 
@@ -58,6 +59,11 @@ class Submission < ActiveRecord::Base
   end
 
   validates :status, inclusion: { in: statuses }
+
+  def parameterized_degree_type
+    matching_degree_type = Degree.degree_types_json.find { |type| type['singular'] == degree_type }
+    matching_degree_type['parameter']
+  end
 
   Degree.degree_types_json.each do |type|
     symbol_name = type["parameter"].to_sym
