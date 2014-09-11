@@ -54,11 +54,13 @@ Then(/^I should no longer see the submission(?:s)?$/) do
 end
 
 Given(/^a submitted format review exists$/) do
-  @submissions = Array.new(1) {
+  def make_submission
     submission = create :submission, :waiting_for_format_review_response
     create_committee submission
     create :format_review_file, submission: submission
-  }
+    submission
+  end
+  @submissions = [make_submission]
 end
 
 When(/^I click the title of the submitted format review$/) do

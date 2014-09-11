@@ -4,37 +4,6 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-xs-12">
-    <div id="bulk-actions">
-      <h5>Bulk Actions <span class="small"><span class="number-of-selected-rows"></span> submissions selected ( <span class="number-of-visible-selected-rows"></span> visible )</span></h5>
+<%= render 'bulk_actions' %>
 
-      <div class="actions">
-          <%# link_to 'Delete selected', admin_submissions_delete_format_review_incomplete_path, method: 'delete', class: 'btn btn-danger' %>
-          <%= button_to 'Delete selected', admin_submissions_delete_format_review_incomplete_path,
-              method: 'delete',
-              params: { submission_ids: '' },
-              data: { confirm: "Are you sure you want to permanently delete the selected submission(s)?" },
-              class: 'btn btn-danger' %>
-      </div>
-    </div>
-    <div id="row-selection-buttons">
-      <button class="select-all-button btn btn-sm btn-default">Select All</button>
-      <button class="deselect-all-button btn btn-sm btn-default">Deselect All</button>
-      <button class="select-visible-button btn btn-sm btn-default">Select Visible</button>
-      <button class="deselect-visible-button btn btn-sm btn-default">Deselect Visible</button>
-    </div>
-  </div>
-</div>
-
-<table id="incomplete-format-review-submissions-index" class="table table-striped admin-submissions-index datatable" data-ajax-url="<%= admin_submissions_format_review_incomplete_path %>">
-  <thead>
-    <tr>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
-      <th>Title</th>
-      <th>Last Name</th>
-      <th>First Name</th>
-    </tr>
-  </thead>
-</table>
+<%= render partial: 'table', locals: { id: 'incomplete-format-review-submissions-index', ajax_url: admin_submissions_format_review_incomplete_path } %>
