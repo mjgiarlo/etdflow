@@ -5,7 +5,7 @@ describe SubmissionView do
   let(:submission) { create :submission }
   let(:view) { SubmissionView.new submission }
 
-  describe '#name' do
+  describe '#formatted_program_information' do
     let(:program) { create :program, name: 'Phys Ed.' }
     let(:degree) { create :degree, name: 'Doctorate' }
     let(:submission) { create :submission, program: program,
@@ -13,7 +13,28 @@ describe SubmissionView do
                                            semester: 'Spring',
                                            year: Date.new(2016, 06, 01).year }
     it "returns a formatted name for the submission" do
-      expect(view.name).to eq 'Phys Ed. Doctorate - Spring 2016'
+      expect(view.formatted_program_information).to eq 'Phys Ed. Doctorate - Spring 2016'
+    end
+  end
+
+  describe '#delete_link' do
+    context "when step two is the current step" do
+      before { submission.status = 'collecting committee' }
+      it "returns a link to delete the submission" do
+        expect(view.delete_link).to eq "<span class='delete-link'><a href='#{author_submission_path(submission)}' class='text-danger' data-method='delete' data-confirm='Permanently delete this submission?' rel='nofollow' >[delete]</a></span>"
+      end
+    end
+    context "when step three is the current step" do
+      before { submission.status = 'collecting format review files' }
+      it "returns a link to delete the submission" do
+        expect(view.delete_link).to eq "<span class='delete-link'><a href='#{author_submission_path(submission)}' class='text-danger' data-method='delete' data-confirm='Permanently delete this submission?' rel='nofollow' >[delete]</a></span>"
+      end
+    end
+    context 'when the submission is beyond step three' do
+      before { submission.stub(beyond_collecting_format_review_files?: true) }
+      it "returns an empty string" do
+        expect(view.delete_link).to eq ''
+      end
     end
   end
 

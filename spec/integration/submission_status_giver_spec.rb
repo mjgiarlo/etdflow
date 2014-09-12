@@ -64,6 +64,7 @@ describe 'Submission status transitions', js: true do
       let!(:degree) { create :degree, name: 'Master of Science' }
       before do
         visit new_author_submission_path
+        fill_in 'Title', with: 'A unique test title'
         select program.name, from: 'Program'
         select degree.name, from: 'Degree'
         select 'Fall', from: 'Semester Intending to Graduate'
@@ -71,7 +72,7 @@ describe 'Submission status transitions', js: true do
         click_button 'Save Program Information'
       end
       specify "submission status updates to 'collecting committee'" do
-        new_submission = Submission.where(program: program, degree: degree).first
+        new_submission = Submission.where(program: program, degree: degree, title: 'A unique test title').first
         expect(new_submission.status).to eq 'collecting committee'
       end
     end
