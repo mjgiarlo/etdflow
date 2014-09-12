@@ -16,6 +16,10 @@ class Admin::SubmissionsController < AdminController
     @submissions = Submission.send(params[:degree_type]).format_review_is_submitted
   end
 
+  def final_submission_incomplete
+    @submissions = Submission.send(params[:degree_type]).final_submission_is_incomplete
+  end
+
   def bulk_destroy
     ids = params[:submission_ids].split(',')
     Submission.destroy(ids)
