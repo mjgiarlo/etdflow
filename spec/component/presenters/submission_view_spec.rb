@@ -209,4 +209,64 @@ describe SubmissionView do
     end
   end
 
+  describe 'step five: Upload Final Submission files' do
+    describe '#step_five_class' do
+      context "when the submission is before step five" do
+        before { submission.stub(beyond_waiting_for_format_review_response?: false) }
+        it "returns an empty string" do
+          expect(view.step_five_class).to eq ''
+        end
+      end
+      context "when step five is the current step" do
+        before { submission.status = 'collecting final submission files' }
+        it "returns 'current'" do
+          expect(view.step_five_class).to eq 'current'
+        end
+      end
+      context "when step five has been completed" do
+        before { submission.stub(beyond_collecting_final_submission_files?: true) }
+        it "returns 'complete'" do
+          expect(view.step_five_class).to eq 'complete'
+        end
+      end
+    end
+
+    describe '#step_five_description' do
+      context "when the submission is before step five" do
+        before { submission.stub(beyond_waiting_for_format_review_response?: false) }
+        it "returns the step five label" do
+          expect(view.step_five_description).to eq 'Upload Final Submission files'
+        end
+      end
+      context "when step five is the current step" do
+        before { submission.status = 'collecting final submission files' }
+        it "returns a link to complete step five" do
+         #expect(view.step_five_description).to eq "<a href='#{author_submission_final_submission_path(submission)}'>Upload Final Submission files</a>"
+          expect(view.step_five_description).to eq "<a href='#'>Upload Final Submission files</a>"
+        end
+      end
+      context "when step five has been completed" do
+        before { submission.stub(beyond_collecting_final_submission_files?: true) }
+        it "returns a link to review the files" do
+          expect(view.step_five_description).to eq "Upload Final Submission files <a href='#' class='small'>[review]</a>"
+        end
+      end
+    end
+
+    describe '#step_five_status' do
+      context "when the submission is before step five" do
+        before { submission.stub(beyond_waiting_for_format_review_response?: false) }
+        it 'returns an empty string' do
+          expect(view.step_five_status).to eq ''
+        end
+      end
+      context 'when step five has been completed' do
+        before { submission.stub(beyond_collecting_final_submission_files?: true) }
+        it 'returns completed' do
+          expect(view.step_five_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> completed"
+        end
+      end
+    end
+  end
+
 end

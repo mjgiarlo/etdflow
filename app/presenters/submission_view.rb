@@ -101,4 +101,32 @@ class SubmissionView < SimpleDelegator
     end
   end
 
+  def step_five_class
+    if collecting_final_submission_files?
+      'current'
+    elsif beyond_collecting_final_submission_files?
+      'complete'
+    else
+      ''
+    end
+  end
+
+  def step_five_description
+    if collecting_final_submission_files?
+      ("<a href='" + "/author/submissions/#{id}/final_submission" + "'>Upload Final Submission files</a>").html_safe
+    elsif beyond_collecting_final_submission_files?
+      ("Upload Final Submission files <a href='#' class='small'>[review]</a>").html_safe
+    else
+      'Upload Final Submission files'
+    end
+  end
+
+  def step_five_status
+    if beyond_collecting_final_submission_files?
+      "<span class='glyphicon glyphicon-ok-circle'></span> completed".html_safe
+    else
+      ''
+    end
+  end
+
 end
