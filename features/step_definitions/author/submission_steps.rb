@@ -118,6 +118,8 @@ When(/^My Format Review is approved$/) do
   s.save!
   status_giver = SubmissionStatusGiver.new(s)
   status_giver.collecting_final_submission_files!
+  expect(s.beyond_waiting_for_format_review_response?).to be_true
+  visit author_submissions_path
 end
 
 Then(/^My Format Review approval progress indicator should be updated$/) do

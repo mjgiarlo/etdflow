@@ -83,6 +83,8 @@ class SubmissionView < SimpleDelegator
   def step_four_class
     if waiting_for_format_review_response?
       'current'
+    elsif beyond_waiting_for_format_review_response?
+      'complete'
     else
       ''
     end
@@ -91,6 +93,9 @@ class SubmissionView < SimpleDelegator
   def step_four_status
     if waiting_for_format_review_response?
       'in process'
+    elsif beyond_waiting_for_format_review_response?
+      'complete'
+      "<span class='glyphicon glyphicon-ok-circle'></span> completed".html_safe
     else
       ''
     end

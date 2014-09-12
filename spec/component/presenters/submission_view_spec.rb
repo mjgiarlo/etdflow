@@ -167,31 +167,43 @@ describe SubmissionView do
 
   describe 'step four: Graduate school approves Format Review files' do
     describe '#step_four_class' do
+      context 'when the submission is before waiting for format review response' do
+        before { submission.stub(beyond_collecting_format_review_files?: false) }
+        it 'returns an empty string' do
+          expect(view.step_four_class).to eq ''
+        end
+      end
       context 'when the submission is currently waiting for format review response' do
         before { submission.status = 'waiting for format review response' }
         it 'returns "current"' do
           expect(view.step_four_class).to eq 'current'
         end
       end
-      context 'when the submission is not waiting for format review response' do
-        before { submission.status = 'collecting format review files' }
-        it 'returns an empty string' do
-          expect(view.step_four_class).to eq ''
+      context "when the submission's Format Review files have been approved" do
+        before { submission.stub(beyond_waiting_for_format_review_response?: true) }
+        it "returns 'complete'" do
+          expect(view.step_four_class).to eq 'complete'
         end
       end
     end
 
     describe '#step_four_status' do
+      context 'when the submission is before waiting for format review response' do
+        before { submission.status = 'collecting format review files' }
+        it 'returns an empty string' do
+          expect(view.step_four_status).to eq ''
+        end
+      end
       context 'when the submission is currently waiting for format review response' do
         before { submission.status = 'waiting for format review response' }
         it 'returns "in process"' do
           expect(view.step_four_status).to eq 'in process'
         end
       end
-      context 'when the submission is not waiting for format review response' do
-        before { submission.status = 'collecting format review files' }
-        it 'returns an empty string' do
-          expect(view.step_four_status).to eq ''
+      context "when the submission's Format Review files have been approved" do
+        before { submission.stub(beyond_waiting_for_format_review_response?: true) }
+        it 'returns completed' do
+          expect(view.step_four_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> completed"
         end
       end
     end
