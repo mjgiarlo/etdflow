@@ -2,11 +2,11 @@ FactoryGirl.define do
 
   factory :submission do |s|
     author
+    title
     program
     degree
     semester "Spring"
     year Date.today.year
-    title
 
     Degree.degree_types_json.each do |type|
       trait_name = type["parameter"].to_sym

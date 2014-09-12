@@ -25,7 +25,6 @@ So that I can eventually graduate
     And My committee progress indicator should be updated
     And I should now be on "step-3" "Upload Format Review files"
     When I click the "Upload Format Review files" link within "#submission-1"
-    And I fill in "Title" with "Test Submission Title"
     And I choose my Format Review files
     And I click the "Submit files for review" button
     Then The system should save my files
