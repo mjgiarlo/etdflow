@@ -94,8 +94,7 @@ class SubmissionView < SimpleDelegator
     if waiting_for_format_review_response?
       'in process'
     elsif beyond_waiting_for_format_review_response?
-      'complete'
-      "<span class='glyphicon glyphicon-ok-circle'></span> completed".html_safe
+      "<span class='glyphicon glyphicon-ok-circle'></span> approved".html_safe
     else
       ''
     end
