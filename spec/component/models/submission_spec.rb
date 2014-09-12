@@ -178,6 +178,19 @@ describe Submission do
     end
   end
 
+  describe '.final_submission_is_incomplete' do
+    before do
+      create :submission, :collecting_program_information
+      create :submission, :collecting_committee
+      create :submission, :collecting_format_review_files
+      create :submission, :waiting_for_format_review_response
+      create :submission, :collecting_final_submission_files
+    end
+    it "returns submissions whose final submission has not yet been submitted or are currently rejected" do
+      expect(Submission.final_submission_is_incomplete.count).to eq 1
+    end
+  end
+
   describe '.years' do
     it 'Returns an array containing the current year plus 3 more' do
       today = Date.today
