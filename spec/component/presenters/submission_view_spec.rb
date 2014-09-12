@@ -203,7 +203,7 @@ describe SubmissionView do
       context "when the submission's Format Review files have been approved" do
         before { submission.stub(beyond_waiting_for_format_review_response?: true) }
         it 'returns completed' do
-          expect(view.step_four_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> completed"
+          expect(view.step_four_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> approved"
         end
       end
     end
