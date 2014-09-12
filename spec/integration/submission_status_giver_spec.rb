@@ -233,21 +233,25 @@ describe 'Submission status transitions', js: true do
       end
     end
 
+    context "when an admin accepts the format review files" do
+      before do
+        create :format_review_file, submission: submission
+        visit admin_edit_submission_path(submission)
+        fill_in 'Format Review Notes to Student', with: 'Note on format review'
+        click_button 'Approve Format Review'
+      end
+      specify "submission status updates to 'collecting final submission files'" do
+        submission.reload
+        expect(submission.status).to eq 'collecting final submission files'
+      end
+    end
+
     pending "when an admin rejects the format review files" do
       before do
       end
       specify "submission status updates to 'collecting format review files'" do
         submission.reload
         expect(submission.status).to eq 'collecting format review files'
-      end
-    end
-
-    pending "when an admin accepts the format review files" do
-      before do
-      end
-      specify "submission status updates to 'collecting final submission files'" do
-        submission.reload
-        expect(submission.status).to eq 'collecting final submission files'
       end
     end
   end
