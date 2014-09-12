@@ -11,10 +11,19 @@
 
     <div id="submission-<%= submission.id %>" class="col-xs-12 submission">
 
-      <h3><%= @submission_view.name %> <span class="small"><%= link_to "[delete]", author_submission_path(submission), class: "text-danger", method: :delete, data: {confirm: "Permanently delete this submission?"} %></span></h3>
+      <div class="heading">
+        <h3><%= submission.title %></h3>
+
+        <div class="help-block"><%= @submission_view.name %>
+          <span class="delete-link"><%= link_to "[delete]", author_submission_path(submission), class: "text-danger", method: :delete, data: { confirm: "Permanently delete this submission?" } %></span>
+        </div>
+      </div>
+
       <%= render 'progress_indicator', submission: submission %>
+
     </div>
   <% end %>
+
   <div class="col-xs-12 submission">
     <p><%= link_to "Start a new Submission", new_author_submission_path, class: 'btn btn-primary' %></p>
   </div>

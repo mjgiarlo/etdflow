@@ -16,14 +16,11 @@ class Submission < ActiveRecord::Base
   after_initialize :set_status_to_collecting_program_information
 
   validates_presence_of :author_id,
+                        :title,
                         :program_id,
                         :degree_id,
                         :semester,
                         :year
-
-  validates :title,
-      presence: true,
-      if: Proc.new { |s| s.collecting_format_review_files? }
 
   validates :format_review_notes,
       presence: true,

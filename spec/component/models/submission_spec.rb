@@ -20,6 +20,7 @@ describe Submission do
   specify { expect(subject).to have_db_column :has_agreed_to_terms }
 
   specify { expect(subject).to validate_presence_of :author_id }
+  specify { expect(subject).to validate_presence_of :title }
   specify { expect(subject).to validate_presence_of :program_id }
   specify { expect(subject).to validate_presence_of :degree_id }
   specify { expect(subject).to validate_presence_of :semester }
@@ -42,32 +43,6 @@ describe Submission do
   specify { expect(subject).to accept_nested_attributes_for :committee_members }
 
   let(:submission) { create :submission }
-
-  describe 'validates presence of title' do
-    context 'when collecting format review files' do
-      before { submission.status = 'collecting format review files' }
-      context 'when there is a title' do
-        it 'is valid' do
-          expect(submission).to be_valid
-        end
-      end
-      context 'when there is no title' do
-        before { submission.title = nil }
-        it 'is not valid' do
-          expect(submission).to_not be_valid
-        end
-      end
-    end
-    context 'when collecting program information' do
-      before { submission.status = 'collecting program information' }
-      context 'when there is no title' do
-        before { submission.title = nil }
-        it 'is valid' do
-          expect(submission).to be_valid
-        end
-      end
-    end
-  end
 
   describe 'validates presence of format review notes' do
     context 'when beyond collecting format review files' do

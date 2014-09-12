@@ -5,7 +5,7 @@
 <%= simple_form_for @submission, url: admin_submissions_format_review_response_path do |f| %>
 
   <div class="form-section-body">
-    <%= f.input :title, label: "Title<span title='require' class='required-asterisk'>*</span>".html_safe %>
+    <%= f.input :title %>
   </div>
 
   <div class="form-section-heading" data-toggle="collapse" data-target="#author-information">Author Information

@@ -91,7 +91,8 @@ class Author::SubmissionsController < AuthorController
                                        :year,
                                        :author_id,
                                        :program_id,
-                                       :degree_id)
+                                       :degree_id,
+                                       :title)
   end
 
   def format_review_params

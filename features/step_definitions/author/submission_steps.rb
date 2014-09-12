@@ -5,6 +5,7 @@ Given(/^I have confirmed my contact information$/) do
 end
 
 When(/^I fill in my program information$/) do
+  fill_in 'Title', with: 'Test Submission Title'
   step "I select 'Spring' from 'Semester Intending to Graduate'"
   step "I select \'#{Date.today.year}\' from 'Graduation Year'"
   step "I select \'#{Program.first.name}\' from 'Program'"
@@ -12,7 +13,9 @@ When(/^I fill in my program information$/) do
 end
 
 Then(/^I should see my new program information$/) do
-  expect(page).to have_content "#{Program.first.name} #{Degree.first.name} - Spring #{Date.today.year}"
+  submission = Submission.first
+  expect(page).to have_content submission.title
+  expect(page).to have_content "#{submission.program_name} #{submission.degree_name} - Spring #{Date.today.year}"
 end
 
 Then(/^My program information progress indicator should be updated$/) do
@@ -125,7 +128,7 @@ end
 Then(/^My Format Review approval progress indicator should be updated$/) do
   within '#submission-1' do
     within '.step.step-4' do
-      expect(page).to have_content "completed"
+      expect(page).to have_content "approved"
     end
   end
 end
