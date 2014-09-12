@@ -31,6 +31,16 @@ So that I can eventually graduate
     Then The system should save my files
     And I should be on the author submissions page
     And I should see that my Format Review is in process
+    When My Format Review is approved
+    Then My Format Review approval progress indicator should be updated
+    And I should now be on "step-5" "Upload Final Submission files"
+    When I click the "Upload Final Submission files" link within "#submission-1"
+    And I fill in the Final Submission fields
+    And I upload my Final Submission files
+    And I click the "Submit" button
+    Then The system should save my Final Submission files
+    And I should be on the author submissions page
+    And I should see that my Final Submission is in process
 
   Scenario: Delete my submission
     Given I have started a submission

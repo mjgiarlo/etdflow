@@ -111,3 +111,35 @@ Then(/^my committee should be updated$/) do
     expect(member.email).to eq 'new_name@example.com'
   end
 end
+
+When(/^My Format Review is approved$/) do
+  s = Submission.first
+  s.format_review_notes = 'Great job!'
+  s.save!
+  status_giver = SubmissionStatusGiver.new(s)
+  status_giver.collecting_final_submission_files!
+end
+
+Then(/^My Format Review approval progress indicator should be updated$/) do
+  within '#submission-1' do
+    within '.step.step-4' do
+      expect(page).to have_content "completed"
+    end
+  end
+end
+
+When(/^I fill in the Final Submission fields$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+When(/^I upload my Final Submission files$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^The system should save my Final Submission files$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should see that my Final Submission is in process$/) do
+  pending # express the regexp above with the code you wish you had
+end
