@@ -8,8 +8,16 @@ class SubmissionView < SimpleDelegator
     __getobj__.class
   end
 
-  def name
+  def formatted_program_information
     program_name + ' ' + degree_name + ' - ' + semester + ' ' + year.to_s
+  end
+
+  def delete_link
+    if beyond_collecting_format_review_files?
+      ''
+    else
+      ("<span class='delete-link'><a href='" + "/author/submissions/#{id}" + "' class='text-danger' data-method='delete' data-confirm='Permanently delete this submission?' rel='nofollow' >[delete]</a></span>").html_safe
+    end
   end
 
   def created_on

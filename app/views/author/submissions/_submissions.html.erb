@@ -14,8 +14,8 @@
       <div class="heading">
         <h3><%= submission.title %></h3>
 
-        <div class="help-block"><%= @submission_view.name %>
-          <span class="delete-link"><%= link_to "[delete]", author_submission_path(submission), class: "text-danger", method: :delete, data: { confirm: "Permanently delete this submission?" } %></span>
+        <div class="help-block"><%= @submission_view.formatted_program_information %>
+          <%= @submission_view.delete_link %>
         </div>
       </div>
 
