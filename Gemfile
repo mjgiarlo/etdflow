@@ -52,6 +52,9 @@ gem 'mini_magick'
 # Easily handle nested forms
 gem 'cocoon'
 
+# FontAwesome sass integration
+gem 'font-awesome-sass'
+
 group :development do
 
   # Spring speeds up development by keeping your application running in the background.

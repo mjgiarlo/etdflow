@@ -166,6 +166,8 @@ GEM
     fastercsv (1.5.5)
     ffaker (1.25.0)
     ffi (1.9.3)
+    font-awesome-sass (4.1.0)
+      sass (~> 3.2)
     foreigner (1.6.1)
       activerecord (>= 3.0.0)
     gherkin (2.12.2)
@@ -543,6 +545,7 @@ DEPENDENCIES
   devise
   factory_girl_rails
   ffaker
+  font-awesome-sass
   jbuilder
   jettywrapper
   jquery-rails
