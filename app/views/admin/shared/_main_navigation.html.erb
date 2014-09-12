@@ -2,7 +2,7 @@
   <nav id="main-navigation" class="collapse navbar-collapse">
     <ul class="nav nav-pills nav-stacked" role="navigation">
       <% Degree.degree_types_json.each do |type| %>
-        <li class="<%= 'active' if current_page? admin_submissions_dashboard_path(type["parameter"]) %>">
+        <li class="<%= 'active' if params[:degree_type] == type["parameter"] %>">
           <%= link_to type["plural"], admin_submissions_dashboard_path(type["parameter"]) %>
         </li>
       <% end %>
