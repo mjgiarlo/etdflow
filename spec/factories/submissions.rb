@@ -32,5 +32,10 @@ FactoryGirl.define do
       format_review_notes "Format review notes"
     end
 
+    trait :collecting_final_submission_files do
+      status "collecting final submission files"
+      format_review_notes "Format review were accepted"
+    end
+
   end
 end
