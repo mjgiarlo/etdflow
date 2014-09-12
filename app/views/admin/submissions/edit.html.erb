@@ -1,37 +1,44 @@
-<h2><%# @submission_form.page_title %></h2>
+<h2>Format Review Evaluation</h2>
 
-<div class="row">
-  <div class="col-xs-12">
-    <div class="form-section-heading">Author Information
-      <span class="hide-show-link" data-toggle="collapse" data-target="#author-information">[hide]</span>
-    </div>
-    <div id="author-information" class="form-section-body collapse in">
-      <div class="row">
-        <div class="col-xs-12 col-sm-6">
-          <p>
-            <%= @submission.author.full_name %><br />
-            <%= @submission.author.address_1 %><br />
-            <% if @submission.author.address_2.present? %>
-              <%= @submission.author.address_2 %><br />
-            <% end %>
-            <%= @submission.author.city %>, <%= @submission.author.state %> <%= @submission.author.zip %><br />
-          </p>
-        </div>
-        <div class="col-xs-12 col-sm-6">
-          <p>
-            <strong>Phone:</strong> <%= @submission.author.phone_number %> <br />
-            <strong>Alternate email:</strong> <%= @submission.author.alternate_email_address %><br />
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<%= render partial: 'shared/error_messages', locals: { object: @submission } %>
 
 <%= simple_form_for @submission, url: admin_submissions_format_review_response_path do |f| %>
 
-  <div class="form-section-heading">Program Information
-    <span class="hide-show-link" data-toggle="collapse" data-target="#program-information">[hide]</span>
+  <div class="form-section-body">
+    <%= f.input :title, label: "Title<span title='require' class='required-asterisk'>*</span>".html_safe %>
+  </div>
+
+  <div class="form-section-heading" data-toggle="collapse" data-target="#author-information">Author Information
+    <span class="hide-show-indicator fa-rotate-90"></span>
+  </div>
+  <div id="author-information" class="form-section-body collapse in">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <p>
+          <%= @submission.author.full_name %><br />
+          <%= @submission.author.address_1 %><br />
+          <% if @submission.author.address_2.present? %>
+            <%= @submission.author.address_2 %><br />
+          <% end %>
+          <%= @submission.author.city %>, <%= @submission.author.state %> <%= @submission.author.zip %><br />
+        </p>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <p>
+          <strong>Phone:</strong> <%= @submission.author.phone_number %> <br />
+          <strong>Alternate email:</strong> <%= @submission.author.alternate_email_address %><br />
+        </p>
+      </div>
+      <div class="col-xs-12">
+        <%= link_to edit_admin_author_path(@submission.author), class: 'form-edit-link' do %>
+          <span class="fa"></span> Edit Author Information
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section-heading" data-toggle="collapse" data-target="#program-information">Program Information
+    <span class="hide-show-indicator fa-rotate-90"></span>
   </div>
   <div id="program-information" class="form-section-body collapse in">
     <%= f.input :program_id, label: 'Program', collection: Program.all, prompt: "Please Select" %>
@@ -40,8 +47,8 @@
     <%= f.input :year, label: 'Graduation Year', collection: Submission.years, prompt: "Please Select" %>
   </div>
 
-  <div class="form-section-heading">Committee
-    <span class="hide-show-link" data-toggle="collapse" data-target="#committee">[hide]</span>
+  <div class="form-section-heading" data-toggle="collapse" data-target="#committee">Committee
+    <span class="hide-show-indicator fa-rotate-90"></span>
   </div>
   <div id="committee" class="form-section-body collapse in">
     <%= f.simple_fields_for :committee_members do |cmf| %>
@@ -70,12 +77,10 @@
     <% end %>
   </div>
 
-  <div class="form-section-heading">Format Review Files
-    <span class="hide-show-link" data-toggle="collapse" data-target="#format-review-file">[hide]</span>
+  <div class="form-section-heading" data-toggle="collapse" data-target="#format-review-files">Format Review Information
+    <span class="hide-show-indicator fa-rotate-90"></span>
   </div>
-  <div id="format-review-file" class="form-section-body collapse in">
-    <%= f.input :title %>
-
+  <div id="format-review-files" class="form-section-body collapse in">
     <div class="links cocoon-links">
       <label>Files<span class="required-astrisk">*</span></label>
       <%= link_to_add_association f, :format_review_files,
@@ -90,13 +95,13 @@
         <%= render 'format_review_file_fields', file_fields: format_review_file %>
       <% end %>
     </div>
+
+    <%= f.input :format_review_notes, as: :text, label: "Format Review Notes to Student<span title='require' class='required-asterisk'>*</span>".html_safe %>
   </div>
 
-  <%= f.input :format_review_notes, as: :text, label: 'Format Review Notes to Student' %>
-
   <div class="form-group actions">
-    <%= f.button :submit, name: 'approved', class: "btn-primary", value: "Approve Format Review" %>
-    <%= link_to "Cancel", admin_submissions_format_review_submitted_path(@submission.degree_type) %>
+    <%= f.button :submit, name: 'approved', class: "btn-success", value: "Approve Format Review" %>
+    <%= link_to "Cancel", admin_submissions_format_review_submitted_path(@submission.parameterized_degree_type) %>
   </div>
 
 <% end %>
