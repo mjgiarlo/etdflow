@@ -58,7 +58,10 @@ class Submission < ActiveRecord::Base
       'collecting committee',
       'collecting format review files',
       'waiting for format review response',
-      'collecting final submission files'
+      'collecting final submission files',
+      'waiting for final submission response',
+      'waiting for publication release',
+      'released for publication'
     ]
   end
 
@@ -109,6 +112,18 @@ class Submission < ActiveRecord::Base
     status == 'collecting final submission files' ? true : false
   end
 
+  def waiting_for_final_submission_response?
+    status == 'waiting for final submission response' ? true : false
+  end
+
+  def waiting_for_publication_release?
+    status == 'waiting for publication release' ? true : false
+  end
+
+  def released_for_publication?
+    status == 'released for publication' ? true : false
+  end
+
   def beyond_collecting_committee?
     collecting_format_review_files? || beyond_collecting_format_review_files?
   end
@@ -118,7 +133,15 @@ class Submission < ActiveRecord::Base
   end
 
   def beyond_waiting_for_format_review_response?
-    collecting_final_submission_files?
+    collecting_final_submission_files? || beyond_collecting_final_submission_files?
+  end
+
+  def beyond_collecting_final_submission_files?
+    waiting_for_final_submission_response? || beyond_waiting_for_final_submission_response?
+  end
+
+  def beyond_waiting_for_final_submission_response?
+    waiting_for_publication_release? || released_for_publication?
   end
 
   private

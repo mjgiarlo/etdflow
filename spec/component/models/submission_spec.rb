@@ -260,6 +260,51 @@ describe Submission do
     end
   end
 
+  describe '#waiting_for_final_submission_response?' do
+    context "when status is set to another valid value" do
+      before { submission.status = 'collecting program information' }
+      it "returns false" do
+        expect(submission).to_not be_waiting_for_final_submission_response
+      end
+    end
+    context "when status is set to 'waiting for final submission response'" do
+      before { submission.status = "waiting for final submission response" }
+      it "returns true" do
+        expect(submission).to be_waiting_for_final_submission_response
+      end
+    end
+  end
+
+  describe '#waiting_for_publication_release?' do
+    context "when status is set to another valid value" do
+      before { submission.status = 'collecting program information' }
+      it "returns false" do
+        expect(submission).to_not be_waiting_for_publication_release
+      end
+    end
+    context "when status is set to 'waiting for publication release'" do
+      before { submission.status = "waiting for publication release" }
+      it "returns true" do
+        expect(submission).to be_waiting_for_publication_release
+      end
+    end
+  end
+
+  describe '#released_for_publication?' do
+    context "when status is set to another valid value" do
+      before { submission.status = 'collecting program information' }
+      it "returns false" do
+        expect(submission).to_not be_released_for_publication
+      end
+    end
+    context "when status is set to 'released for publication'" do
+      before { submission.status = "released for publication" }
+      it "returns true" do
+        expect(submission).to be_released_for_publication
+      end
+    end
+  end
+
   describe '#beyond_collecting_committee?' do
     context "when status is beyond 'collecting committee'" do
       context "when status is 'collecting format review files'" do
@@ -280,19 +325,19 @@ describe Submission do
           expect(submission).to be_beyond_collecting_committee
         end
       end
-      pending "when status is 'waiting for final submission response'" do
+      context "when status is 'waiting for final submission response'" do
         before { submission.status = 'waiting for final submission response' }
         it "returns true" do
           expect(submission).to be_beyond_collecting_committee
         end
       end
-      pending "when status is 'waiting for publication release'" do
+      context "when status is 'waiting for publication release'" do
         before { submission.status = 'waiting for publication release' }
         it "returns true" do
           expect(submission).to be_beyond_collecting_committee
         end
       end
-      pending "when status is 'released for publication'" do
+      context "when status is 'released for publication'" do
         before { submission.status = 'waiting for final submission response' }
         it "returns true" do
           expect(submission).to be_beyond_collecting_committee
@@ -331,19 +376,19 @@ describe Submission do
           expect(submission).to be_beyond_collecting_format_review_files
         end
       end
-      pending "when status is 'waiting for final submission response'" do
+      context "when status is 'waiting for final submission response'" do
         before { submission.status = 'waiting for final submission response' }
         it "returns true" do
           expect(submission).to be_beyond_collecting_format_review_files
         end
       end
-      pending "when status is 'waiting for publication release'" do
+      context "when status is 'waiting for publication release'" do
         before { submission.status = 'waiting for publication release' }
         it "returns true" do
           expect(submission).to be_beyond_collecting_format_review_files
         end
       end
-      pending "when status is 'released for publication'" do
+      context "when status is 'released for publication'" do
         before { submission.status = 'waiting for final submission response' }
         it "returns true" do
           expect(submission).to be_beyond_collecting_format_review_files
@@ -368,6 +413,105 @@ describe Submission do
         before { submission.status = 'collecting format review files' }
         it "returns false" do
           expect(submission).to_not be_beyond_collecting_format_review_files
+        end
+      end
+    end
+  end
+
+  describe '#beyond_collecting_final_submission_files?' do
+    context "when status is beyond 'collecting final submission files'" do
+      context "when status is 'waiting for final submission response'" do
+        before { submission.status = 'waiting for final submission response' }
+        it "returns true" do
+          expect(submission).to be_beyond_collecting_final_submission_files
+        end
+      end
+      context "when status is 'waiting for publication release'" do
+        before { submission.status = 'waiting for publication release' }
+        it "returns true" do
+          expect(submission).to be_beyond_collecting_final_submission_files
+        end
+      end
+      context "when status is 'released for publication'" do
+        before { submission.status = 'released for publication' }
+        it "returns true" do
+          expect(submission).to be_beyond_collecting_final_submission_files
+        end
+      end
+    end
+    context "when status is before 'collecting final submission files'" do
+      context "when status is 'collecting program information'" do
+        before { submission.status = 'collecting program information' }
+        it "returns false" do
+          expect(submission).to_not be_beyond_collecting_final_submission_files
+        end
+      end
+      context "when status is 'collecting committee'" do
+        before { submission.status = 'collecting committee' }
+        it "returns false" do
+          expect(submission).to_not be_beyond_collecting_final_submission_files
+        end
+      end
+      context "when status is 'collecting format review files'" do
+        before { submission.status = 'collecting format review files' }
+        it "returns false" do
+          expect(submission).to_not be_beyond_collecting_final_submission_files
+        end
+      end
+      context "when status is 'waiting for format review response'" do
+        before { submission.status = 'waiting for format review response' }
+        it "returns false" do
+          expect(submission).to_not be_beyond_collecting_final_submission_files
+        end
+      end
+    end
+  end
+
+  describe '#beyond_waiting_for_final_submission_response?' do
+    context "when status is beyond 'waiting for final submission response'" do
+      context "when status is 'waiting for publication release'" do
+        before { submission.status = 'waiting for publication release' }
+        it "returns true" do
+          expect(submission).to be_beyond_waiting_for_final_submission_response
+        end
+      end
+      context "when status is 'released for publication'" do
+        before { submission.status = 'released for publication' }
+        it "returns true" do
+          expect(submission).to be_beyond_waiting_for_final_submission_response
+        end
+      end
+    end
+
+    context "when status is before 'waiting for final submission response'" do
+      context "when status is 'collecting program information'" do
+        before { submission.status = 'collecting program information' }
+        it "returns false" do
+          expect(submission).to_not be_beyond_waiting_for_final_submission_response
+        end
+      end
+      context "when status is 'collecting committee'" do
+        before { submission.status = 'collecting committee' }
+        it "returns false" do
+          expect(submission).to_not be_beyond_waiting_for_final_submission_response
+        end
+      end
+      context "when status is 'collecting format review files'" do
+        before { submission.status = 'collecting format review files' }
+        it "returns false" do
+          expect(submission).to_not be_beyond_waiting_for_final_submission_response
+        end
+      end
+      context "when status is 'waiting for format review response'" do
+        before { submission.status = 'waiting for format review response' }
+        it "returns false" do
+          expect(submission).to_not be_beyond_waiting_for_final_submission_response
+        end
+      end
+      context "when status is 'collecting final submission files'" do
+        before { submission.status = 'collecting final submission files' }
+        it "returns false" do
+          expect(submission).to_not be_beyond_waiting_for_final_submission_response
         end
       end
     end
