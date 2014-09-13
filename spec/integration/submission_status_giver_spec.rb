@@ -51,7 +51,7 @@ describe 'Submission status transitions', js: true do
       end
     end
 
-    pending "visiting the 'Upload Final Submission Files' page" do
+    context "visiting the 'Upload Final Submission Files' page" do
       before { visit author_submission_final_submission_path(submission) }
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
@@ -111,7 +111,7 @@ describe 'Submission status transitions', js: true do
       end
     end
 
-    pending "visiting the 'Upload Final Submission Files' page" do
+    context "visiting the 'Upload Final Submission Files' page" do
       before { visit author_submission_final_submission_path(submission) }
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
@@ -167,7 +167,7 @@ describe 'Submission status transitions', js: true do
       end
     end
 
-    pending "visiting the 'Upload Final Submission Files' page" do
+    context "visiting the 'Upload Final Submission Files' page" do
       before { visit author_submission_final_submission_path(submission) }
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
@@ -226,7 +226,7 @@ describe 'Submission status transitions', js: true do
       end
     end
 
-    pending "visiting the 'Upload Final Submission Files' page" do
+    context "visiting the 'Upload Final Submission Files' page" do
       before { visit author_submission_final_submission_path(submission) }
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
@@ -253,6 +253,73 @@ describe 'Submission status transitions', js: true do
       specify "submission status updates to 'collecting format review files'" do
         submission.reload
         expect(submission.status).to eq 'collecting format review files'
+      end
+    end
+  end
+
+  describe "When status is 'collecting final submission files'" do
+    before do
+      submission.update_attribute :status, 'collecting final submission files'
+      submission.update_attribute :format_review_notes, 'Format review note'
+    end
+
+    context "visiting the 'Update Program Information' page" do
+      before { visit edit_author_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Provide Committee' page" do
+      before { visit new_author_submission_committee_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Update Committee' page" do
+      before { visit edit_author_submission_committee_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Upload Format Review Files' page" do
+      before { visit author_submission_format_review_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Upload Final Submission Files' page" do
+      before { visit author_submission_final_submission_path(submission) }
+      specify "loads the page" do
+        expect(current_path).to eq author_submission_final_submission_path(submission)
+      end
+    end
+
+    context "when I submit the 'Upload Final Submission Files' form" do
+      before do
+        visit author_submission_final_submission_path(submission)
+        select Time.zone.now.year, from: 'submission[defended_at(1i)]'
+        select Time.zone.now.strftime('%B'), from: 'submission[defended_at(2i)]'
+        select Time.zone.now.day, from: 'submission[defended_at(3i)]'
+        fill_in 'Abstract', with: 'A paper on stuff'
+        fill_in 'Keywords', with: 'stuff, more stuff'
+        choose 'Open Access'
+        expect(page).to have_css '#final-submission-file-fields .nested-fields:first-child input[type="file"]'
+        first_input_id = first('#final-submission-file-fields .nested-fields:first-child input[type="file"]')[:id]
+        attach_file first_input_id, fixture('final_submission_file_01.pdf')
+        check 'I agree'
+        click_button 'Submit final files for review'
+      end
+      specify "submission status updates to 'waiting for final submission response'" do
+        submission.reload
+        expect(submission.status).to eq 'waiting for final submission response'
       end
     end
   end
