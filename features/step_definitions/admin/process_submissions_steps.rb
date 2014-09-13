@@ -74,3 +74,7 @@ end
 When(/^the file looks good$/) do
   # Admin thinks the file is acceptable
 end
+
+Then(/^the file looks bad$/) do
+  # Admin thinks the file is unacceptable
+end
