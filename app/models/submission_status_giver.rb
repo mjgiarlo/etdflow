@@ -43,6 +43,15 @@ class SubmissionStatusGiver
     end
   end
 
+  def can_upload_final_submission_files?
+    s = @submission
+    if s.collecting_final_submission_files?
+      return
+    else
+      raise AccessForbidden
+    end
+  end
+
   def collecting_committee!
     s = @submission
     new_status = 'collecting committee'
@@ -83,6 +92,18 @@ class SubmissionStatusGiver
     s = @submission
     new_status = 'collecting final submission files'
     if s.waiting_for_format_review_response?
+      s.update_attribute :status, new_status
+    elsif s.status == new_status
+      return
+    else
+      raise InvalidTransition
+    end
+  end
+
+  def waiting_for_final_submission_response!
+    s = @submission
+    new_status = 'waiting for final submission response'
+    if s.collecting_final_submission_files?
       s.update_attribute :status, new_status
     elsif s.status == new_status
       return

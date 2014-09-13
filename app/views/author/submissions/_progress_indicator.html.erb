@@ -31,19 +31,19 @@
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>
-  <div class="step step-5">
+  <div class="step step-5 <%= @submission_view.step_five_class %>">
     <div class="number">5</div>
     <div class="information">
-      <div class="description">Upload Final Submission files</div>
-      <div class="status"></div>
+      <div class="description"><%= @submission_view.step_five_description %></div>
+      <div class="status"><%= @submission_view.step_five_status %></div>
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>
-  <div class="step step-6">
+  <div class="step step-6 <%= @submission_view.step_six_class %>">
     <div class="number">6</div>
     <div class="information">
       <div class="description">Graduate school approves Final Submission files</div>
-      <div class="status"></div>
+      <div class="status"><%= @submission_view.step_six_status %></div>
     </div>
     <div class="direction glyphicon glyphicon-arrow-down"></div>
   </div>

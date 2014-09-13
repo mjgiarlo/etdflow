@@ -34,6 +34,10 @@ Rails.application.routes.draw do
     resources :submissions, except: [:show] do
       get '/format_review', to: 'submissions#format_review', as: :format_review
       patch '/format_review', to: 'submissions#update_format_review', as: :update_format_review
+
+      get '/final_submission', to: 'submissions#final_submission', as: :final_submission
+      patch '/final_submission', to: 'submissions#update_final_submission', as: :update_final_submission
+
       resource :committee, except: [:show, :destroy]
     end
     root to: 'submissions#index'

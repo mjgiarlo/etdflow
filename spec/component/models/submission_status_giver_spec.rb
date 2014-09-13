@@ -138,4 +138,30 @@ describe SubmissionStatusGiver do
       end
     end
   end
+
+  describe '#waiting_for_final_submission_response!' do
+    context "when status is 'collecting final submission files'" do
+      before { submission.status = 'collecting final submission files' }
+      it "updates status to 'waiting for final submission response'" do
+        giver = SubmissionStatusGiver.new(submission)
+        giver.waiting_for_final_submission_response!
+        expect(submission.status).to eq('waiting for final submission response')
+      end
+    end
+    context "when status is 'waiting for final submission response'" do
+      before { submission.status = 'waiting for final submission response' }
+      it "does not change the status" do
+        giver = SubmissionStatusGiver.new(submission)
+        giver.waiting_for_final_submission_response!
+        expect(submission.status).to eq('waiting for final submission response')
+      end
+    end
+    context 'when status is a different valid value' do
+      before { submission.status = 'collecting program information' }
+      it "raises an exception" do
+        giver = SubmissionStatusGiver.new(submission)
+        expect {giver.waiting_for_final_submission_response!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
+      end
+    end
+  end
 end

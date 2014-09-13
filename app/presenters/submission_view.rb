@@ -136,4 +136,24 @@ class SubmissionView < SimpleDelegator
     end
   end
 
+  def step_six_class
+    if waiting_for_final_submission_response?
+      'current'
+    elsif beyond_waiting_for_final_submission_response?
+      'complete'
+    else
+      ''
+    end
+  end
+
+  def step_six_status
+    if waiting_for_final_submission_response?
+      'in process'
+    elsif beyond_waiting_for_final_submission_response?
+      "<span class='glyphicon glyphicon-ok-circle'></span> approved".html_safe
+    else
+      ''
+    end
+  end
+
 end

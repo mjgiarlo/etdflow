@@ -84,6 +84,33 @@ class Author::SubmissionsController < AuthorController
     flash[:alert] = 'Oops! You may have submitted invalid format review data. Please check that your format review information is correct.'
   end
 
+  def final_submission
+    @submission = Submission.find(params[:submission_id])
+    status_giver = SubmissionStatusGiver.new(@submission)
+    status_giver.can_upload_final_submission_files?
+  rescue SubmissionStatusGiver::AccessForbidden
+    redirect_to author_root_path
+    flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
+  end
+
+  def update_final_submission
+    @submission = Submission.find(params[:submission_id])
+    status_giver = SubmissionStatusGiver.new(@submission)
+    status_giver.can_upload_final_submission_files?
+    @submission.update_attributes!(final_submission_params)
+    status_giver.waiting_for_final_submission_response!
+    redirect_to author_root_path
+    flash[:notice] = 'Final submission files uploaded successfully.'
+  rescue ActiveRecord::RecordInvalid
+    render :final_submission
+  rescue SubmissionStatusGiver::AccessForbidden
+    redirect_to author_root_path
+    flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
+  rescue SubmissionStatusGiver::InvalidTransition
+    redirect_to author_root_path
+    flash[:alert] = 'Oops! You may have submitted invalid format review data. Please check that your format review information is correct.'
+  end
+
   private
 
   def program_information_params
@@ -97,7 +124,16 @@ class Author::SubmissionsController < AuthorController
 
   def format_review_params
     params.require(:submission).permit(:title,
-                                       format_review_files_attributes: [:filename, :submission_id])
+                                       format_review_files_attributes: [:filename, :submission_id, :_destroy])
+  end
+
+  def final_submission_params
+    params.require(:submission).permit(:defended_at,
+                                       :abstract,
+                                       :keywords,
+                                       :access_level,
+                                       :has_agreed_to_terms,
+                                       final_submission_files_attributes: [:filename, :submission_id, :_destroy])
   end
 
 end
