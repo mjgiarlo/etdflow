@@ -1,4 +1,4 @@
-class FormatReviewFileUploader < CarrierWave::Uploader::Base
+class SubmissionFileUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   storage :file
