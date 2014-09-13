@@ -247,8 +247,12 @@ describe 'Submission status transitions', js: true do
       end
     end
 
-    pending "when an admin rejects the format review files" do
+    context "when an admin rejects the format review files" do
       before do
+        create :format_review_file, submission: submission
+        visit admin_edit_submission_path(submission)
+        fill_in 'Format Review Notes to Student', with: 'Note on need for revisions'
+        click_button 'Reject & request revisions'
       end
       specify "submission status updates to 'collecting format review files'" do
         submission.reload
