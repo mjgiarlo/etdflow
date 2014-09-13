@@ -216,3 +216,42 @@ form {
     }
   }
 }
+
+textarea {
+  max-width: 100%;
+}
+
+.radio {
+  input {
+    box-shadow: none;
+  }
+}
+
+.form-group.date {
+  @include clearfix();
+  margin-bottom: 15px;
+
+  .form-control.date {
+    float: left;
+  }
+
+  > div {
+    select:first-child, select:last-child {
+      max-width: 80px;
+
+    }
+
+    select:first-child {
+      margin-right: 5px;
+
+      + select {
+        max-width: 160px;
+        margin-right: 5px;
+      }
+    }
+  }
+}
+
+#submission_keywords {
+  height: 34px;
+}

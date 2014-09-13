@@ -13,7 +13,7 @@
       <%= f.input :defended_at, as: :date %>
       <%= f.input :abstract, as: :text %>
       <%= f.input :keywords, as: :text %>
-      <%= f.input :access_level, as: :radio_buttons, collection: [['Open Access', 'open_access'], ['Restricted (Penn State only)', 'restricted_to_institution'],['Restricted', 'restricted']] %>
+      <%= f.input :access_level, as: :radio_buttons, collection: [['Open Access', 'open_access'], ['Restricted (Penn State only)', 'restricted_to_institution'],['Restricted', 'restricted']], wrapper: :vertical_radio_and_checkboxes %>
 
       <div class="links cocoon-links">
         <label>Files<span class="required-astrisk">*</span></label>
@@ -31,7 +31,7 @@
         <% end %>
       </div>
 
-      <%= f.input :has_agreed_to_terms, label: 'I agree', as: :boolean, wrapper: :checkbox %>
+      <%= f.input :has_agreed_to_terms, label: 'I agree', as: :boolean, wrapper: :vertical_boolean %>
 
       <div class="form-group actions">
         <%= f.button :submit, class: "btn-primary", value: "Submit final files for review" %>
