@@ -6,6 +6,7 @@ class Submission < ActiveRecord::Base
 
   has_many :committee_members, dependent: :destroy
   has_many :format_review_files, dependent: :destroy
+  has_many :final_submission_files, dependent: :destroy
 
   delegate :name, to: :program, prefix: :program
   delegate :name, to: :degree, prefix: :degree
@@ -28,6 +29,7 @@ class Submission < ActiveRecord::Base
 
   accepts_nested_attributes_for :committee_members
   accepts_nested_attributes_for :format_review_files
+  accepts_nested_attributes_for :final_submission_files
 
   SEMESTERS = [
                 'Fall',
