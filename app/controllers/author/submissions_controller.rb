@@ -72,7 +72,7 @@ class Author::SubmissionsController < AuthorController
     @submission.update_attributes!(format_review_params)
     status_giver.waiting_for_format_review_response!
     redirect_to author_root_path
-    flash[:notice] = 'Format review files uploaded succcessfully.'
+    flash[:notice] = 'Format review files uploaded successfully.'
   rescue ActiveRecord::RecordInvalid => e
     redirect_to author_submission_format_review_path(@submission)
     flash[:alert] = e.message
