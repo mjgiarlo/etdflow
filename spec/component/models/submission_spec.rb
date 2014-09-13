@@ -32,6 +32,8 @@ describe Submission do
 
   specify { expect(subject).to have_many :committee_members }
   specify { expect(subject).to have_many :format_review_files }
+  specify { expect(subject).to have_many :final_submission_files }
+
 
   specify { expect(subject).to ensure_inclusion_of(:semester).in_array(Submission::SEMESTERS) }
 
@@ -39,8 +41,9 @@ describe Submission do
 
   specify { expect(subject).to ensure_inclusion_of(:status).in_array(Submission.statuses) }
 
-  specify { expect(subject).to accept_nested_attributes_for :format_review_files }
   specify { expect(subject).to accept_nested_attributes_for :committee_members }
+  specify { expect(subject).to accept_nested_attributes_for :format_review_files }
+  specify { expect(subject).to accept_nested_attributes_for :final_submission_files }
 
   let(:submission) { create :submission }
 
