@@ -15,9 +15,24 @@ describe Admin::SubmissionsDashboardView do
     context 'when no submissions exist for each filter' do
       it "returns a set of placeholders according to submission status" do
         expect(view.filters).to eq [
-            "<div class='panel panel-default no-submissions'><div class='panel-heading'><h3 class='panel-title'>Format Review is Incomplete <span class='badge pull-right'>0</span></h3></div><div class='panel-body'>Submissions whose format review has not yet been submitted or whose format review is currently rejected.</div></div>",
-            "<div class='panel panel-default no-submissions'><div class='panel-heading'><h3 class='panel-title'>Format Review is Submitted <span class='badge pull-right'>0</span></h3></div><div class='panel-body'>Submissions whose format review is currently waiting to be approved or rejected.</div></div>",
-            "<div class='panel panel-default no-submissions'><div class='panel-heading'><h3 class='panel-title'>Final Submission is Incomplete <span class='badge pull-right'>0</span></h3></div><div class='panel-body'>Submissions whose format review information has been approved, but whose final submission information has not yet been submitted or whose final submission information is currently rejected.</div></div>"
+            {
+                title: 'Format Review is Incomplete',
+                description: 'Submissions whose format review has not yet been submitted or whose format review is currently rejected.',
+                path: nil,
+                count: nil
+            },
+            {
+                title: 'Format Review is Submitted',
+                description: 'Submissions whose format review is currently waiting to be approved or rejected.',
+                path: nil,
+                count: nil
+            },
+            {
+                title: 'Final Submission is Incomplete',
+                description: 'Submissions whose format review information has been approved, but whose final submission information has not yet been submitted or whose final submission information is currently rejected.',
+                path: nil,
+                count: nil
+            }
         ]
       end
     end
@@ -32,9 +47,24 @@ describe Admin::SubmissionsDashboardView do
       end
       it "returns a set of links according to submission status" do
         expect(view.filters).to eq [
-            "<a href='#{admin_submissions_format_review_incomplete_path(degree_type)}' class='panel panel-default filter'><div class='panel-heading'><h3 class='panel-title'>Format Review is Incomplete <span class='badge pull-right'>3</span></h3></div><div class='panel-body'>Submissions whose format review has not yet been submitted or whose format review is currently rejected.</div></a>",
-            "<a href='#{admin_submissions_format_review_submitted_path(degree_type)}' class='panel panel-default filter'><div class='panel-heading'><h3 class='panel-title'>Format Review is Submitted <span class='badge pull-right'>1</span></h3></div><div class='panel-body'>Submissions whose format review is currently waiting to be approved or rejected.</div></a>",
-            "<a href='#{admin_submissions_final_submission_incomplete_path(degree_type)}' class='panel panel-default filter'><div class='panel-heading'><h3 class='panel-title'>Final Submission is Incomplete <span class='badge pull-right'>1</span></h3></div><div class='panel-body'>Submissions whose final submission information has not yet been submitted or whose final submission information is currently rejected.</div></a>"
+            {
+                title: 'Format Review is Incomplete',
+                description: 'Submissions whose format review has not yet been submitted or whose format review is currently rejected.',
+                path: admin_submissions_format_review_incomplete_path(degree_type),
+                count: '3'
+            },
+            {
+                title: 'Format Review is Submitted',
+                description: 'Submissions whose format review is currently waiting to be approved or rejected.',
+                path: admin_submissions_format_review_submitted_path(degree_type),
+                count: '1'
+            },
+            {
+                title: 'Final Submission is Incomplete',
+                description: 'Submissions whose format review information has been approved, but whose final submission information has not yet been submitted or whose final submission information is currently rejected.',
+                path: admin_submissions_final_submission_incomplete_path(degree_type),
+                count: '1'
+            }
         ]
       end
     end

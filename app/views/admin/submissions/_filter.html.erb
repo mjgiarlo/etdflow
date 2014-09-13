@@ -1,0 +1,16 @@
+<% if filter[:path] %>
+  <%= link_to filter[:path], class: 'panel panel-default filter' do %>
+    <div class='panel-heading'>
+      <h3 class='panel-title'><%= filter[:title] %>
+        <span class='badge pull-right'><%= filter[:count] %></span>
+      </h3>
+    </div>
+    <div class='panel-body'><%= filter[:description] %></div>
+  <% end %>
+<% else %>
+  <div class='panel panel-default no-submissions'>
+    <div class='panel-heading'>
+      <h3 class='panel-title'><%= filter[:title] %> <span class='badge pull-right'>0</span></h3></div>
+    <div class='panel-body'><%= filter[:description] %></div>
+  </div>
+<% end %>
