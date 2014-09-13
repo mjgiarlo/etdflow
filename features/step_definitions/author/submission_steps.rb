@@ -66,7 +66,7 @@ When(/^I choose my Format Review files$/) do
   attach_file second_input_id, fixture('format_review_file_02.pdf')
 end
 
-Then(/^The system should save my files$/) do
+Then(/^The system should save my Format Review files$/) do
   expect(FormatReviewFile.count).to eq 2
 end
 
@@ -134,17 +134,31 @@ Then(/^My Format Review approval progress indicator should be updated$/) do
 end
 
 When(/^I fill in the Final Submission fields$/) do
-  pending # express the regexp above with the code you wish you had
+  select Time.zone.now.year, from: 'submission[defended_at(1i)]'
+  select Time.zone.now.strftime('%B'), from: 'submission[defended_at(2i)]'
+  select Time.zone.now.day, from: 'submission[defended_at(3i)]'
+  fill_in 'Abstract', with: 'Abstract words'
+  fill_in 'Keywords', with: 'word, tag, value'
+  choose 'Restricted'
+  check 'I agree'
 end
 
 When(/^I upload my Final Submission files$/) do
-  pending # express the regexp above with the code you wish you had
+  expect(page).to have_css '#final-submission-file-fields .nested-fields:first-child input[type="file"]'
+  first_input_id = first('#final-submission-file-fields .nested-fields:first-child input[type="file"]')[:id]
+  attach_file first_input_id, fixture('final_submission_file_01.pdf')
 end
 
 Then(/^The system should save my Final Submission files$/) do
-  pending # express the regexp above with the code you wish you had
+  expect(FinalSubmissionFile.count).to eq 1
 end
 
 Then(/^I should see that my Final Submission is in process$/) do
-  pending # express the regexp above with the code you wish you had
+  within '.step-5' do
+    expect(page).to have_link '[review]'
+  end
+  within '.step-6' do
+    expect(page).to have_content 'in process'
+  end
+  expect(page).to have_css ".step.step-6.current"
 end

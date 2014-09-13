@@ -27,7 +27,7 @@ So that I can eventually graduate
     When I click the "Upload Format Review files" link within "#submission-1"
     And I choose my Format Review files
     And I click the "Submit files for review" button
-    Then The system should save my files
+    Then The system should save my Format Review files
     And I should be on the author submissions page
     And I should see that my Format Review is in process
     When My Format Review is approved
@@ -36,7 +36,7 @@ So that I can eventually graduate
     When I click the "Upload Final Submission files" link within "#submission-1"
     And I fill in the Final Submission fields
     And I upload my Final Submission files
-    And I click the "Submit" button
+    And I click the "Submit final files for review" button
     Then The system should save my Final Submission files
     And I should be on the author submissions page
     And I should see that my Final Submission is in process
