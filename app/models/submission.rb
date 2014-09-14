@@ -28,8 +28,8 @@ class Submission < ActiveRecord::Base
       if: Proc.new { |s| s.beyond_collecting_format_review_files? }
 
   accepts_nested_attributes_for :committee_members
-  accepts_nested_attributes_for :format_review_files
-  accepts_nested_attributes_for :final_submission_files
+  accepts_nested_attributes_for :format_review_files, allow_destroy: true
+  accepts_nested_attributes_for :final_submission_files, allow_destroy: true
 
   SEMESTERS = [
                 'Fall',
