@@ -186,12 +186,13 @@ Given(/^My Format Review is rejected/) do
 end
 
 Then(/^I should see that my format review was rejected$/) do
+  s = Submission.first
   within '#submission-1' do
     expect(page).to_not have_link '[delete]'
 
     within '.step-3' do
       expect(page).to have_link '[update]'
-      expect(page).to have_content 'rejected, please see the notes on the format review files form'
+      expect(page).to have_content "rejected"
     end
   end
 end
