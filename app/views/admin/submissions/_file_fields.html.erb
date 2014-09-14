@@ -1,11 +1,6 @@
-<div class="nested-fields">
-  <% if file_fields.object.filename? %>
-    <div class="form-group uploaded-file-link">
-      <%= link_to_remove_association "[delete]".html_safe, file_fields, class: 'text-danger' %>
-      <%= link_to file_fields.object.filename_identifier, file_fields.object.filename_url, class: 'file-link', target: '_blank' %>
-    </div>
-  <% else %>
-    <%= file_fields.input :filename, as: :file, label: false %>
-    <%= link_to_remove_association "[remove]".html_safe, file_fields, class: 'text-danger' %>
-  <% end %>
-</div>
+<!-- Since we need this partial in both the admin and author forms, -->
+<!-- and since the cocoon gem requires to have these partials in    -->
+<!-- the same directory as their parent template, we will simply    -->
+<!-- use these to point to the single shared partial.               -->
+
+<%= render partial: 'shared/file_fields', locals: { file_fields: file_fields } %>
