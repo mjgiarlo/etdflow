@@ -6,4 +6,8 @@ class FormatReviewFile < ActiveRecord::Base
 
   mount_uploader :filename, SubmissionFileUploader
 
+  def class_name
+    self.class.to_s.underscore.dasherize
+  end
+
 end
