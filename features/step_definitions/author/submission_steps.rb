@@ -162,3 +162,60 @@ Then(/^I should see that my Final Submission is in process$/) do
   end
   expect(page).to have_css ".step.step-6.current"
 end
+
+Given(/^I have submitted my format review for response/) do
+  steps %Q{
+    Given I have started a submission and provided my committee
+    When I click the "Upload Format Review files" link within "#submission-1"
+    And I choose my Format Review files
+    And I click the "Submit files for review" button
+    Then The system should save my Format Review files
+    And I should be on the author submissions page
+  }
+end
+
+
+Given(/^My Format Review is rejected/) do
+  step 'I have submitted my format review for response'
+  s = Submission.first
+  s.format_review_notes = 'Please revise!'
+  s.save!
+  status_giver = SubmissionStatusGiver.new(s)
+  status_giver.collecting_format_review_files!
+  expect(s.collecting_format_review_files?).to be_true
+end
+
+Then(/^I should see that my format review was rejected$/) do
+  within '#submission-1' do
+    expect(page).to_not have_link '[delete]'
+
+    within '.step-3' do
+      expect(page).to have_link '[update]'
+      expect(page).to have_content 'rejected, please see the notes on the format review files form'
+    end
+  end
+end
+
+Then(/^I should the reason for my format review's rejection$/) do
+  s = Submission.first
+  within "#format-review-notes" do
+    expect(page).to have_content s.format_review_notes
+  end
+end
+
+When(/^I update my Format Review files$/) do
+  within "#format-review-file-1" do
+    click_link "[delete]"
+  end
+  within "#format-review-file-2" do
+    click_link "[delete]"
+  end
+  click_link 'Additional File'
+  expect(page).to have_css '#format-review-file-fields .nested-fields:last-child input[type="file"]'
+  new_input_id = first('#format-review-file-fields .nested-fields:last-child input[type="file"]')[:id]
+  attach_file new_input_id, fixture('format_review_file_03.docx')
+end
+
+Then(/^The system should save my updated Format Review file$/) do
+  expect(FormatReviewFile.count).to eq 1
+end
