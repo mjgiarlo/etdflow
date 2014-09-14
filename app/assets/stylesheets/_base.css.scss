@@ -182,6 +182,8 @@ form {
         @extend .form-control;
         border-color: $gray-lighter;
         color: $link-color;
+        overflow: hidden;
+        text-overflow: ellipsis;
 
         &:hover {
           color: $link-hover-color;
