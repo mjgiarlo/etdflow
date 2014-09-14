@@ -24,14 +24,26 @@ describe SubmissionView do
         expect(view.delete_link).to eq "<span class='delete-link'><a href='#{author_submission_path(submission)}' class='text-danger' data-method='delete' data-confirm='Permanently delete this submission?' rel='nofollow' >[delete]</a></span>"
       end
     end
-    context "when step three is the current step" do
-      before { submission.status = 'collecting format review files' }
+    context "when step three is the current step for the first time" do
+      before do
+        submission.status = 'collecting format review files'
+        submission.format_review_notes = nil
+      end
       it "returns a link to delete the submission" do
         expect(view.delete_link).to eq "<span class='delete-link'><a href='#{author_submission_path(submission)}' class='text-danger' data-method='delete' data-confirm='Permanently delete this submission?' rel='nofollow' >[delete]</a></span>"
       end
     end
     context 'when the submission is beyond step three' do
       before { submission.stub(beyond_collecting_format_review_files?: true) }
+      it "returns an empty string" do
+        expect(view.delete_link).to eq ''
+      end
+    end
+    context 'when step three is the current step after my format review is rejected' do
+      before do
+        submission.status = 'collecting format review files'
+        submission.format_review_notes = 'some format review notes'
+      end
       it "returns an empty string" do
         expect(view.delete_link).to eq ''
       end
@@ -135,7 +147,7 @@ describe SubmissionView do
           expect(view.step_three_class).to eq ''
         end
       end
-      context "when step three is the current step" do
+      context "when step three is the current step for the first time" do
         before { submission.status = 'collecting format review files' }
         it "returns 'current'" do
           expect(view.step_three_class).to eq 'current'
@@ -156,13 +168,25 @@ describe SubmissionView do
           expect(view.step_three_description).to eq 'Upload Format Review files'
         end
       end
-      context "when step three is the current step" do
-        before { submission.status = 'collecting format review files' }
+      context "when step three is the current step for the first time" do
+        before do
+          submission.status = 'collecting format review files'
+          submission.format_review_notes = nil
+        end
         it "returns a link to complete step three" do
           expect(view.step_three_description).to eq "<a href='#{author_submission_format_review_path(submission)}'>Upload Format Review files</a>"
         end
       end
-      context "when step three has been completed" do
+      context 'when step three is the current step after my format review is rejected' do
+        before do
+          submission.status = 'collecting format review files'
+          submission.format_review_notes = 'some format review notes'
+        end
+        it "returns a link to edit step three" do
+          expect(view.step_three_description).to eq "Upload Format Review files <a href='#{author_submission_format_review_path(submission)}' class='small'>[update]</a>"
+        end
+      end
+      context "when the submission is beyond step three" do
         before { submission.stub(beyond_collecting_format_review_files?: true) }
         it "returns a link to review the files" do
           expect(view.step_three_description).to eq "Upload Format Review files <a href='#' class='small'>[review]</a>"
@@ -181,6 +205,15 @@ describe SubmissionView do
         before { submission.stub(beyond_collecting_format_review_files?: true) }
         it 'returns completed' do
           expect(view.step_three_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> completed"
+        end
+      end
+      context 'when step three is the current step after my format review is rejected' do
+        before do
+          submission.status = 'collecting format review files'
+          submission.format_review_notes = 'some format review notes'
+        end
+        it 'returns rejection instructions' do
+          expect(view.step_three_status).to eq "<span class='fa fa-warning'></span> rejected, please see the <a href='#{author_submission_format_review_path(submission, anchor: 'format-review-notes')}'>notes from the administrator</a>"
         end
       end
     end

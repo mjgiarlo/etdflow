@@ -7,6 +7,16 @@
 <div class="row">
   <div class="col-xs-12">
     <%= simple_form_for [:author, @submission], url: author_submission_update_format_review_path do |f| %>
+      <% if @submission.format_review_notes.present? %>
+          <div id="format-review-notes" class="row">
+            <div class="col-xs-12">
+              <h5>Format Review notes from the administrator</h5>
+              <div class="alert alert-<%= @submission.beyond_waiting_for_format_review_response? ? 'info' : 'warning'  %>">
+                <p><%= @submission.format_review_notes %></p>
+              </div>
+            </div>
+          </div>
+      <% end %>
       <%= f.input :title %>
       <div class="links cocoon-links">
         <label>Files<span class="required-astrisk">*</span></label>

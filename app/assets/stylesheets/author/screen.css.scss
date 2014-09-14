@@ -67,9 +67,17 @@
         vertical-align: top;
         line-height: 18px;
 
-        .glyphicon {
-          color: $brand-success;
+        .glyphicon-ok-circle {
           font-size: 140%;
+          color: $brand-success;
+        }
+        .fa-warning {
+          position: relative;
+          left: 1px;
+          top: 1px;
+          margin-right: 3px;
+          font-size: 130%;
+          color: $brand-warning;
         }
       }
     }
@@ -146,7 +154,7 @@
           @extend .text-muted;
         }
         .status {
-          .glyphicon {
+          .glyphicon-ok-circle {
             font-size: 120%;
           }
         }
