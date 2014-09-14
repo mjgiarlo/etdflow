@@ -65,3 +65,15 @@ So that I can eventually graduate
     And I click the "Update Committee" button
     Then I should be on the author submissions page
     And my committee should be updated
+
+  Scenario: Revise and resubmit a rejected submission
+    Given My Format Review is rejected
+    When I go to the author submissions page
+    Then I should see that my format review was rejected
+    When I click the "update" link within "#submission-1 .step-3"
+    Then I should the reason for my format review's rejection
+    When I update my Format Review files
+    And I click the "Submit files for review" button
+    Then The system should save my updated Format Review file
+    And I should be on the author submissions page
+    And I should see that my Format Review is in process
