@@ -66,7 +66,7 @@ So that I can eventually graduate
     Then I should be on the author submissions page
     And my committee should be updated
 
-  Scenario: Revise and resubmit a rejected submission
+  Scenario: Revise and resubmit a rejected format review
     Given My Format Review is rejected
     When I go to the author submissions page
     Then I should see that my format review was rejected
