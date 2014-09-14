@@ -1,6 +1,6 @@
 <div class="nested-fields">
   <% if file_fields.object.filename? %>
-    <div id="<%= file_fields.object.filename_identifier %>" class="form-group uploaded-file-link">
+    <div id="<%= file_fields.object.class.to_s.underscore.dasherize %>-<%= file_fields.object.id %>" class="form-group uploaded-file-link">
       <%= file_fields.input :filename, as: :hidden %>
       <%= link_to_remove_association "[delete]", file_fields, class: 'text-danger' %>
       <%= link_to file_fields.object.filename_identifier, file_fields.object.filename_url, class: 'file-link', target: '_blank' %>

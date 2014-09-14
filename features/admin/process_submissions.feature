@@ -49,7 +49,8 @@ Feature: Manage submissions
     And I click the "format_review_file_01.pdf" link
     Then I should see a link to view the PDF file
     And the file looks bad
-    And I fill in "Format Review Notes to Student" with "There are a few problems"
+    And I fill in "Format Review Notes to Student" with "There are problem with your file. Please re-upload."
+    And I click the "[delete]" link within "#format-review-file-1"
     And I click the "Reject & request revisions" button
     Then I should be on the admin default type format review submitted page
     And I should no longer see the submission
