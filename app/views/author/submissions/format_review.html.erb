@@ -9,18 +9,25 @@
     <% if @submission.format_review_notes.present? %>
         <div id="format-review-notes" class="row">
           <div class="col-xs-12">
-            <h5>Format Review notes from the administrator</h5>
+            <label>Format Review notes from the administrator</label>
             <div class="alert alert-<%= @submission.beyond_waiting_for_format_review_response? ? 'info' : 'warning'  %>">
               <p><%= @submission.format_review_notes %></p>
             </div>
           </div>
         </div>
     <% end %>
-    <%= @submission.title %>
-    <% @submission.format_review_files.each do |file| %>
-      <div id="format-review-file-<%=file.id%>">
-        <%= link_to file.filename_identifier, file.filename_url, class: 'file-link', target: '_blank' %>
-      </div>
-    <% end %>
+    <div id="title" class="review-group">
+      <label>Title</label>
+      <p><%= @submission.title %></p>
+    </div>
+
+    <div id="format-review-files" class="review-group">
+      <label>Files</label>
+      <% @submission.format_review_files.each do |file| %>
+        <div id="format-review-file-<%=file.id%>">
+          <%= link_to file.filename_identifier, file.filename_url, class: 'file-link', target: '_blank' %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

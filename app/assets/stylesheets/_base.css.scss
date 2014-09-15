@@ -166,6 +166,27 @@ form {
   }
 }
 
+.file-link {
+  @extend .form-control;
+  border-color: $gray-lighter;
+  color: $link-color;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    color: $link-hover-color;
+    background-color: $gray-lightest;
+    text-decoration: none;
+
+  }
+
+  &:before {
+    @extend .fa;
+    @extend .fa-file-text;
+    margin: 0px 5px 0px -5px;
+  }
+}
+
 .nested-fields {
   position: relative;
   min-height: 34px;
@@ -179,24 +200,7 @@ form {
       padding-right: 0px;
 
       .file-link {
-        @extend .form-control;
-        border-color: $gray-lighter;
-        color: $link-color;
-        overflow: hidden;
-        text-overflow: ellipsis;
-
-        &:hover {
-          color: $link-hover-color;
-          background-color: $gray-lightest;
-          text-decoration: none;
-
-        }
-
-        &:before {
-          @extend .fa;
-          @extend .fa-file-text;
-          margin: 0px 5px 0px -5px;
-        }
+        @extend .file-link;
       }
 
       .remove_fields {
@@ -264,4 +268,14 @@ textarea {
 
 #submission_keywords {
   height: 34px;
+}
+
+#format-review-files {
+  > div {
+    margin-bottom: 10px;
+  }
+}
+
+.review-group {
+  @extend .form-group;
 }
