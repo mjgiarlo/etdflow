@@ -79,6 +79,13 @@ So that I can eventually graduate
     And I should be on the author submissions page
     And I should see that my Format Review is in process
 
+  Scenario: Review my program information
+    Given I have submitted my format review for response
+    And My Format Review is approved
+    When I go to the author submissions page
+    And I click the "review" link within "#submission-1 .step-1"
+    Then I should see all of my program information
+
   Scenario: Review my format review files
     Given I have submitted my format review for response
     And My Format Review is approved
