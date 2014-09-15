@@ -26,7 +26,7 @@ class SubmissionView < SimpleDelegator
 
   def step_one_description
     if beyond_collecting_format_review_files?
-      ("Provide program information <a href='#' class='small'>[review]</a>").html_safe
+      ("Provide program information <a href='" + "/author/submissions/#{id}/program_information" + "' class='small'>[review]</a>").html_safe
     else
       ("Provide program information <a href='" + "/author/submissions/#{id}/edit" + "' class='small'>[update]</a>").html_safe
     end

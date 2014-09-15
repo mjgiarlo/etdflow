@@ -261,5 +261,11 @@ textarea {
 }
 
 .review-group {
-  @extend .form-group;
+  border-radius: 6px;
+  padding: 15px 10px;
+  border-bottom: 1px solid $gray-lightest;
+
+  &.odd {
+    background-color: $gray-lightest;
+  }
 }
