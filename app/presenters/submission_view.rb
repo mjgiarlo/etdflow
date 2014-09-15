@@ -73,9 +73,9 @@ class SubmissionView < SimpleDelegator
   def step_three_description
     if collecting_format_review_files?
       if format_review_notes.present?
-        ("Upload Format Review files <a href='" + "/author/submissions/#{id}/format_review" + "' class='small'>[update]</a>").html_safe
+        ("Upload Format Review files <a href='" + "/author/submissions/#{id}/format_review/edit" + "' class='small'>[update]</a>").html_safe
       else
-        ("<a href='" + "/author/submissions/#{id}/format_review" + "'>Upload Format Review files</a>").html_safe
+        ("<a href='" + "/author/submissions/#{id}/format_review/edit" + "'>Upload Format Review files</a>").html_safe
       end
     elsif beyond_collecting_format_review_files?
       ("Upload Format Review files <a href='#' class='small'>[review]</a>").html_safe
@@ -88,7 +88,7 @@ class SubmissionView < SimpleDelegator
     if beyond_collecting_format_review_files?
       "<span class='glyphicon glyphicon-ok-circle'></span> completed".html_safe
     elsif collecting_format_review_files? && format_review_notes.present?
-      ("<span class='fa fa-warning'></span> rejected, please see the <a href='" + "/author/submissions/#{id}/format_review#format-review-notes" + "'>notes from the administrator</a>").html_safe
+      ("<span class='fa fa-warning'></span> rejected, please see the <a href='" + "/author/submissions/#{id}/format_review/edit#format-review-notes" + "'>notes from the administrator</a>").html_safe
     else
       ''
     end

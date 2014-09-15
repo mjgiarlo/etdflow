@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   namespace :author do
     resources :authors, except: [:index, :show, :destroy]
     resources :submissions, except: [:show] do
-      get '/format_review', to: 'submissions#format_review', as: :format_review
+      get '/format_review/edit', to: 'submissions#edit_format_review', as: :edit_format_review
       patch '/format_review', to: 'submissions#update_format_review', as: :update_format_review
 
       get '/final_submission', to: 'submissions#final_submission', as: :final_submission

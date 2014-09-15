@@ -56,7 +56,7 @@ class Author::SubmissionsController < AuthorController
     redirect_to author_root_path
   end
 
-  def format_review
+  def edit_format_review
     @submission = Submission.find(params[:submission_id])
     status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.can_upload_format_review_files?

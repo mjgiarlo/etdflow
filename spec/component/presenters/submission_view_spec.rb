@@ -174,7 +174,7 @@ describe SubmissionView do
           submission.format_review_notes = nil
         end
         it "returns a link to complete step three" do
-          expect(view.step_three_description).to eq "<a href='#{author_submission_format_review_path(submission)}'>Upload Format Review files</a>"
+          expect(view.step_three_description).to eq "<a href='#{author_submission_edit_format_review_path(submission)}'>Upload Format Review files</a>"
         end
       end
       context 'when step three is the current step after my format review is rejected' do
@@ -183,7 +183,7 @@ describe SubmissionView do
           submission.format_review_notes = 'some format review notes'
         end
         it "returns a link to edit step three" do
-          expect(view.step_three_description).to eq "Upload Format Review files <a href='#{author_submission_format_review_path(submission)}' class='small'>[update]</a>"
+          expect(view.step_three_description).to eq "Upload Format Review files <a href='#{author_submission_edit_format_review_path(submission)}' class='small'>[update]</a>"
         end
       end
       context "when the submission is beyond step three" do
@@ -213,7 +213,7 @@ describe SubmissionView do
           submission.format_review_notes = 'some format review notes'
         end
         it 'returns rejection instructions' do
-          expect(view.step_three_status).to eq "<span class='fa fa-warning'></span> rejected, please see the <a href='#{author_submission_format_review_path(submission, anchor: 'format-review-notes')}'>notes from the administrator</a>"
+          expect(view.step_three_status).to eq "<span class='fa fa-warning'></span> rejected, please see the <a href='#{author_submission_edit_format_review_path(submission, anchor: 'format-review-notes')}'>notes from the administrator</a>"
         end
       end
     end
