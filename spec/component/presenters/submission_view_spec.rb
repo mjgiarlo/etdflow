@@ -295,7 +295,7 @@ describe SubmissionView do
       context "when step five is the current step" do
         before { submission.status = 'collecting final submission files' }
         it "returns a link to complete step five" do
-         expect(view.step_five_description).to eq "<a href='#{author_submission_final_submission_path(submission)}'>Upload Final Submission files</a>"
+         expect(view.step_five_description).to eq "<a href='#{author_submission_edit_final_submission_path(submission)}'>Upload Final Submission files</a>"
         end
       end
       context "when step five has been completed" do
