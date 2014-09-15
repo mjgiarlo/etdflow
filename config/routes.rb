@@ -26,6 +26,8 @@ Rails.application.routes.draw do
 
     get '/:degree_type/final_submission_incomplete', to: 'submissions#final_submission_incomplete', as: :submissions_final_submission_incomplete
 
+    get '/:degree_type/final_submission_submitted', to: 'submissions#final_submission_submitted', as: :submissions_final_submission_submitted
+
     root to: redirect(path: "/admin/#{Degree.default_degree_type}"), as: :dashboard
   end
 

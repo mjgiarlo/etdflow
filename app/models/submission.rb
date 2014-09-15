@@ -83,6 +83,7 @@ class Submission < ActiveRecord::Base
   }
   scope :format_review_is_submitted, -> { where(status: 'waiting for format review response') }
   scope :final_submission_is_incomplete, -> { where(status: 'collecting final submission files') }
+  scope :final_submission_is_submitted, -> { where(status: 'waiting for final submission response') }
 
   def has_committee?
     if committee_members.any?
