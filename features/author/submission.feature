@@ -72,7 +72,7 @@ So that I can eventually graduate
     When I go to the author submissions page
     Then I should see that my format review was rejected
     When I click the "update" link within "#submission-1 .step-3"
-    Then I should the reason for my format review's rejection
+    Then I should see the reason for my format review's rejection
     When I update my Format Review files
     And I click the "Submit files for review" button
     Then The system should save my updated Format Review file
