@@ -234,3 +234,14 @@ Then(/^I should see Format Review Notes from the administrator$/) do
     expect(page).to have_content 'Great job!'
   end
 end
+
+Then(/^I should see all of my program information$/) do
+  s = Submission.first
+  within 'body.submission.program_information' do
+    expect(page).to have_content s.title
+    expect(page).to have_content s.program_name
+    expect(page).to have_content s.degree_name
+    expect(page).to have_content s.semester
+    expect(page).to have_content s.year
+  end
+end
