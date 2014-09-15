@@ -63,6 +63,15 @@ Given(/^a submitted format review exists$/) do
   @file = create :format_review_file, submission: @submissions.first
 end
 
+Given(/^a submitted final submission exists$/) do
+  def make_submission
+    create :submission, :waiting_for_final_submission_response
+  end
+  @submissions = [make_submission]
+  @committee = create_committee @submissions.first
+  @file = create :final_submission_file, submission: @submissions.first
+end
+
 When(/^I click the title of the submitted format review$/) do
   click_link @submissions.first.title
 end
