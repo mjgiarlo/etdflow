@@ -70,12 +70,12 @@ Then(/^The system should save my Format Review files$/) do
   expect(FormatReviewFile.count).to eq 2
 end
 
-Then(/^I should see that my Format Review is in process$/) do
+Then(/^I should see that my Format Review is being reviewed$/) do
   within '.step-3' do
     expect(page).to have_link '[review]'
   end
   within '.step-4' do
-    expect(page).to have_content 'in process'
+    expect(page).to have_content 'under review by an administrator'
   end
   expect(page).to have_css ".step.step-4.current"
 end
@@ -153,12 +153,12 @@ Then(/^The system should save my Final Submission files$/) do
   expect(FinalSubmissionFile.count).to eq 1
 end
 
-Then(/^I should see that my Final Submission is in process$/) do
+Then(/^I should see that my Final Submission is being reviewed$/) do
   within '.step-5' do
     expect(page).to have_link '[review]'
   end
   within '.step-6' do
-    expect(page).to have_content 'in process'
+    expect(page).to have_content 'under review by an administrator'
   end
   expect(page).to have_css ".step.step-6.current"
 end

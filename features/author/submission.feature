@@ -29,7 +29,7 @@ So that I can eventually graduate
     And I click the "Submit files for review" button
     Then The system should save my Format Review files
     And I should be on the author submissions page
-    And I should see that my Format Review is in process
+    And I should see that my Format Review is being reviewed
     When My Format Review is approved
     Then My Format Review approval progress indicator should be updated
     And I should now be on "step-5" "Upload Final Submission files"
@@ -39,7 +39,7 @@ So that I can eventually graduate
     And I click the "Submit final files for review" button
     Then The system should save my Final Submission files
     And I should be on the author submissions page
-    And I should see that my Final Submission is in process
+    And I should see that my Final Submission is being reviewed
 
   Scenario: Delete my submission
     Given I have started a submission
@@ -77,7 +77,7 @@ So that I can eventually graduate
     And I click the "Submit files for review" button
     Then The system should save my updated Format Review file
     And I should be on the author submissions page
-    And I should see that my Format Review is in process
+    And I should see that my Format Review is being reviewed
 
   Scenario: Review my program information
     Given I have submitted my format review for response
