@@ -78,7 +78,7 @@ class SubmissionView < SimpleDelegator
         ("<a href='" + "/author/submissions/#{id}/format_review/edit" + "'>Upload Format Review files</a>").html_safe
       end
     elsif beyond_collecting_format_review_files?
-      ("Upload Format Review files <a href='#' class='small'>[review]</a>").html_safe
+      ("Upload Format Review files <a href='" + "/author/submissions/#{id}/format_review" + "' class='small'>[review]</a>").html_safe
     else
       'Upload Format Review files'
     end

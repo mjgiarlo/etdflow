@@ -176,7 +176,6 @@ end
 
 
 Given(/^My Format Review is rejected/) do
-  step 'I have submitted my format review for response'
   s = Submission.first
   s.format_review_notes = 'Please revise!'
   s.save!
@@ -219,4 +218,19 @@ end
 
 Then(/^The system should save my updated Format Review file$/) do
   expect(FormatReviewFile.count).to eq 1
+end
+
+Then(/^I should see all of my format review files$/) do
+ submission = Submission.first
+ submission.format_review_files.each do |file|
+  within "#format-review-file-#{file.id}" do
+   expect(page).to have_link file.filename_identifier
+  end
+ end
+end
+
+Then(/^I should see Format Review Notes from the administrator$/) do
+  within '#format-review-notes' do
+    expect(page).to have_content 'Great job!'
+  end
 end
