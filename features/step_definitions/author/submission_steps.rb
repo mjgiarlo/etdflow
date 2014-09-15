@@ -246,13 +246,6 @@ Then(/^I should see all of my program information$/) do
   end
 end
 
-Then(/^I should see my submission title$/) do
-  s = Submission.first
-  within 'body.submissions.committee' do
-    expect(page).to have_content s.title
-  end
-end
-
 Then(/^I should see all of my committee information$/) do
   s = Submission.first
   within 'body.submissions.committee' do
