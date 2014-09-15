@@ -213,7 +213,7 @@ describe SubmissionView do
           submission.format_review_notes = 'some format review notes'
         end
         it 'returns rejection instructions' do
-          expect(view.step_three_status).to eq "<span class='fa fa-warning'></span> rejected, please see the <a href='#{author_submission_edit_format_review_path(submission, anchor: 'format-review-notes')}'>notes from the administrator</a>"
+          expect(view.step_three_status).to eq "<span class='fa fa-exclamation-circle'></span> rejected, please see the <a href='#{author_submission_edit_format_review_path(submission, anchor: 'format-review-notes')}'>notes from the administrator</a>"
         end
       end
     end
@@ -250,8 +250,8 @@ describe SubmissionView do
       end
       context 'when the submission is currently waiting for format review response' do
         before { submission.status = 'waiting for format review response' }
-        it 'returns "in process"' do
-          expect(view.step_four_status).to eq 'in process'
+        it 'returns "under review by an administrator"' do
+          expect(view.step_four_status).to eq "<span class='fa fa-warning'></span> under review by an administrator"
         end
       end
       context "when the submission's Format Review files have been approved" do
@@ -353,8 +353,8 @@ describe SubmissionView do
       end
       context 'when the submission is currently waiting for final submission response' do
         before { submission.status = 'waiting for final submission response' }
-        it 'returns "in process"' do
-          expect(view.step_six_status).to eq 'in process'
+        it 'returns "under review by an administrator"' do
+          expect(view.step_six_status).to eq "<span class='fa fa-warning'></span> under review by an administrator"
         end
       end
       context "when the submission's Final Submission files have been approved" do
