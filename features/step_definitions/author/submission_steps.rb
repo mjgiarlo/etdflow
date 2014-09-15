@@ -196,7 +196,7 @@ Then(/^I should see that my format review was rejected$/) do
   end
 end
 
-Then(/^I should the reason for my format review's rejection$/) do
+Then(/^I should see the reason for my format review's rejection$/) do
   s = Submission.first
   within "#format-review-notes" do
     expect(page).to have_content s.format_review_notes
