@@ -52,7 +52,7 @@ describe 'Submission status transitions', js: true do
     end
 
     context "visiting the 'Upload Final Submission Files' page" do
-      before { visit author_submission_final_submission_path(submission) }
+      before { visit author_submission_edit_final_submission_path(submission) }
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
         expect(current_path).to eq author_root_path
@@ -112,7 +112,7 @@ describe 'Submission status transitions', js: true do
     end
 
     context "visiting the 'Upload Final Submission Files' page" do
-      before { visit author_submission_final_submission_path(submission) }
+      before { visit author_submission_edit_final_submission_path(submission) }
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
         expect(current_path).to eq author_root_path
@@ -168,7 +168,7 @@ describe 'Submission status transitions', js: true do
     end
 
     context "visiting the 'Upload Final Submission Files' page" do
-      before { visit author_submission_final_submission_path(submission) }
+      before { visit author_submission_edit_final_submission_path(submission) }
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
         expect(current_path).to eq author_root_path
@@ -227,7 +227,7 @@ describe 'Submission status transitions', js: true do
     end
 
     context "visiting the 'Upload Final Submission Files' page" do
-      before { visit author_submission_final_submission_path(submission) }
+      before { visit author_submission_edit_final_submission_path(submission) }
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
         expect(current_path).to eq author_root_path
@@ -300,15 +300,15 @@ describe 'Submission status transitions', js: true do
     end
 
     context "visiting the 'Upload Final Submission Files' page" do
-      before { visit author_submission_final_submission_path(submission) }
+      before { visit author_submission_edit_final_submission_path(submission) }
       specify "loads the page" do
-        expect(current_path).to eq author_submission_final_submission_path(submission)
+        expect(current_path).to eq author_submission_edit_final_submission_path(submission)
       end
     end
 
     context "when I submit the 'Upload Final Submission Files' form" do
       before do
-        visit author_submission_final_submission_path(submission)
+        visit author_submission_edit_final_submission_path(submission)
         select Time.zone.now.year, from: 'submission[defended_at(1i)]'
         select Time.zone.now.strftime('%B'), from: 'submission[defended_at(2i)]'
         select Time.zone.now.day, from: 'submission[defended_at(3i)]'

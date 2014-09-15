@@ -35,7 +35,7 @@ Rails.application.routes.draw do
       get '/format_review/edit', to: 'submissions#edit_format_review', as: :edit_format_review
       patch '/format_review', to: 'submissions#update_format_review', as: :update_format_review
 
-      get '/final_submission', to: 'submissions#final_submission', as: :final_submission
+      get '/final_submission/edit', to: 'submissions#edit_final_submission', as: :edit_final_submission
       patch '/final_submission', to: 'submissions#update_final_submission', as: :update_final_submission
 
       resource :committee, except: [:show, :destroy]

@@ -84,7 +84,7 @@ class Author::SubmissionsController < AuthorController
     flash[:alert] = 'Oops! You may have submitted invalid format review data. Please check that your format review information is correct.'
   end
 
-  def final_submission
+  def edit_final_submission
     @submission = Submission.find(params[:submission_id])
     status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.can_upload_final_submission_files?
