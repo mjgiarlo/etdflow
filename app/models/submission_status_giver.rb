@@ -43,6 +43,15 @@ class SubmissionStatusGiver
     end
   end
 
+  def can_review_program_information?
+    s = @submission
+    if s.beyond_collecting_format_review_files?
+      return
+    else
+      raise AccessForbidden
+    end
+  end
+
   def can_review_format_review_files?
     s = @submission
     if s.beyond_collecting_format_review_files?
