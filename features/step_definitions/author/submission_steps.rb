@@ -237,11 +237,29 @@ end
 
 Then(/^I should see all of my program information$/) do
   s = Submission.first
-  within 'body.submission.program_information' do
+  within 'body.submissions.program_information' do
     expect(page).to have_content s.title
     expect(page).to have_content s.program_name
     expect(page).to have_content s.degree_name
     expect(page).to have_content s.semester
     expect(page).to have_content s.year
+  end
+end
+
+Then(/^I should see my submission title$/) do
+  s = Submission.first
+  within 'body.submissions.committee' do
+    expect(page).to have_content s.title
+  end
+end
+
+Then(/^I should see all of my committee information$/) do
+  s = Submission.first
+  within 'body.submissions.committee' do
+    s.committee_members.each do |member|
+      expect(page).to have_content member.role
+      expect(page).to have_content member.name
+      expect(page).to have_content member.email
+    end
   end
 end
