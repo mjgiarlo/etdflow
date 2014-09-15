@@ -153,10 +153,6 @@ form {
   }
 }
 
-#format-review-files-heading {
-  padding-right: 120px;
-}
-
 .cocoon-links {
   @extend .clearfix;
 
@@ -216,18 +212,6 @@ form {
     position: absolute;
     top: 0px;
     right: 4px;
-  }
-}
-
-@media (max-width: 400px) {
-  #format-review-files-heading {
-    padding-right: 0px;
-  }
-  .cocoon-links {
-    .add_fields {
-      margin-top: 0px;
-      float: none;
-    }
   }
 }
 
