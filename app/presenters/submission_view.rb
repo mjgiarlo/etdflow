@@ -46,7 +46,7 @@ class SubmissionView < SimpleDelegator
     elsif collecting_format_review_files?
       ("Provide committee <a href='" + "/author/submissions/#{id}/committee/edit" + "' class='small'>[update]</a>").html_safe
     elsif beyond_collecting_format_review_files?
-      ("Provide committee <a href='#' class='small'>[review]</a>").html_safe
+      ("Provide committee <a href='" + "/author/submissions/#{id}/committee" + "' class='small'>[review]</a>").html_safe
     else
       'Provide committee'
     end

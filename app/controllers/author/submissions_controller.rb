@@ -65,6 +65,15 @@ class Author::SubmissionsController < AuthorController
     flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
   end
 
+  def committee
+    @submission = Submission.find(params[:submission_id])
+    status_giver = SubmissionStatusGiver.new(@submission)
+    status_giver.can_review_committee?
+  rescue SubmissionStatusGiver::AccessForbidden
+    redirect_to author_root_path
+    flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
+  end
+
   def edit_format_review
     @submission = Submission.find(params[:submission_id])
     status_giver = SubmissionStatusGiver.new(@submission)
