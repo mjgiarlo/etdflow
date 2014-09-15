@@ -84,6 +84,15 @@ class Author::SubmissionsController < AuthorController
     flash[:alert] = 'Oops! You may have submitted invalid format review data. Please check that your format review information is correct.'
   end
 
+  def format_review
+    @submission = Submission.find(params[:submission_id])
+    status_giver = SubmissionStatusGiver.new(@submission)
+    status_giver.can_review_format_review_files?
+  rescue SubmissionStatusGiver::AccessForbidden
+    redirect_to author_root_path
+    flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
+  end
+
   def edit_final_submission
     @submission = Submission.find(params[:submission_id])
     status_giver = SubmissionStatusGiver.new(@submission)

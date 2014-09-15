@@ -67,7 +67,8 @@ So that I can eventually graduate
     And my committee should be updated
 
   Scenario: Revise and resubmit a rejected format review
-    Given My Format Review is rejected
+    Given I have submitted my format review for response
+    And My Format Review is rejected
     When I go to the author submissions page
     Then I should see that my format review was rejected
     When I click the "update" link within "#submission-1 .step-3"
@@ -77,3 +78,11 @@ So that I can eventually graduate
     Then The system should save my updated Format Review file
     And I should be on the author submissions page
     And I should see that my Format Review is in process
+
+  Scenario: Review my format review files
+    Given I have submitted my format review for response
+    And My Format Review is approved
+    When I go to the author submissions page
+    And I click the "review" link within "#submission-1 .step-3"
+    Then I should see all of my format review files
+    And I should see Format Review Notes from the administrator

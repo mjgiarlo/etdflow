@@ -189,7 +189,7 @@ describe SubmissionView do
       context "when the submission is beyond step three" do
         before { submission.stub(beyond_collecting_format_review_files?: true) }
         it "returns a link to review the files" do
-          expect(view.step_three_description).to eq "Upload Format Review files <a href='#' class='small'>[review]</a>"
+          expect(view.step_three_description).to eq "Upload Format Review files <a href='#{author_submission_format_review_path(submission)}' class='small'>[review]</a>"
         end
       end
     end

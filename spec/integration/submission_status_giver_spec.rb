@@ -51,8 +51,40 @@ describe 'Submission status transitions', js: true do
       end
     end
 
+    pending "visiting the 'Review Program Information' page" do
+      before { visit edit_author_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    pending "visiting the 'Review Committee' page" do
+      before { visit edit_author_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Review Format Review Files' page" do
+      before { visit author_submission_format_review_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
     context "visiting the 'Upload Final Submission Files' page" do
       before { visit author_submission_edit_final_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    pending "visiting the 'Review Final Submission Files' page" do
+      before { visit author_submission_format_review_path(submission) }
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
         expect(current_path).to eq author_root_path
@@ -105,6 +137,30 @@ describe 'Submission status transitions', js: true do
 
     context "visiting the 'Upload Format Review Files' page" do
       before { visit author_submission_edit_format_review_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    pending "visiting the 'Review Program Information' page" do
+      before { visit edit_author_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    pending "visiting the 'Review Committee' page" do
+      before { visit edit_author_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Review Format Review Files' page" do
+      before { visit author_submission_format_review_path(submission) }
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
         expect(current_path).to eq author_root_path
@@ -167,6 +223,30 @@ describe 'Submission status transitions', js: true do
       end
     end
 
+    pending "visiting the 'Review Program Information' page" do
+      before { visit edit_author_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    pending "visiting the 'Review Committee' page" do
+      before { visit edit_author_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Review Format Review Files' page" do
+      before { visit author_submission_format_review_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
     context "visiting the 'Upload Final Submission Files' page" do
       before { visit author_submission_edit_final_submission_path(submission) }
       specify "raises a forbidden access error" do
@@ -223,6 +303,29 @@ describe 'Submission status transitions', js: true do
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
         expect(current_path).to eq author_root_path
+      end
+    end
+
+    pending "visiting the 'Review Program Information' page" do
+      before { visit edit_author_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    pending "visiting the 'Review Committee' page" do
+      before { visit edit_author_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Review Format Review Files' page" do
+      before { visit author_submission_format_review_path(submission) }
+      specify "loads the page" do
+        expect(current_path).to eq author_submission_format_review_path(submission)
       end
     end
 
@@ -296,6 +399,29 @@ describe 'Submission status transitions', js: true do
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
         expect(current_path).to eq author_root_path
+      end
+    end
+
+    pending "visiting the 'Review Program Information' page" do
+      before { visit edit_author_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    pending "visiting the 'Review Committee' page" do
+      before { visit edit_author_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Review Format Review Files' page" do
+      before { visit author_submission_format_review_path(submission) }
+      specify "loads the page" do
+        expect(current_path).to eq author_submission_format_review_path(submission)
       end
     end
 
