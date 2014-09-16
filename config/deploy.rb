@@ -55,7 +55,7 @@ namespace :deploy do
     ln -sf /dlt/#{application}/config_#{stage}/#{application}/solr.yml #{release_path}/config/ &&
     ln -sf /dlt/#{application}/config_#{stage}/#{application}/secrets.yml #{release_path}/config/ &&
     ln -sf /dlt/#{application}/config_#{stage}/#{application}/hydra-ldap.yml #{release_path}/config/ &&
-    ln -sf /dlt/#{application}/config_#{stage}/#{application}/carrierwave.rb #{release_path}/config/initializers/ &&
+    ln -sf /dlt/#{application}/config_#{stage}/#{application}/carrierwave.rb #{release_path}/config/initializers/
     CMD
   end
 end
