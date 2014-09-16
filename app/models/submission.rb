@@ -53,6 +53,15 @@ class Submission < ActiveRecord::Base
 
   validates_inclusion_of :semester,  in: SEMESTERS
 
+  ACCESS_LEVELS = [
+                    nil,
+                    'open_access',
+                    'restricted_to_institution',
+                    'restricted'
+                  ].freeze
+
+  validates_inclusion_of :access_level,  in: ACCESS_LEVELS
+
   validates :year, numericality: { only_integer: true }
 
   def self.years

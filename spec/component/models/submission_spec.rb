@@ -43,6 +43,7 @@ describe Submission do
 
 
   specify { expect(subject).to ensure_inclusion_of(:semester).in_array(Submission::SEMESTERS) }
+  specify { expect(subject).to ensure_inclusion_of(:access_level).in_array(Submission::ACCESS_LEVELS) }
 
   specify { expect(subject).to validate_numericality_of :year }
 
@@ -121,7 +122,7 @@ describe Submission do
         end
       end
       context 'when there is an access level' do
-        before { submission.access_level = 'public' }
+        before { submission.access_level = 'open_access' }
         it 'is valid' do
           expect(submission).to be_valid
         end
