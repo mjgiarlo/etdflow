@@ -2,6 +2,14 @@
   <span class="hide-show-indicator fa-rotate-90"></span>
 </div>
 <div id="final-submission-information" class="form-section-body collapse in">
+  <%= f.input :defended_at, as: :date, label: 'Date defended<span class="required-astrisk">*</span>'.html_safe %>
+  <%= f.input :abstract, as: :text, label: 'Abstract<span class="required-astrisk">*</span>'.html_safe %>
+  <%= f.input :keywords, as: :text, label: 'Keywords<span class="required-astrisk">*</span>'.html_safe %>
+  <%= f.input :access_level, as: :radio_buttons,
+      collection: [['Open Access', 'open_access'], ['Restricted (Penn State only)', 'restricted_to_institution'],['Restricted', 'restricted']],
+      wrapper: :vertical_radio_and_checkboxes,
+      label: 'Access level<span class="required-astrisk">*</span>'.html_safe %>
+
   <div class="links cocoon-links">
     <label>Final Submission Files<span class="required-astrisk">*</span></label>
     <%= link_to_add_association f, :final_submission_files,
