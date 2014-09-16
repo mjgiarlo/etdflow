@@ -89,6 +89,7 @@ class Author::SubmissionsController < AuthorController
     status_giver.can_upload_format_review_files?
     @submission.update_attributes!(format_review_params)
     status_giver.waiting_for_format_review_response!
+    @submission.update_attribute :format_review_files_uploaded_at, Time.zone.now
     redirect_to author_root_path
     flash[:notice] = 'Format review files uploaded successfully.'
   rescue ActiveRecord::RecordInvalid => e
@@ -126,6 +127,7 @@ class Author::SubmissionsController < AuthorController
     status_giver.can_upload_final_submission_files?
     @submission.update_attributes!(final_submission_params)
     status_giver.waiting_for_final_submission_response!
+    @submission.update_attribute :final_submission_files_uploaded_at, Time.zone.now
     redirect_to author_root_path
     flash[:notice] = 'Final submission files uploaded successfully.'
   rescue ActiveRecord::RecordInvalid

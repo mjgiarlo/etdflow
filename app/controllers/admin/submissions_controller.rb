@@ -41,6 +41,7 @@ class Admin::SubmissionsController < AdminController
       @submission.update_attributes!(format_review_params)
       status_giver = SubmissionStatusGiver.new(@submission)
       status_giver.collecting_final_submission_files!
+      @submission.update_attribute :format_review_approved_at, Time.zone.now
       redirect_to admin_submissions_format_review_submitted_path(@submission.parameterized_degree_type)
       flash[:notice] = 'The submission\'s format review information was successfully approved and returned to the author to collect final submission information.'
     end
@@ -48,6 +49,7 @@ class Admin::SubmissionsController < AdminController
       @submission.update_attributes!(format_review_params)
       status_giver = SubmissionStatusGiver.new(@submission)
       status_giver.collecting_format_review_files!
+      @submission.update_attribute :format_review_rejected_at, Time.zone.now
       redirect_to admin_submissions_format_review_submitted_path(@submission.parameterized_degree_type)
       flash[:notice] = 'The submission\'s format review information was successfully rejected and returned to the author for revision.'
     end
