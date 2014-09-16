@@ -18,6 +18,13 @@ describe Submission do
   specify { expect(subject).to have_db_column :keywords }
   specify { expect(subject).to have_db_column :access_level }
   specify { expect(subject).to have_db_column :has_agreed_to_terms }
+  specify { expect(subject).to have_db_column :committee_provided_at }
+  specify { expect(subject).to have_db_column :format_review_files_uploaded_at }
+  specify { expect(subject).to have_db_column :format_review_rejected_at }
+  specify { expect(subject).to have_db_column :format_review_approved_at }
+  specify { expect(subject).to have_db_column :final_submission_files_uploaded_at }
+  specify { expect(subject).to have_db_column :final_submission_rejected_at }
+  specify { expect(subject).to have_db_column :final_submission_approved_at }
 
   specify { expect(subject).to validate_presence_of :author_id }
   specify { expect(subject).to validate_presence_of :title }
