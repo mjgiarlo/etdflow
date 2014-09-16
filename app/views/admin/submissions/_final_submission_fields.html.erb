@@ -1,0 +1,22 @@
+<div class="form-section-heading" data-toggle="collapse" data-target="#final-submission-information">Final Submission Information
+  <span class="hide-show-indicator fa-rotate-90"></span>
+</div>
+<div id="final-submission-information" class="form-section-body collapse in">
+  <div class="links cocoon-links">
+    <label>Final Submission Files<span class="required-astrisk">*</span></label>
+    <%= link_to_add_association f, :final_submission_files,
+        class: 'btn btn-default btn-sm',
+        data: { association_insertion_node: '#final-submission-file-fields', association_insertion_method: 'append' },
+        form_name: 'file_fields',
+        partial: 'file_fields' do %>
+      <span class="glyphicon glyphicon-plus"></span> Additional File
+    <% end %>
+  </div>
+  <div id="final-submission-file-fields">
+    <%= f.simple_fields_for :final_submission_files do |final_submission_file| %>
+      <%= render 'file_fields', file_fields: final_submission_file %>
+    <% end %>
+  </div>
+
+  <%= f.input :final_submission_notes, as: :text, label: "Final Submission Notes to Student<span title='require' class='required-asterisk'>*</span>".html_safe %>
+</div>
