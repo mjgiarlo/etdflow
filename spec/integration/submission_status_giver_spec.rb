@@ -482,4 +482,105 @@ describe 'Submission status transitions', js: true do
     end
   end
 
+  describe "When status is 'waiting for final submission response'" do
+    before do
+      submission.update_attribute :status, 'waiting for final submission response'
+      submission.update_attribute :format_review_notes, 'Format review note'
+    end
+
+    context "visiting the 'Update Program Information' page" do
+      before { visit edit_author_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Provide Committee' page" do
+      before { visit new_author_submission_committee_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Update Committee' page" do
+      before { visit edit_author_submission_committee_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Upload Format Review Files' page" do
+      before { visit author_submission_edit_format_review_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Review Program Information' page" do
+      before { visit author_submission_program_information_path(submission) }
+      specify "loads the page" do
+        expect(current_path).to eq author_submission_program_information_path(submission)
+      end
+    end
+
+    context "visiting the 'Review Committee' page" do
+      before { visit author_submission_committee_path(submission) }
+      specify "loads the page" do
+        expect(current_path).to eq author_submission_committee_path(submission)
+      end
+    end
+
+    context "visiting the 'Review Format Review Files' page" do
+      before { visit author_submission_format_review_path(submission) }
+      specify "loads the page" do
+        expect(current_path).to eq author_submission_format_review_path(submission)
+      end
+    end
+
+    context "visiting the 'Upload Final Submission Files' page" do
+      before { visit author_submission_edit_final_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    pending "visiting the 'Review Final Submission Files' page" do
+      before { visit author_submission_final_submission_path(submission) }
+      specify "loads the page" do
+        expect(current_path).to eq author_submission_final_submission_path(submission)
+      end
+    end
+
+    pending "when an admin accepts the final submission files" do
+      before do
+        create :format_review_file, submission: submission
+        visit admin_edit_submission_path(submission)
+        fill_in 'Final Submission Notes to Student', with: 'Note on final submission'
+        click_button 'Approve Final submission'
+      end
+      specify "submission status updates to 'waiting for publication release'" do
+        submission.reload
+        expect(submission.status).to eq 'waiting for publication release'
+      end
+    end
+
+    pending "when an admin rejects the final submission files" do
+      before do
+        create :format_review_file, submission: submission
+        visit admin_edit_submission_path(submission)
+        fill_in 'Final Submission Notes to Student', with: 'Note on need for revisions'
+        click_button 'Reject & request revisions'
+      end
+      specify "submission status updates to 'collecting final submission files'" do
+        submission.reload
+        expect(submission.status).to eq 'collecting final submission files'
+      end
+    end
+  end
+
 end
