@@ -185,6 +185,7 @@ describe 'Submission status transitions', js: true do
 
     context "when I submit the 'Provide Committee' form" do
       before do
+        expect(submission.committee_provided_at).to be_nil
         visit new_author_submission_committee_path(submission)
         Committee.minimum_number_of_members.times do |i|
           fill_in "committee_committee_members_attributes_#{i}_name", with: "name_#{i}"
@@ -195,6 +196,10 @@ describe 'Submission status transitions', js: true do
       specify "submission status updates to 'collecting format review files'" do
         submission.reload
         expect(submission.status).to eq 'collecting format review files'
+      end
+      specify "submission committee_provided_at is set" do
+        submission.reload
+        expect(submission.committee_provided_at).to_not be_nil
       end
     end
   end
@@ -273,6 +278,7 @@ describe 'Submission status transitions', js: true do
 
     context "when I submit the 'Upload Format Review Files' form" do
       before do
+        expect(submission.format_review_files_uploaded_at).to be_nil
         visit author_submission_edit_format_review_path(submission)
         fill_in 'Title', with: 'Test Title'
         expect(page).to have_css '#format-review-file-fields .nested-fields:first-child input[type="file"]'
@@ -283,6 +289,10 @@ describe 'Submission status transitions', js: true do
       specify "submission status updates to 'waiting for format review response'" do
         submission.reload
         expect(submission.status).to eq 'waiting for format review response'
+      end
+      specify "submission format_review_files_uploaded_at is set" do
+        submission.reload
+        expect(submission.format_review_files_uploaded_at).to_not be_nil
       end
     end
   end
@@ -361,6 +371,7 @@ describe 'Submission status transitions', js: true do
 
     context "when an admin accepts the format review files" do
       before do
+        expect(submission.format_review_approved_at).to be_nil
         create :format_review_file, submission: submission
         visit admin_edit_submission_path(submission)
         fill_in 'Format Review Notes to Student', with: 'Note on format review'
@@ -370,10 +381,15 @@ describe 'Submission status transitions', js: true do
         submission.reload
         expect(submission.status).to eq 'collecting final submission files'
       end
+      specify "submission format_review_approved_at is set" do
+        submission.reload
+        expect(submission.format_review_approved_at).to_not be_nil
+      end
     end
 
     context "when an admin rejects the format review files" do
       before do
+        expect(submission.format_review_rejected_at).to be_nil
         create :format_review_file, submission: submission
         visit admin_edit_submission_path(submission)
         fill_in 'Format Review Notes to Student', with: 'Note on need for revisions'
@@ -382,6 +398,10 @@ describe 'Submission status transitions', js: true do
       specify "submission status updates to 'collecting format review files'" do
         submission.reload
         expect(submission.status).to eq 'collecting format review files'
+      end
+      specify "submission format_review_rejected_at is set" do
+        submission.reload
+        expect(submission.format_review_rejected_at).to_not be_nil
       end
     end
   end
@@ -462,6 +482,7 @@ describe 'Submission status transitions', js: true do
 
     context "when I submit the 'Upload Final Submission Files' form" do
       before do
+        expect(submission.final_submission_files_uploaded_at).to be_nil
         visit author_submission_edit_final_submission_path(submission)
         select Time.zone.now.year, from: 'submission[defended_at(1i)]'
         select Time.zone.now.strftime('%B'), from: 'submission[defended_at(2i)]'
@@ -478,6 +499,10 @@ describe 'Submission status transitions', js: true do
       specify "submission status updates to 'waiting for final submission response'" do
         submission.reload
         expect(submission.status).to eq 'waiting for final submission response'
+      end
+      specify "submission final_submission_files_uploaded_at is set" do
+        submission.reload
+        expect(submission.final_submission_files_uploaded_at).to_not be_nil
       end
     end
   end
@@ -558,6 +583,7 @@ describe 'Submission status transitions', js: true do
 
     pending "when an admin accepts the final submission files" do
       before do
+        expect(submission.final_submission_approved_at).to be_nil
         create :format_review_file, submission: submission
         visit admin_edit_submission_path(submission)
         fill_in 'Final Submission Notes to Student', with: 'Note on final submission'
@@ -567,10 +593,15 @@ describe 'Submission status transitions', js: true do
         submission.reload
         expect(submission.status).to eq 'waiting for publication release'
       end
+      specify "submission final_submission_approved_at is set" do
+        submission.reload
+        expect(submission.final_submission_approved_at).to_not be_nil
+      end
     end
 
     pending "when an admin rejects the final submission files" do
       before do
+        expect(submission.final_submission_rejected_at).to be_nil
         create :format_review_file, submission: submission
         visit admin_edit_submission_path(submission)
         fill_in 'Final Submission Notes to Student', with: 'Note on need for revisions'
@@ -579,6 +610,10 @@ describe 'Submission status transitions', js: true do
       specify "submission status updates to 'collecting final submission files'" do
         submission.reload
         expect(submission.status).to eq 'collecting final submission files'
+      end
+      specify "submission final_submission_rejected_at is set" do
+        submission.reload
+        expect(submission.final_submission_rejected_at).to_not be_nil
       end
     end
   end
