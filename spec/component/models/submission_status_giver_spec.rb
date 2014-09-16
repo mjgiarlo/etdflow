@@ -417,4 +417,73 @@ describe SubmissionStatusGiver do
     end
   end
 
+  describe '#released_for_publication!' do
+    context "when status is 'collecting program information'" do
+      before { submission.status = 'collecting program information' }
+      it "raises an exception" do
+        giver = SubmissionStatusGiver.new(submission)
+        expect {giver.released_for_publication!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
+      end
+    end
+
+    context "when status is 'collecting committee'" do
+      before { submission.status = 'collecting committee' }
+      it "raises an exception" do
+        giver = SubmissionStatusGiver.new(submission)
+        expect {giver.released_for_publication!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
+      end
+    end
+
+    context "when status is 'collecting format review files'" do
+      before { submission.status = 'collecting format review files' }
+      it "raises an exception" do
+        giver = SubmissionStatusGiver.new(submission)
+        expect {giver.released_for_publication!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
+      end
+    end
+
+    context "when status is 'waiting for format review response'" do
+      before { submission.status = 'waiting for format review response' }
+      it "raises an exception" do
+        giver = SubmissionStatusGiver.new(submission)
+        expect {giver.released_for_publication!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
+      end
+    end
+
+    context "when status is 'collecting final submission files'" do
+      before { submission.status = 'collecting final submission files' }
+      it "raises an exception" do
+        giver = SubmissionStatusGiver.new(submission)
+        expect {giver.released_for_publication!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
+      end
+    end
+
+    context "when status is 'waiting for final submission response'" do
+      before { submission.status = 'waiting for final submission response' }
+      it "raises an exception" do
+        giver = SubmissionStatusGiver.new(submission)
+        expect {giver.released_for_publication!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
+      end
+    end
+
+
+    context "when status is 'waiting for publication release'" do
+      before { submission.status = 'waiting for publication release' }
+      it "updates status to 'released for publication'" do
+        giver = SubmissionStatusGiver.new(submission)
+        giver.released_for_publication!
+        expect(submission.status).to eq 'released for publication'
+      end
+    end
+
+    context "when status is 'released for publication'" do
+      before { submission.status = 'released for publication' }
+      it "does not change the status" do
+        giver = SubmissionStatusGiver.new(submission)
+        giver.released_for_publication!
+        expect(submission.status).to eq 'released for publication'
+      end
+    end
+  end
+
 end
