@@ -76,7 +76,11 @@ When(/^I click the title of the submitted format review$/) do
   click_link @submissions.first.title
 end
 
-Then(/^I should see a link to view the PDF file/) do
+Then(/^I should see valid content in the final submissions fields$/) do
+  pending "need to set up validations first"
+end
+
+And(/^I should see a link to view the PDF file/) do
   expect(page).to have_link(@file.filename_identifier, { href: @file.filename_url })
 end
 

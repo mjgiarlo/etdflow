@@ -63,7 +63,8 @@ Feature: Manage submissions
     And I click the "Final Submission is Submitted" link
     Then I should see the submission listed
     When I click the title of the submitted format review
-    Then I should see a link to view the PDF file
+    Then I should see valid content in the final submissions fields
+    And I should see a link to view the PDF file
     And the file looks good
     And I fill in "Final Submission Notes to Student" with "It looks good"
     And I click the "Approve Final Submission" button
