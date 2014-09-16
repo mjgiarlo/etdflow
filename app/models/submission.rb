@@ -27,6 +27,20 @@ class Submission < ActiveRecord::Base
       presence: true,
       if: Proc.new { |s| s.beyond_collecting_format_review_files? }
 
+  validates :defended_at,
+            :abstract,
+            :keywords,
+            :access_level,
+      presence: true,
+      if: Proc.new { |s| s.beyond_waiting_for_format_review_response? }
+
+  validate :agreement_to_terms,
+      if: Proc.new { |s| s.beyond_waiting_for_format_review_response? }
+
+  validates :final_submission_notes,
+      presence: true,
+      if: Proc.new { |s| s.beyond_collecting_final_submission_files? }
+
   accepts_nested_attributes_for :committee_members
   accepts_nested_attributes_for :format_review_files, allow_destroy: true
   accepts_nested_attributes_for :final_submission_files, allow_destroy: true
@@ -150,4 +164,11 @@ class Submission < ActiveRecord::Base
   def set_status_to_collecting_program_information
     self.status = 'collecting program information' if self.new_record? && self.status.nil?
   end
+
+  def agreement_to_terms
+    unless has_agreed_to_terms?
+      errors.add(:base, 'You must agree to terms')
+    end
+  end
+
 end
