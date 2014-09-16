@@ -348,4 +348,73 @@ describe SubmissionStatusGiver do
     end
   end
 
+  describe '#waiting_for_publication_release!' do
+    context "when status is 'collecting program information'" do
+      before { submission.status = 'collecting program information' }
+      it "raises an exception" do
+        giver = SubmissionStatusGiver.new(submission)
+        expect {giver.waiting_for_publication_release!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
+      end
+    end
+
+    context "when status is 'collecting committee'" do
+      before { submission.status = 'collecting committee' }
+      it "raises an exception" do
+        giver = SubmissionStatusGiver.new(submission)
+        expect {giver.waiting_for_publication_release!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
+      end
+    end
+
+    context "when status is 'collecting format review files'" do
+      before { submission.status = 'collecting format review files' }
+      it "raises an exception" do
+        giver = SubmissionStatusGiver.new(submission)
+        expect {giver.waiting_for_publication_release!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
+      end
+    end
+
+    context "when status is 'waiting for format review response'" do
+      before { submission.status = 'waiting for format review response' }
+      it "raises an exception" do
+        giver = SubmissionStatusGiver.new(submission)
+        expect {giver.waiting_for_publication_release!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
+      end
+    end
+
+    context "when status is 'collecting final submission files'" do
+      before { submission.status = 'collecting final submission files' }
+      it "raises an exception" do
+        giver = SubmissionStatusGiver.new(submission)
+        expect {giver.waiting_for_publication_release!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
+      end
+    end
+
+    context "when status is 'waiting for final submission response'" do
+      before { submission.status = 'waiting for final submission response' }
+      it "updates status to 'waiting for publication release'" do
+        giver = SubmissionStatusGiver.new(submission)
+        giver.waiting_for_publication_release!
+        expect(submission.status).to eq 'waiting for publication release'
+      end
+    end
+
+
+    context "when status is 'waiting for publication release'" do
+      before { submission.status = 'waiting for publication release' }
+      it "does not change the status" do
+        giver = SubmissionStatusGiver.new(submission)
+        giver.waiting_for_publication_release!
+        expect(submission.status).to eq 'waiting for publication release'
+      end
+    end
+
+    context "when status is 'released for publication'" do
+      before { submission.status = 'released for publication' }
+      it "raises an exception" do
+        giver = SubmissionStatusGiver.new(submission)
+        expect {giver.waiting_for_publication_release!}.to raise_error(SubmissionStatusGiver::InvalidTransition)
+      end
+    end
+  end
+
 end

@@ -139,4 +139,15 @@ class SubmissionStatusGiver
     end
   end
 
+  def waiting_for_publication_release!
+    s = @submission
+    new_status = 'waiting for publication release'
+    if s.waiting_for_final_submission_response?
+      s.update_attribute :status, new_status
+    elsif s.status == new_status
+      return
+    else
+      raise InvalidTransition
+    end
+  end
 end
