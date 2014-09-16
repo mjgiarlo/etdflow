@@ -29,7 +29,6 @@ FactoryGirl.define do
 
     trait :waiting_for_format_review_response do
       status "waiting for format review response"
-      format_review_notes "Format review notes"
     end
 
     trait :collecting_final_submission_files do
@@ -40,7 +39,14 @@ FactoryGirl.define do
     trait :waiting_for_final_submission_response do
       status "waiting for final submission response"
       format_review_notes "Format review notes"
+      defended_at (Time.zone.now - 30.days)
+    end
+
+    trait :waiting_for_publication_release do
+      status "waiting for final submission response"
+      format_review_notes "Format review notes"
       final_submission_notes "Final submission notes"
+      defended_at (Time.zone.now - 30.days)
     end
 
   end
