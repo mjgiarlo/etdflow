@@ -77,7 +77,12 @@ When(/^I click the title of the submitted format review$/) do
 end
 
 Then(/^I should see valid content in the final submissions fields$/) do
-  pending "need to set up validations first"
+  expect(find_field('submission_defended_at_1i').value).to eq '2014'
+  expect(find_field('submission_defended_at_2i').value).to eq '9'
+  expect(find_field('submission_defended_at_3i').value).to eq '1'
+  expect(find_field('submission[abstract]').value).to eq 'my abstract'
+  expect(find_field('submission[keywords]').value).to eq 'key, word'
+  expect(page.has_checked_field?('submission_access_level_open_access')).to be_true
 end
 
 And(/^I should see a link to view the PDF file/) do
