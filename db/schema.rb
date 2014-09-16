@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140912212749) do
+ActiveRecord::Schema.define(version: 20140916165109) do
 
   create_table "authors", force: true do |t|
     t.string   "access_id"
@@ -110,6 +110,14 @@ ActiveRecord::Schema.define(version: 20140912212749) do
     t.text     "keywords"
     t.string   "access_level"
     t.boolean  "has_agreed_to_terms"
+    t.datetime "committee_provided_at"
+    t.datetime "format_review_files_uploaded_at"
+    t.datetime "format_review_rejected_at"
+    t.datetime "format_review_approved_at"
+    t.datetime "final_submission_files_uploaded_at"
+    t.datetime "final_submission_rejected_at"
+    t.datetime "final_submission_approved_at"
+    t.datetime "released_for_publication_at"
   end
 
   create_table "users", force: true do |t|
