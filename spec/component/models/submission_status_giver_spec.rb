@@ -163,7 +163,7 @@ describe SubmissionStatusGiver do
       it "updates status to 'waiting for format review response'" do
         giver = SubmissionStatusGiver.new(submission)
         giver.waiting_for_format_review_response!
-        expect(submission.status).to eq('waiting for format review response')
+        expect(submission.status).to eq 'waiting for format review response'
       end
     end
 
@@ -172,7 +172,7 @@ describe SubmissionStatusGiver do
       it "does not change the status" do
         giver = SubmissionStatusGiver.new(submission)
         giver.waiting_for_format_review_response!
-        expect(submission.status).to eq('waiting for format review response')
+        expect(submission.status).to eq 'waiting for format review response'
       end
     end
 
@@ -239,7 +239,7 @@ describe SubmissionStatusGiver do
       it "updates status to 'collecting final submission files'" do
         giver = SubmissionStatusGiver.new(submission)
         giver.collecting_final_submission_files!
-        expect(submission.status).to eq('collecting final submission files')
+        expect(submission.status).to eq 'collecting final submission files'
       end
     end
 
@@ -248,7 +248,7 @@ describe SubmissionStatusGiver do
       it "does not change the status" do
         giver = SubmissionStatusGiver.new(submission)
         giver.collecting_final_submission_files!
-        expect(submission.status).to eq('collecting final submission files')
+        expect(submission.status).to eq 'collecting final submission files'
       end
     end
 
@@ -258,7 +258,7 @@ describe SubmissionStatusGiver do
       it "updates status to 'collecting final submission files'" do
         giver = SubmissionStatusGiver.new(submission)
         giver.collecting_final_submission_files!
-        expect(submission.status).to eq('collecting final submission files')
+        expect(submission.status).to eq 'collecting final submission files'
       end
     end
 
@@ -317,7 +317,7 @@ describe SubmissionStatusGiver do
       it "updates status to 'waiting for final submission response'" do
         giver = SubmissionStatusGiver.new(submission)
         giver.waiting_for_final_submission_response!
-        expect(submission.status).to eq('waiting for final submission response')
+        expect(submission.status).to eq 'waiting for final submission response'
       end
     end
 
@@ -326,7 +326,7 @@ describe SubmissionStatusGiver do
       it "does not change the status" do
         giver = SubmissionStatusGiver.new(submission)
         giver.waiting_for_final_submission_response!
-        expect(submission.status).to eq('waiting for final submission response')
+        expect(submission.status).to eq 'waiting for final submission response'
       end
     end
 
