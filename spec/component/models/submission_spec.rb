@@ -81,6 +81,159 @@ describe Submission do
     end
   end
 
+  describe 'validates presence of final submission fields' do
+    context 'when beyond waiting for format review response' do
+      let(:submission) { create :submission, :collecting_final_submission_files }
+      context 'when there is a defended_at value' do
+        before { submission.defended_at = Time.zone.now }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there is no defended_at value' do
+        before { submission.defended_at = nil }
+        it 'is not valid' do
+          expect(submission).to_not be_valid
+        end
+      end
+      context 'when there is an abstract value' do
+        before { submission.abstract = 'My abstract' }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there is no abstract value' do
+        before { submission.abstract = nil }
+        it 'is not valid' do
+          expect(submission).to_not be_valid
+        end
+      end
+      context 'when there are keywords' do
+        before { submission.keywords = 'keyword one, keyword two' }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there are no keywords' do
+        before { submission.keywords = nil }
+        it 'is not valid' do
+          expect(submission).to_not be_valid
+        end
+      end
+      context 'when there is an access level' do
+        before { submission.access_level = 'public' }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there is no access level' do
+        before { submission.access_level = nil }
+        it 'is not valid' do
+          expect(submission).to_not be_valid
+        end
+      end
+    end
+    context 'when collecting program information' do
+      before { submission.status = 'collecting program information' }
+      context 'when there is no defended_at value' do
+        before { submission.defended_at = nil }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there is no abstract value' do
+        before { submission.abstract = nil }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there are no keywords' do
+        before { submission.keywords = nil }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there is no access level' do
+        before { submission.access_level = nil }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+    end
+  end
+
+  describe "validation of agreement to terms" do
+    context 'when beyond waiting for format review response' do
+      let(:submission) { create :submission, :collecting_final_submission_files }
+      context "when has_agreed_to_terms is true" do
+        before do
+          submission.has_agreed_to_terms = true
+          submission.valid?
+        end
+        it "should be valid" do
+          expect(submission.errors[:base]).to be_empty
+        end
+      end
+      context "when has_agreed_to_terms is false" do
+        before do
+          submission.has_agreed_to_terms = false
+          submission.valid?
+        end
+        it "should not be valid" do
+          expect(submission.errors[:base]).to_not be_empty
+        end
+      end
+    end
+    context 'when collecting program information' do
+      before { submission.status = 'collecting program information' }
+      context "when has_agreed_to_terms is true" do
+        before do
+          submission.has_agreed_to_terms = true
+          submission.valid?
+        end
+        it "should be valid" do
+          expect(submission.errors[:base]).to be_empty
+        end
+      end
+      context "when has_agreed_to_terms is false" do
+        before do
+          submission.has_agreed_to_terms = false
+          submission.valid?
+        end
+        it "should be valid" do
+          expect(submission.errors[:base]).to be_empty
+        end
+      end
+    end
+  end
+
+  describe 'validates presence of final submission notes' do
+    context 'when beyond collecting final submission files' do
+      let(:submission) { create :submission, :waiting_for_final_submission_response }
+      context 'when there are final submission notes' do
+        before { submission.final_submission_notes = "Looks good!" }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there are no final submission notes' do
+        before { submission.final_submission_notes = nil }
+        it 'is not valid' do
+          expect(submission).to_not be_valid
+        end
+      end
+    end
+    context 'when collecting program information' do
+      before { submission.status = 'collecting program information' }
+      context 'when there are no final submission notes' do
+        before { submission.final_submission_notes = nil }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+    end
+  end
+
   describe '#program_name' do
     it 'returns the name of the associated program' do
       expect(submission.program_name).to eq(submission.program.name)
