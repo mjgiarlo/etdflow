@@ -6,6 +6,7 @@ class Admin::SubmissionsController < AdminController
 
   def edit
     @submission = Submission.find(params[:id])
+    @view = Admin::SubmissionFormView.new(@submission)
   end
 
   def format_review_incomplete
