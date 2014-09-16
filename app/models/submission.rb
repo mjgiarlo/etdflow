@@ -94,35 +94,35 @@ class Submission < ActiveRecord::Base
   end
 
   def collecting_program_information?
-    status == 'collecting program information' ? true : false
+    status == 'collecting program information'
   end
 
   def collecting_committee?
-    status == 'collecting committee' ? true : false
+    status == 'collecting committee'
   end
 
   def collecting_format_review_files?
-    status == 'collecting format review files' ? true : false
+    status == 'collecting format review files'
   end
 
   def waiting_for_format_review_response?
-    status == 'waiting for format review response' ? true : false
+    status == 'waiting for format review response'
   end
 
   def collecting_final_submission_files?
-    status == 'collecting final submission files' ? true : false
+    status == 'collecting final submission files'
   end
 
   def waiting_for_final_submission_response?
-    status == 'waiting for final submission response' ? true : false
+    status == 'waiting for final submission response'
   end
 
   def waiting_for_publication_release?
-    status == 'waiting for publication release' ? true : false
+    status == 'waiting for publication release'
   end
 
   def released_for_publication?
-    status == 'released for publication' ? true : false
+    status == 'released for publication'
   end
 
   def beyond_collecting_committee?
