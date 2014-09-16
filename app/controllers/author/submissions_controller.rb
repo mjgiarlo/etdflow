@@ -129,7 +129,7 @@ class Author::SubmissionsController < AuthorController
     redirect_to author_root_path
     flash[:notice] = 'Final submission files uploaded successfully.'
   rescue ActiveRecord::RecordInvalid
-    render :final_submission
+    render :edit_final_submission
   rescue SubmissionStatusGiver::AccessForbidden
     redirect_to author_root_path
     flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
