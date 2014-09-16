@@ -150,4 +150,17 @@ class SubmissionStatusGiver
       raise InvalidTransition
     end
   end
+
+  def released_for_publication!
+    s = @submission
+    new_status = 'released for publication'
+    if s.waiting_for_publication_release?
+      s.update_attribute :status, new_status
+    elsif s.status == new_status
+      return
+    else
+      raise InvalidTransition
+    end
+  end
+
 end
