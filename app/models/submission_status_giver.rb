@@ -118,7 +118,7 @@ class SubmissionStatusGiver
   def collecting_final_submission_files!
     s = @submission
     new_status = 'collecting final submission files'
-    if s.waiting_for_format_review_response?
+    if s.waiting_for_format_review_response? || s.waiting_for_final_submission_response?
       s.update_attribute :status, new_status
     elsif s.status == new_status
       return
