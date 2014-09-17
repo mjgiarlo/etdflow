@@ -186,7 +186,6 @@ Given(/^My Format Review is rejected/) do
 end
 
 Then(/^I should see that my format review was rejected$/) do
-  s = Submission.first
   within '#submission-1' do
     expect(page).to_not have_link '[delete]'
 
@@ -305,4 +304,43 @@ Then(/^I should see Final Submission Notes from the administrator$/) do
   within '#final-submission-notes' do
     expect(page).to have_content 'Your final submission looks great!'
   end
+end
+
+Given(/^My Final Submission is rejected$/) do
+  s = Submission.first
+  s.final_submission_notes = 'Please update!'
+  s.save!
+  status_giver = SubmissionStatusGiver.new(s)
+  status_giver.collecting_final_submission_files!
+  s.update_attribute :final_submission_rejected_at, Time.zone.now
+  expect(s.collecting_final_submission_files?).to be_true
+end
+
+Then(/^I should see that my final submission was rejected$/) do
+  within '#submission-1 .step-5' do
+    expect(page).to have_link '[update]'
+    expect(page).to have_content "rejected"
+  end
+end
+
+Then(/^I should see the reason for my final submission's rejection$/) do
+  s = Submission.first
+  within "#final-submission-notes" do
+    expect(page).to have_content s.final_submission_notes
+  end
+end
+
+When(/^I update my Final Submission files$/) do
+  within "#final-submission-file-1" do
+    click_link "[delete]"
+  end
+  click_link 'Additional File'
+  expect(page).to have_css '#final-submission-file-fields .nested-fields:last-child input[type="file"]'
+  new_input_id = first('#final-submission-file-fields .nested-fields:last-child input[type="file"]')[:id]
+  attach_file new_input_id, fixture('final_submission_file_02.docx')
+end
+
+Then(/^The system should save my updated Final Submission file$/) do
+  expect(FinalSubmissionFile.count).to eq 1
+  expect(FinalSubmissionFile.first.filename_identifier).to eq 'final_submission_file_02.docx'
 end

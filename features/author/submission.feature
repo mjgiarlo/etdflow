@@ -109,3 +109,16 @@ So that I can eventually graduate
     Then I should see all of my final submission files
     And I should see all of my final submission information
     And I should see Final Submission Notes from the administrator
+
+  Scenario: Revise and resubmit a rejected final submission
+    Given I have submitted my final submission for response
+    And My Final Submission is rejected
+    When I go to the author submissions page
+    Then I should see that my final submission was rejected
+    When I click the "update" link within "#submission-1 .step-5"
+    Then I should see the reason for my final submission's rejection
+    When I update my Final Submission files
+    And I click the "Submit final files for review" button
+    Then The system should save my updated Final Submission file
+    And I should be on the author submissions page
+    And I should see that my Final Submission is being reviewed
