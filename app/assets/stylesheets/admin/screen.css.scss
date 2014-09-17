@@ -206,4 +206,10 @@ table.dataTable {
   .fa {
     @extend .fa-edit;
   }
+
+  &.ready-to-lock {
+    .fa {
+      @extend .fa-lock;
+    }
+  }
 }

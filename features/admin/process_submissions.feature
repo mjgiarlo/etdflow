@@ -29,7 +29,8 @@ Feature: Manage submissions
     And I click the "Format Review is Submitted" link
     Then I should see the submission listed
     When I click the title of the submission
-    And I click the "format_review_file_01.pdf" link
+    Then I should see the format review fields
+    When I click the "format_review_file_01.pdf" link
     Then I should see a link to view the PDF file
     And the file looks good
     And I fill in "Format Review Notes to Student" with "It looks good"
@@ -63,8 +64,15 @@ Feature: Manage submissions
     And I click the "Final Submission is Submitted" link
     Then I should see the submission listed
     When I click the title of the submission
-    Then I should see valid content in the final submissions fields
+    Then I should not see the format review fields
+    And I should see valid content in the final submissions fields
     And I should see a link to view the PDF file
+    When I click the Format Review Information heading
+    Then I should see that the Format Review Notes to Stundent field is readonly
+    And I should see a button to edit the Format Review Information
+    When I click the "Edit Format Review Information" link
+    Then I should see the edit button update
+    And I should now be able to edit the Format Review Notes to Student field
     And the file looks good
     And I fill in "Final Submission Notes to Student" with "It looks good"
     And I click the "Approve Final Submission" button

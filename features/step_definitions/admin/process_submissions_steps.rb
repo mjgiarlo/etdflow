@@ -76,6 +76,30 @@ When(/^I click the title of the submission$/) do
   click_link @submissions.first.title
 end
 
+Then(/^I should see the format review fields$/) do
+  s = Submission.first
+  expect(page).to have_field "Program*"
+  expect(page).to have_field "Degree*"
+  expect(page).to have_field "Semester Intending to Graduate*"
+  expect(page).to have_field "Graduation Year*"
+  s.committee_members.each do |member|
+    expect(page).to have_content "#{member.role}*"
+  end
+  expect(page).to have_field "Format Review Notes to Student*"
+end
+
+Then(/^I should not see the format review fields$/) do
+  s = Submission.first
+  expect(page).to_not have_field "Program*"
+  expect(page).to_not have_field "Degree*"
+  expect(page).to_not have_field "Semester Intending to Graduate*"
+  expect(page).to_not have_field "Graduation Year*"
+  s.committee_members.each do |member|
+    expect(page).to_not have_content "#{member.role}*"
+  end
+  expect(page).to_not have_field "Format Review Notes to Student*"
+end
+
 Then(/^I should see valid content in the final submissions fields$/) do
   expect(find_field('submission_defended_at_1i').value).to eq '2014'
   expect(find_field('submission_defended_at_2i').value).to eq '9'
@@ -83,6 +107,29 @@ Then(/^I should see valid content in the final submissions fields$/) do
   expect(find_field('submission[abstract]').value).to eq 'my abstract'
   expect(find_field('submission[keywords]').value).to eq 'key, word'
   expect(page.has_checked_field?('submission_access_level_open_access')).to be_true
+end
+
+When(/^I click the Format Review Information heading$/) do
+  heading = first("div[data-target='#format-review-files']")
+  heading.click
+end
+
+Then(/^I should see that the Format Review Notes to Stundent field is readonly$/) do
+  expect(page).to have_field "Format Review Notes to Student*"
+  expect(page).to have_css "#submission_format_review_notes[readonly]"
+end
+
+Then(/^I should see a button to edit the Format Review Information$/) do
+  expect(page).to have_link "Edit Format Review Information"
+end
+
+Then(/^I should see the edit button update$/) do
+  expect(page).to_not have_link "Edit Format Review Information"
+  expect(page).to have_link "Lock Format Review Information"
+end
+
+Then(/^I should now be able to edit the Format Review Notes to Student field$/) do
+  expect(page).to_not have_css "#submission_format_review_notes[readonly]"
 end
 
 And(/^I should see a link to view the PDF file/) do
