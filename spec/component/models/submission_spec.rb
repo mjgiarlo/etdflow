@@ -722,4 +722,54 @@ describe Submission do
     end
   end
 
+  describe '#status_class' do
+    context "when status is 'collecting program information'" do
+      before { submission.status = 'collecting program information' }
+      it "returns 'collecting-program-information'" do
+        expect(submission.status_class).to eq 'collecting-program-information'
+      end
+    end
+    context "when status is 'collecting committee'" do
+      before { submission.status = 'collecting committee' }
+      it "returns 'collecting-committee'" do
+        expect(submission.status_class).to eq 'collecting-committee'
+      end
+    end
+    context "when status is 'collecting format review files'" do
+      before { submission.status = 'collecting format review files' }
+      it "returns 'collecting-format-review-files'" do
+        expect(submission.status_class).to eq 'collecting-format-review-files'
+      end
+    end
+    context "when status is 'waiting for format review response'" do
+      before { submission.status = 'waiting for format review response' }
+      it "returns 'waiting-for-format-review-response'" do
+        expect(submission.status_class).to eq 'waiting-for-format-review-response'
+      end
+    end
+    context "when status is 'collecting final submission files'" do
+      before { submission.status = 'collecting final submission files' }
+      it "returns 'collecting-final-submission-files'" do
+        expect(submission.status_class).to eq 'collecting-final-submission-files'
+      end
+    end
+    context "when status is 'waiting for final submission response'" do
+      before { submission.status = 'waiting for final submission response' }
+      it "returns 'waiting-for-final-submission-response'" do
+        expect(submission.status_class).to eq 'waiting-for-final-submission-response'
+      end
+    end
+    context "when status is 'waiting for publication release'" do
+      before { submission.status = 'waiting for publication release' }
+      it "returns 'waiting-for-publication-release'" do
+        expect(submission.status_class).to eq 'waiting-for-publication-release'
+      end
+    end
+    context "when status is 'released for publication'" do
+      before { submission.status = 'released for publication' }
+      it "returns 'released-for-publication'" do
+        expect(submission.status_class).to eq 'released-for-publication'
+      end
+    end
+  end
 end

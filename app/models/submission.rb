@@ -117,6 +117,10 @@ class Submission < ActiveRecord::Base
     end
   end
 
+  def status_class
+    status.parameterize
+  end
+
   def collecting_program_information?
     status == 'collecting program information'
   end
