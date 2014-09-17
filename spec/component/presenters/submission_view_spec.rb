@@ -292,13 +292,25 @@ describe SubmissionView do
           expect(view.step_five_description).to eq 'Upload Final Submission files'
         end
       end
-      context "when step five is the current step" do
-        before { submission.status = 'collecting final submission files' }
+      context "when step five is the current step for the first time" do
+        before do
+          submission.status = 'collecting final submission files'
+          submission.final_submission_rejected_at = nil
+        end
         it "returns a link to complete step five" do
          expect(view.step_five_description).to eq "<a href='#{author_submission_edit_final_submission_path(submission)}'>Upload Final Submission files</a>"
         end
       end
-      context "when step five has been completed" do
+      context 'when step five is the current step after my final submission is rejected' do
+        before do
+          submission.status = 'collecting final submission files'
+          submission.final_submission_rejected_at = Time.zone.now
+        end
+        it "returns a link to edit step five" do
+          expect(view.step_five_description).to eq "Upload Final Submission files <a href='#{author_submission_edit_final_submission_path(submission)}' class='small'>[update]</a>"
+        end
+      end
+      context "when the submission is beyond step five" do
         before { submission.stub(beyond_collecting_final_submission_files?: true) }
         it "returns a link to review the files" do
           expect(view.step_five_description).to eq "Upload Final Submission files <a href='#{author_submission_final_submission_path(submission)}' class='small'>[review]</a>"
@@ -317,6 +329,15 @@ describe SubmissionView do
         before { submission.stub(beyond_collecting_final_submission_files?: true) }
         it 'returns completed' do
           expect(view.step_five_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> completed"
+        end
+      end
+      context 'when step five is the current step after my final submission is rejected' do
+        before do
+          submission.status = 'collecting final submission files'
+          submission.final_submission_rejected_at = Time.zone.now
+        end
+        it 'returns rejection instructions' do
+          expect(view.step_five_status).to eq "<span class='fa fa-exclamation-circle'></span> rejected, please see the <a href='#{author_submission_edit_final_submission_path(submission, anchor: 'final-submission-notes')}'>notes from the administrator</a>"
         end
       end
     end
