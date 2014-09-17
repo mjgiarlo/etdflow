@@ -79,6 +79,15 @@ class SubmissionStatusGiver
     end
   end
 
+  def can_review_final_submission_files?
+    s = @submission
+    if s.beyond_collecting_final_submission_files?
+      return
+    else
+      raise AccessForbidden
+    end
+  end
+
   def collecting_committee!
     s = @submission
     new_status = 'collecting committee'
