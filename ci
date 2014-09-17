@@ -44,7 +44,7 @@ bundle exec cucumber --no-color
 
 echo '========== Deploy To Staging ============================================'
 current_revision=`git show | awk '/^commit / { print $2 }'`
-bundle exec cap staging deploy -s branch=$current_revision
+bundle exec cap qa deploy -s branch=$current_revision
 
 echo '========== System Tests ================================================='
 bundle exec rspec --no-color spec.system
