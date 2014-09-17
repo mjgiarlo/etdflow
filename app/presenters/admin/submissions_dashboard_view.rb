@@ -13,7 +13,8 @@ class Admin::SubmissionsDashboardView
         format_review_is_incomplete_filter,
         format_review_is_submitted_filter,
         final_submission_is_incomplete_filter,
-        final_submission_is_submitted_filter
+        final_submission_is_submitted_filter,
+        final_submission_is_approved_filter
     ]
   end
 
@@ -58,4 +59,15 @@ class Admin::SubmissionsDashboardView
         count: submissions.empty? ? nil : submissions.count.to_s
     }
   end
+
+  def final_submission_is_approved_filter
+    submissions = Submission.send(@degree_type).final_submission_is_approved
+    {
+        title: 'Final Submission is Approved',
+        description: 'Submissions whose final submission information has been approved and is waiting to be released for publication.',
+        path: submissions.empty? ? nil : "/admin/#{@degree_type}/final_submission_approved",
+        count: submissions.empty? ? nil : submissions.count.to_s
+    }
+  end
+
 end

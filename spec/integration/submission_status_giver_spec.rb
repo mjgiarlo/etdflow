@@ -581,13 +581,15 @@ describe 'Submission status transitions', js: true do
       end
     end
 
-    pending "when an admin accepts the final submission files" do
+    context "when an admin accepts the final submission files" do
+      let(:submission) { create :submission, :waiting_for_final_submission_response }
       before do
         expect(submission.final_submission_approved_at).to be_nil
         create :format_review_file, submission: submission
+        create :final_submission_file, submission: submission
         visit admin_edit_submission_path(submission)
-        fill_in 'Final Submission Notes to Student', with: 'Note on final submission'
-        click_button 'Approve Final submission'
+        fill_in 'Final Submission Notes to Student', with: 'Note on need for revisions'
+        click_button 'Approve Final Submission'
       end
       specify "submission status updates to 'waiting for publication release'" do
         submission.reload
@@ -600,9 +602,11 @@ describe 'Submission status transitions', js: true do
     end
 
     pending "when an admin rejects the final submission files" do
+      let(:submission) { create :submission, :waiting_for_final_submission_response }
       before do
         expect(submission.final_submission_rejected_at).to be_nil
         create :format_review_file, submission: submission
+        create :final_submission_file, submission: submission
         visit admin_edit_submission_path(submission)
         fill_in 'Final Submission Notes to Student', with: 'Note on need for revisions'
         click_button 'Reject & request revisions'

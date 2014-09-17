@@ -25,6 +25,10 @@ class Admin::SubmissionsController < AdminController
     @submissions = Submission.send(params[:degree_type]).final_submission_is_submitted
   end
 
+  def final_submission_approved
+    @submissions = Submission.send(params[:degree_type]).final_submission_is_approved
+  end
+
   def bulk_destroy
     ids = params[:submission_ids].split(',')
     Submission.destroy(ids)
@@ -63,6 +67,26 @@ class Admin::SubmissionsController < AdminController
     flash[:alert] = 'Oops! You may have submitted invalid format review data. Please check that your format review information is correct.'
   end
 
+  def record_final_submission_response
+    @submission = Submission.find(params[:id])
+    if params[:approved]
+      @submission.update_attributes!(final_submission_params)
+      status_giver = SubmissionStatusGiver.new(@submission)
+      status_giver.waiting_for_publication_release!
+      @submission.update_attribute :final_submission_approved_at, Time.zone.now
+      redirect_to admin_submissions_final_submission_submitted_path(@submission.parameterized_degree_type)
+      flash[:notice] = 'The submission\'s final submission information was successfully approved.'
+    end
+  rescue ActiveRecord::RecordInvalid
+    render :edit
+  rescue SubmissionStatusGiver::AccessForbidden
+    redirect_to author_root_path
+    flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
+  rescue SubmissionStatusGiver::InvalidTransition
+    redirect_to author_root_path
+    flash[:alert] = 'Oops! You may have submitted invalid format review data. Please check that your format review information is correct.'
+  end
+
   private
 
   def format_review_params
@@ -75,6 +99,24 @@ class Admin::SubmissionsController < AdminController
                                        :format_review_notes,
                                        committee_members_attributes: [:role, :name, :email, :is_advisor, :id],
                                        format_review_files_attributes: [:filename, :id, :_destroy])
+  end
+
+  def final_submission_params
+    params.require(:submission).permit(:semester,
+                                       :year,
+                                       :author_id,
+                                       :program_id,
+                                       :degree_id,
+                                       :title,
+                                       :format_review_notes,
+                                       :final_submission_notes,
+                                       :defended_at,
+                                       :abstract,
+                                       :keywords,
+                                       :access_level,
+                                       committee_members_attributes: [:role, :name, :email, :is_advisor, :id],
+                                       format_review_files_attributes: [:filename, :id, :_destroy],
+                                       final_submission_files_attributes: [:filename, :id, :_destroy])
   end
 
 end

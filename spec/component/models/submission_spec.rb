@@ -344,6 +344,21 @@ describe Submission do
     end
   end
 
+  describe '.final_submission_is_approved' do
+    before do
+      create :submission, :collecting_program_information
+      create :submission, :collecting_committee
+      create :submission, :collecting_format_review_files
+      create :submission, :waiting_for_format_review_response
+      create :submission, :collecting_final_submission_files
+      create :submission, :waiting_for_final_submission_response
+      create :submission, :waiting_for_publication_release
+    end
+    it "returns submissions whose final submissions have been approved" do
+      expect(Submission.final_submission_is_approved.count).to eq 1
+    end
+  end
+
   describe '.years' do
     it 'Returns an array containing the current year plus 3 more' do
       today = Date.today
