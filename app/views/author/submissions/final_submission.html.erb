@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h1>Final Submission Files</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <% if @submission.final_submission_notes.present? %>
+      <div id="final-submission-notes" class="row">
+        <div class="col-xs-12">
+          <label>Final Submission notes from the administrator</label>
+          <div class="alert alert-<%= @submission.beyond_waiting_for_final_submission_response? ? 'info' : 'warning'  %>">
+            <p><%= @submission.final_submission_notes %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div id="defended-at" class="review-group odd">
+      <label>Date defended</label>
+      <p><%= @submission.defended_at.strftime('%B %d, %Y') if @submission.defended_at.present? %></p>
+    </div>
+
+    <div id="abstract" class="review-group">
+      <label>Abstract</label>
+      <p><%= @submission.abstract %></p>
+    </div>
+
+    <div id="keywords" class="review-group odd">
+      <label>Keywords</label>
+      <p><%= @submission.keywords %></p>
+    </div>
+
+    <div id="access-level" class="review-group">
+      <label>Access level</label>
+      <p><%= @submission.access_level %></p>
+    </div>
+
+    <div id="final-submission-files" class="review-group odd">
+      <label>Files</label>
+      <% @submission.final_submission_files.each do |file| %>
+        <div id="final-submission-file-<%=file.id%>">
+          <%= link_to file.filename_identifier, file.filename_url, class: 'file-link', target: '_blank' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

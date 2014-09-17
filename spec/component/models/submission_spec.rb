@@ -18,6 +18,13 @@ describe Submission do
   specify { expect(subject).to have_db_column :keywords }
   specify { expect(subject).to have_db_column :access_level }
   specify { expect(subject).to have_db_column :has_agreed_to_terms }
+  specify { expect(subject).to have_db_column :committee_provided_at }
+  specify { expect(subject).to have_db_column :format_review_files_uploaded_at }
+  specify { expect(subject).to have_db_column :format_review_rejected_at }
+  specify { expect(subject).to have_db_column :format_review_approved_at }
+  specify { expect(subject).to have_db_column :final_submission_files_uploaded_at }
+  specify { expect(subject).to have_db_column :final_submission_rejected_at }
+  specify { expect(subject).to have_db_column :final_submission_approved_at }
 
   specify { expect(subject).to validate_presence_of :author_id }
   specify { expect(subject).to validate_presence_of :title }
@@ -36,6 +43,7 @@ describe Submission do
 
 
   specify { expect(subject).to ensure_inclusion_of(:semester).in_array(Submission::SEMESTERS) }
+  specify { expect(subject).to ensure_inclusion_of(:access_level).in_array(Submission::ACCESS_LEVELS) }
 
   specify { expect(subject).to validate_numericality_of :year }
 
@@ -67,6 +75,159 @@ describe Submission do
       before { submission.status = 'collecting program information' }
       context 'when there are no format review notes' do
         before { submission.format_review_notes = nil }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+    end
+  end
+
+  describe 'validates presence of final submission fields' do
+    context 'when beyond waiting for format review response' do
+      let(:submission) { create :submission, :collecting_final_submission_files }
+      context 'when there is a defended_at value' do
+        before { submission.defended_at = Time.zone.now }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there is no defended_at value' do
+        before { submission.defended_at = nil }
+        it 'is not valid' do
+          expect(submission).to_not be_valid
+        end
+      end
+      context 'when there is an abstract value' do
+        before { submission.abstract = 'My abstract' }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there is no abstract value' do
+        before { submission.abstract = nil }
+        it 'is not valid' do
+          expect(submission).to_not be_valid
+        end
+      end
+      context 'when there are keywords' do
+        before { submission.keywords = 'keyword one, keyword two' }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there are no keywords' do
+        before { submission.keywords = nil }
+        it 'is not valid' do
+          expect(submission).to_not be_valid
+        end
+      end
+      context 'when there is an access level' do
+        before { submission.access_level = 'open_access' }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there is no access level' do
+        before { submission.access_level = nil }
+        it 'is not valid' do
+          expect(submission).to_not be_valid
+        end
+      end
+    end
+    context 'when collecting program information' do
+      before { submission.status = 'collecting program information' }
+      context 'when there is no defended_at value' do
+        before { submission.defended_at = nil }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there is no abstract value' do
+        before { submission.abstract = nil }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there are no keywords' do
+        before { submission.keywords = nil }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there is no access level' do
+        before { submission.access_level = nil }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+    end
+  end
+
+  describe "validation of agreement to terms" do
+    context 'when beyond waiting for format review response' do
+      let(:submission) { create :submission, :collecting_final_submission_files }
+      context "when has_agreed_to_terms is true" do
+        before do
+          submission.has_agreed_to_terms = true
+          submission.valid?
+        end
+        it "should be valid" do
+          expect(submission.errors[:base]).to be_empty
+        end
+      end
+      context "when has_agreed_to_terms is false" do
+        before do
+          submission.has_agreed_to_terms = false
+          submission.valid?
+        end
+        it "should not be valid" do
+          expect(submission.errors[:base]).to_not be_empty
+        end
+      end
+    end
+    context 'when collecting program information' do
+      before { submission.status = 'collecting program information' }
+      context "when has_agreed_to_terms is true" do
+        before do
+          submission.has_agreed_to_terms = true
+          submission.valid?
+        end
+        it "should be valid" do
+          expect(submission.errors[:base]).to be_empty
+        end
+      end
+      context "when has_agreed_to_terms is false" do
+        before do
+          submission.has_agreed_to_terms = false
+          submission.valid?
+        end
+        it "should be valid" do
+          expect(submission.errors[:base]).to be_empty
+        end
+      end
+    end
+  end
+
+  describe 'validates presence of final submission notes' do
+    context 'when beyond collecting final submission files' do
+      let(:submission) { create :submission, :waiting_for_final_submission_response }
+      context 'when there are final submission notes' do
+        before { submission.final_submission_notes = "Looks good!" }
+        it 'is valid' do
+          expect(submission).to be_valid
+        end
+      end
+      context 'when there are no final submission notes' do
+        before { submission.final_submission_notes = nil }
+        it 'is not valid' do
+          expect(submission).to_not be_valid
+        end
+      end
+    end
+    context 'when collecting program information' do
+      before { submission.status = 'collecting program information' }
+      context 'when there are no final submission notes' do
+        before { submission.final_submission_notes = nil }
         it 'is valid' do
           expect(submission).to be_valid
         end
@@ -166,6 +327,35 @@ describe Submission do
     end
     it "returns submissions whose final submission has not yet been submitted or are currently rejected" do
       expect(Submission.final_submission_is_incomplete.count).to eq 1
+    end
+  end
+
+  describe '.final_submission_is_submitted' do
+    before do
+      create :submission, :collecting_program_information
+      create :submission, :collecting_committee
+      create :submission, :collecting_format_review_files
+      create :submission, :waiting_for_format_review_response
+      create :submission, :collecting_final_submission_files
+      create :submission, :waiting_for_final_submission_response
+    end
+    it "returns submissions whose final submissions have been submitted for review" do
+      expect(Submission.final_submission_is_submitted.count).to eq 1
+    end
+  end
+
+  describe '.final_submission_is_approved' do
+    before do
+      create :submission, :collecting_program_information
+      create :submission, :collecting_committee
+      create :submission, :collecting_format_review_files
+      create :submission, :waiting_for_format_review_response
+      create :submission, :collecting_final_submission_files
+      create :submission, :waiting_for_final_submission_response
+      create :submission, :waiting_for_publication_release
+    end
+    it "returns submissions whose final submissions have been approved" do
+      expect(Submission.final_submission_is_approved.count).to eq 1
     end
   end
 
@@ -532,4 +722,54 @@ describe Submission do
     end
   end
 
+  describe '#status_class' do
+    context "when status is 'collecting program information'" do
+      before { submission.status = 'collecting program information' }
+      it "returns 'collecting-program-information'" do
+        expect(submission.status_class).to eq 'collecting-program-information'
+      end
+    end
+    context "when status is 'collecting committee'" do
+      before { submission.status = 'collecting committee' }
+      it "returns 'collecting-committee'" do
+        expect(submission.status_class).to eq 'collecting-committee'
+      end
+    end
+    context "when status is 'collecting format review files'" do
+      before { submission.status = 'collecting format review files' }
+      it "returns 'collecting-format-review-files'" do
+        expect(submission.status_class).to eq 'collecting-format-review-files'
+      end
+    end
+    context "when status is 'waiting for format review response'" do
+      before { submission.status = 'waiting for format review response' }
+      it "returns 'waiting-for-format-review-response'" do
+        expect(submission.status_class).to eq 'waiting-for-format-review-response'
+      end
+    end
+    context "when status is 'collecting final submission files'" do
+      before { submission.status = 'collecting final submission files' }
+      it "returns 'collecting-final-submission-files'" do
+        expect(submission.status_class).to eq 'collecting-final-submission-files'
+      end
+    end
+    context "when status is 'waiting for final submission response'" do
+      before { submission.status = 'waiting for final submission response' }
+      it "returns 'waiting-for-final-submission-response'" do
+        expect(submission.status_class).to eq 'waiting-for-final-submission-response'
+      end
+    end
+    context "when status is 'waiting for publication release'" do
+      before { submission.status = 'waiting for publication release' }
+      it "returns 'waiting-for-publication-release'" do
+        expect(submission.status_class).to eq 'waiting-for-publication-release'
+      end
+    end
+    context "when status is 'released for publication'" do
+      before { submission.status = 'released for publication' }
+      it "returns 'released-for-publication'" do
+        expect(submission.status_class).to eq 'released-for-publication'
+      end
+    end
+  end
 end

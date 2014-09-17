@@ -130,6 +130,15 @@ table {
   }
 }
 
+a.disabled {
+  color: $btn-link-disabled-color;
+  cursor: not-allowed;
+
+  &:hover {
+    color: $btn-link-disabled-color;
+  }
+}
+
 form {
   .actions {
     margin-top: 30px;
@@ -223,6 +232,11 @@ textarea {
   input {
     box-shadow: none;
   }
+}
+
+select.disabled {
+  cursor: not-allowed;
+  background-color: $gray-lighter;
 }
 
 .form-group.date {

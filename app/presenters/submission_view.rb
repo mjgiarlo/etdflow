@@ -88,7 +88,7 @@ class SubmissionView < SimpleDelegator
     if beyond_collecting_format_review_files?
       "<span class='glyphicon glyphicon-ok-circle'></span> completed".html_safe
     elsif collecting_format_review_files? && format_review_notes.present?
-      ("<span class='fa fa-warning'></span> rejected, please see the <a href='" + "/author/submissions/#{id}/format_review/edit#format-review-notes" + "'>notes from the administrator</a>").html_safe
+      ("<span class='fa fa-exclamation-circle'></span> rejected, please see the <a href='" + "/author/submissions/#{id}/format_review/edit#format-review-notes" + "'>notes from the administrator</a>").html_safe
     else
       ''
     end
@@ -106,7 +106,7 @@ class SubmissionView < SimpleDelegator
 
   def step_four_status
     if waiting_for_format_review_response?
-      'in process'
+      "<span class='fa fa-warning'></span> under review by an administrator".html_safe
     elsif beyond_waiting_for_format_review_response?
       "<span class='glyphicon glyphicon-ok-circle'></span> approved".html_safe
     else
@@ -126,9 +126,13 @@ class SubmissionView < SimpleDelegator
 
   def step_five_description
     if collecting_final_submission_files?
-      ("<a href='" + "/author/submissions/#{id}/final_submission/edit" + "'>Upload Final Submission files</a>").html_safe
+      if final_submission_rejected_at.present?
+        ("Upload Final Submission files <a href='" + "/author/submissions/#{id}/final_submission/edit" + "' class='small'>[update]</a>").html_safe
+      else
+        ("<a href='" + "/author/submissions/#{id}/final_submission/edit" + "'>Upload Final Submission files</a>").html_safe
+      end
     elsif beyond_collecting_final_submission_files?
-      ("Upload Final Submission files <a href='#' class='small'>[review]</a>").html_safe
+      ("Upload Final Submission files <a href='" + "/author/submissions/#{id}/final_submission" + "' class='small'>[review]</a>").html_safe
     else
       'Upload Final Submission files'
     end
@@ -137,6 +141,8 @@ class SubmissionView < SimpleDelegator
   def step_five_status
     if beyond_collecting_final_submission_files?
       "<span class='glyphicon glyphicon-ok-circle'></span> completed".html_safe
+    elsif collecting_final_submission_files? && final_submission_rejected_at.present?
+      ("<span class='fa fa-exclamation-circle'></span> rejected, please see the <a href='" + "/author/submissions/#{id}/final_submission/edit#final-submission-notes" + "'>notes from the administrator</a>").html_safe
     else
       ''
     end
@@ -154,7 +160,7 @@ class SubmissionView < SimpleDelegator
 
   def step_six_status
     if waiting_for_final_submission_response?
-      'in process'
+      "<span class='fa fa-warning'></span> under review by an administrator".html_safe
     elsif beyond_waiting_for_final_submission_response?
       "<span class='glyphicon glyphicon-ok-circle'></span> approved".html_safe
     else

@@ -29,12 +29,39 @@ FactoryGirl.define do
 
     trait :waiting_for_format_review_response do
       status "waiting for format review response"
-      format_review_notes "Format review notes"
+      format_review_notes "Format review note"
     end
 
     trait :collecting_final_submission_files do
       status "collecting final submission files"
       format_review_notes "Format review were accepted"
+      defended_at DateTime.new(2014, 9, 1, 0, 0, 0)
+      abstract 'my abstract'
+      keywords 'key, word'
+      access_level 'open_access'
+      has_agreed_to_terms true
+    end
+
+    trait :waiting_for_final_submission_response do
+      status "waiting for final submission response"
+      format_review_notes "Format review notes"
+      defended_at DateTime.new(2014, 9, 1, 0, 0, 0)
+      abstract 'my abstract'
+      keywords 'key, word'
+      access_level 'open_access'
+      has_agreed_to_terms true
+      final_submission_notes "Final submission notes"
+    end
+
+    trait :waiting_for_publication_release do
+      status "waiting for publication release"
+      format_review_notes "Format review notes"
+      defended_at DateTime.new(2014, 9, 1, 0, 0, 0)
+      abstract 'my abstract'
+      keywords 'key, word'
+      access_level 'open_access'
+      has_agreed_to_terms true
+      final_submission_notes "Final submission notes"
     end
 
   end

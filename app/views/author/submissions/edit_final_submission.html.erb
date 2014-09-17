@@ -10,10 +10,24 @@
     <%= render partial: 'shared/error_messages', locals: { object: @submission } %>
 
     <%= simple_form_for [:author, @submission], url: author_submission_update_final_submission_path do |f| %>
-      <%= f.input :defended_at, as: :date %>
-      <%= f.input :abstract, as: :text %>
-      <%= f.input :keywords, as: :text %>
-      <%= f.input :access_level, as: :radio_buttons, collection: [['Open Access', 'open_access'], ['Restricted (Penn State only)', 'restricted_to_institution'],['Restricted', 'restricted']], wrapper: :vertical_radio_and_checkboxes %>
+      <% if @submission.final_submission_notes.present? %>
+        <div id="final-submission-notes" class="row">
+          <div class="col-xs-12">
+            <label>Final Submission notes from the administrator</label>
+            <div class="alert alert-<%= @submission.beyond_waiting_for_final_submission_response? ? 'info' : 'warning'  %>">
+              <p><%= @submission.final_submission_notes %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <%= f.input :defended_at, as: :date, label: 'Date defended<span class="required-astrisk">*</span>'.html_safe %>
+      <%= f.input :abstract, as: :text, label: 'Abstract<span class="required-astrisk">*</span>'.html_safe %>
+      <%= f.input :keywords, as: :text, label: 'Keywords<span class="required-astrisk">*</span>'.html_safe %>
+      <%= f.input :access_level, as: :radio_buttons,
+          collection: [['Open Access', 'open_access'], ['Restricted (Penn State only)', 'restricted_to_institution'],['Restricted', 'restricted']],
+          wrapper: :vertical_radio_and_checkboxes,
+          label: 'Access level<span class="required-astrisk">*</span>'.html_safe %>
 
       <div class="links cocoon-links">
         <label>Files<span class="required-astrisk">*</span></label>
@@ -31,7 +45,7 @@
         <% end %>
       </div>
 
-      <%= f.input :has_agreed_to_terms, label: 'I agree', as: :boolean, wrapper: :vertical_boolean %>
+      <%= f.input :has_agreed_to_terms, label: 'I agree<span class="required-astrisk">*</span>'.html_safe, as: :boolean, wrapper: :vertical_boolean %>
 
       <div class="form-group actions">
         <%= f.button :submit, class: "btn-primary", value: "Submit final files for review" %>

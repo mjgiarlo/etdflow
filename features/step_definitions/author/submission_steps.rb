@@ -70,12 +70,12 @@ Then(/^The system should save my Format Review files$/) do
   expect(FormatReviewFile.count).to eq 2
 end
 
-Then(/^I should see that my Format Review is in process$/) do
+Then(/^I should see that my Format Review is being reviewed$/) do
   within '.step-3' do
     expect(page).to have_link '[review]'
   end
   within '.step-4' do
-    expect(page).to have_content 'in process'
+    expect(page).to have_content 'under review by an administrator'
   end
   expect(page).to have_css ".step.step-4.current"
 end
@@ -153,12 +153,12 @@ Then(/^The system should save my Final Submission files$/) do
   expect(FinalSubmissionFile.count).to eq 1
 end
 
-Then(/^I should see that my Final Submission is in process$/) do
+Then(/^I should see that my Final Submission is being reviewed$/) do
   within '.step-5' do
     expect(page).to have_link '[review]'
   end
   within '.step-6' do
-    expect(page).to have_content 'in process'
+    expect(page).to have_content 'under review by an administrator'
   end
   expect(page).to have_css ".step.step-6.current"
 end
@@ -171,6 +171,7 @@ Given(/^I have submitted my format review for response/) do
     And I click the "Submit files for review" button
     Then The system should save my Format Review files
     And I should be on the author submissions page
+    And I should see that my Format Review is being reviewed
   }
 end
 
@@ -185,7 +186,6 @@ Given(/^My Format Review is rejected/) do
 end
 
 Then(/^I should see that my format review was rejected$/) do
-  s = Submission.first
   within '#submission-1' do
     expect(page).to_not have_link '[delete]'
 
@@ -221,12 +221,12 @@ Then(/^The system should save my updated Format Review file$/) do
 end
 
 Then(/^I should see all of my format review files$/) do
- submission = Submission.first
- submission.format_review_files.each do |file|
-  within "#format-review-file-#{file.id}" do
-   expect(page).to have_link file.filename_identifier
+  submission = Submission.first
+  submission.format_review_files.each do |file|
+    within "#format-review-file-#{file.id}" do
+      expect(page).to have_link file.filename_identifier
+    end
   end
- end
 end
 
 Then(/^I should see Format Review Notes from the administrator$/) do
@@ -255,4 +255,92 @@ Then(/^I should see all of my committee information$/) do
       expect(page).to have_content member.email
     end
   end
+end
+
+Given(/^I have submitted my final submission for response$/) do
+  steps %Q{
+    Given I have submitted my format review for response
+    When My Format Review is approved
+    Then My Format Review approval progress indicator should be updated
+    And I should now be on "step-5" "Upload Final Submission files"
+    When I click the "Upload Final Submission files" link within "#submission-1"
+    And I fill in the Final Submission fields
+    And I upload my Final Submission files
+    And I click the "Submit final files for review" button
+    Then The system should save my Final Submission files
+    And I should be on the author submissions page
+    And I should see that my Final Submission is being reviewed
+  }
+end
+
+Given(/^My Final Submission is approved$/) do
+  s = Submission.first
+  s.final_submission_notes = 'Your final submission looks great!'
+  s.save!
+  status_giver = SubmissionStatusGiver.new(s)
+  status_giver.waiting_for_publication_release!
+  expect(s.beyond_waiting_for_final_submission_response?).to be_true
+  visit author_submissions_path
+end
+
+Then(/^I should see all of my final submission files$/) do
+  submission = Submission.first
+  submission.final_submission_files.each do |file|
+    within "#final-submission-file-#{file.id}" do
+      expect(page).to have_link file.filename_identifier
+    end
+  end
+end
+
+Then(/^I should see all of my final submission information$/) do
+  s = Submission.first
+  expect(page).to have_content s.defended_at.strftime('%B %d, %Y')
+  expect(page).to have_content s.abstract
+  expect(page).to have_content s.keywords
+  expect(page).to have_content s.access_level
+end
+
+Then(/^I should see Final Submission Notes from the administrator$/) do
+  within '#final-submission-notes' do
+    expect(page).to have_content 'Your final submission looks great!'
+  end
+end
+
+Given(/^My Final Submission is rejected$/) do
+  s = Submission.first
+  s.final_submission_notes = 'Please update!'
+  s.save!
+  status_giver = SubmissionStatusGiver.new(s)
+  status_giver.collecting_final_submission_files!
+  s.update_attribute :final_submission_rejected_at, Time.zone.now
+  expect(s.collecting_final_submission_files?).to be_true
+end
+
+Then(/^I should see that my final submission was rejected$/) do
+  within '#submission-1 .step-5' do
+    expect(page).to have_link '[update]'
+    expect(page).to have_content "rejected"
+  end
+end
+
+Then(/^I should see the reason for my final submission's rejection$/) do
+  s = Submission.first
+  within "#final-submission-notes" do
+    expect(page).to have_content s.final_submission_notes
+  end
+end
+
+When(/^I update my Final Submission files$/) do
+  within "#final-submission-file-1" do
+    click_link "[delete]"
+  end
+  click_link 'Additional File'
+  expect(page).to have_css '#final-submission-file-fields .nested-fields:last-child input[type="file"]'
+  new_input_id = first('#final-submission-file-fields .nested-fields:last-child input[type="file"]')[:id]
+  attach_file new_input_id, fixture('final_submission_file_02.docx')
+end
+
+Then(/^The system should save my updated Final Submission file$/) do
+  expect(FinalSubmissionFile.count).to eq 1
+  expect(FinalSubmissionFile.first.filename_identifier).to eq 'final_submission_file_02.docx'
 end
