@@ -77,6 +77,14 @@ class Admin::SubmissionsController < AdminController
       redirect_to admin_submissions_final_submission_submitted_path(@submission.parameterized_degree_type)
       flash[:notice] = 'The submission\'s final submission information was successfully approved.'
     end
+    if params[:rejected]
+      @submission.update_attributes!(final_submission_params)
+      status_giver = SubmissionStatusGiver.new(@submission)
+      status_giver.collecting_final_submission_files!
+      @submission.update_attribute :final_submission_rejected_at, Time.zone.now
+      redirect_to admin_submissions_final_submission_submitted_path(@submission.parameterized_degree_type)
+      flash[:notice] = 'The submission\'s final submission information was successfully rejected and returned to the author for revision.'
+    end
   rescue ActiveRecord::RecordInvalid
     render :edit
   rescue SubmissionStatusGiver::AccessForbidden

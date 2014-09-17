@@ -601,7 +601,7 @@ describe 'Submission status transitions', js: true do
       end
     end
 
-    pending "when an admin rejects the final submission files" do
+    context "when an admin rejects the final submission files" do
       let(:submission) { create :submission, :waiting_for_final_submission_response }
       before do
         expect(submission.final_submission_rejected_at).to be_nil
