@@ -128,7 +128,7 @@ class SubmissionView < SimpleDelegator
     if collecting_final_submission_files?
       ("<a href='" + "/author/submissions/#{id}/final_submission/edit" + "'>Upload Final Submission files</a>").html_safe
     elsif beyond_collecting_final_submission_files?
-      ("Upload Final Submission files <a href='#' class='small'>[review]</a>").html_safe
+      ("Upload Final Submission files <a href='" + "/author/submissions/#{id}/final_submission" + "' class='small'>[review]</a>").html_safe
     else
       'Upload Final Submission files'
     end

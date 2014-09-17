@@ -301,7 +301,7 @@ describe SubmissionView do
       context "when step five has been completed" do
         before { submission.stub(beyond_collecting_final_submission_files?: true) }
         it "returns a link to review the files" do
-          expect(view.step_five_description).to eq "Upload Final Submission files <a href='#' class='small'>[review]</a>"
+          expect(view.step_five_description).to eq "Upload Final Submission files <a href='#{author_submission_final_submission_path(submission)}' class='small'>[review]</a>"
         end
       end
     end

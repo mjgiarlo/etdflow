@@ -100,3 +100,12 @@ So that I can eventually graduate
     And I click the "review" link within "#submission-1 .step-3"
     Then I should see all of my format review files
     And I should see Format Review Notes from the administrator
+
+  Scenario: Review my final submission files
+    Given I have submitted my final submission for response
+    And My Final Submission is approved
+    When I go to the author submissions page
+    And I click the "review" link within "#submission-1 .step-5"
+    Then I should see all of my final submission files
+    And I should see all of my final submission information
+    And I should see Final Submission Notes from the administrator

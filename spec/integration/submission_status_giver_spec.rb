@@ -83,7 +83,7 @@ describe 'Submission status transitions', js: true do
       end
     end
 
-    pending "visiting the 'Review Final Submission Files' page" do
+    context "visiting the 'Review Final Submission Files' page" do
       before { visit author_submission_final_submission_path(submission) }
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
@@ -175,7 +175,7 @@ describe 'Submission status transitions', js: true do
       end
     end
 
-    pending "visiting the 'Review Final Submission Files' page" do
+    context "visiting the 'Review Final Submission Files' page" do
       before { visit author_submission_final_submission_path(submission) }
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
@@ -268,7 +268,7 @@ describe 'Submission status transitions', js: true do
       end
     end
 
-    pending "visiting the 'Review Final Submission Files' page" do
+    context "visiting the 'Review Final Submission Files' page" do
       before { visit author_submission_final_submission_path(submission) }
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
@@ -361,7 +361,7 @@ describe 'Submission status transitions', js: true do
       end
     end
 
-    pending "visiting the 'Review Final Submission Files' page" do
+    context "visiting the 'Review Final Submission Files' page" do
       before { visit author_submission_final_submission_path(submission) }
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
@@ -472,7 +472,7 @@ describe 'Submission status transitions', js: true do
       end
     end
 
-    pending "visiting the 'Review Final Submission Files' page" do
+    context "visiting the 'Review Final Submission Files' page" do
       before { visit author_submission_final_submission_path(submission) }
       specify "raises a forbidden access error" do
         expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
@@ -574,7 +574,7 @@ describe 'Submission status transitions', js: true do
       end
     end
 
-    pending "visiting the 'Review Final Submission Files' page" do
+    context "visiting the 'Review Final Submission Files' page" do
       before { visit author_submission_final_submission_path(submission) }
       specify "loads the page" do
         expect(current_path).to eq author_submission_final_submission_path(submission)

@@ -171,6 +171,7 @@ Given(/^I have submitted my format review for response/) do
     And I click the "Submit files for review" button
     Then The system should save my Format Review files
     And I should be on the author submissions page
+    And I should see that my Format Review is being reviewed
   }
 end
 
@@ -221,12 +222,12 @@ Then(/^The system should save my updated Format Review file$/) do
 end
 
 Then(/^I should see all of my format review files$/) do
- submission = Submission.first
- submission.format_review_files.each do |file|
-  within "#format-review-file-#{file.id}" do
-   expect(page).to have_link file.filename_identifier
+  submission = Submission.first
+  submission.format_review_files.each do |file|
+    within "#format-review-file-#{file.id}" do
+      expect(page).to have_link file.filename_identifier
+    end
   end
- end
 end
 
 Then(/^I should see Format Review Notes from the administrator$/) do
@@ -254,5 +255,54 @@ Then(/^I should see all of my committee information$/) do
       expect(page).to have_content member.name
       expect(page).to have_content member.email
     end
+  end
+end
+
+Given(/^I have submitted my final submission for response$/) do
+  steps %Q{
+    Given I have submitted my format review for response
+    When My Format Review is approved
+    Then My Format Review approval progress indicator should be updated
+    And I should now be on "step-5" "Upload Final Submission files"
+    When I click the "Upload Final Submission files" link within "#submission-1"
+    And I fill in the Final Submission fields
+    And I upload my Final Submission files
+    And I click the "Submit final files for review" button
+    Then The system should save my Final Submission files
+    And I should be on the author submissions page
+    And I should see that my Final Submission is being reviewed
+  }
+end
+
+Given(/^My Final Submission is approved$/) do
+  s = Submission.first
+  s.final_submission_notes = 'Your final submission looks great!'
+  s.save!
+  status_giver = SubmissionStatusGiver.new(s)
+  status_giver.waiting_for_publication_release!
+  expect(s.beyond_waiting_for_final_submission_response?).to be_true
+  visit author_submissions_path
+end
+
+Then(/^I should see all of my final submission files$/) do
+  submission = Submission.first
+  submission.final_submission_files.each do |file|
+    within "#final-submission-file-#{file.id}" do
+      expect(page).to have_link file.filename_identifier
+    end
+  end
+end
+
+Then(/^I should see all of my final submission information$/) do
+  s = Submission.first
+  expect(page).to have_content s.defended_at.strftime('%B %d, %Y')
+  expect(page).to have_content s.abstract
+  expect(page).to have_content s.keywords
+  expect(page).to have_content s.access_level
+end
+
+Then(/^I should see Final Submission Notes from the administrator$/) do
+  within '#final-submission-notes' do
+    expect(page).to have_content 'Your final submission looks great!'
   end
 end
