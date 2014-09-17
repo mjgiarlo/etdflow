@@ -27,6 +27,20 @@ class Submission < ActiveRecord::Base
       presence: true,
       if: Proc.new { |s| s.beyond_collecting_format_review_files? }
 
+  validates :defended_at,
+            :abstract,
+            :keywords,
+            :access_level,
+      presence: true,
+      if: Proc.new { |s| s.beyond_waiting_for_format_review_response? }
+
+  validate :agreement_to_terms,
+      if: Proc.new { |s| s.beyond_waiting_for_format_review_response? }
+
+  validates :final_submission_notes,
+      presence: true,
+      if: Proc.new { |s| s.beyond_collecting_final_submission_files? }
+
   accepts_nested_attributes_for :committee_members
   accepts_nested_attributes_for :format_review_files, allow_destroy: true
   accepts_nested_attributes_for :final_submission_files, allow_destroy: true
@@ -38,6 +52,15 @@ class Submission < ActiveRecord::Base
               ].freeze
 
   validates_inclusion_of :semester,  in: SEMESTERS
+
+  ACCESS_LEVELS = [
+                    nil,
+                    'open_access',
+                    'restricted_to_institution',
+                    'restricted'
+                  ].freeze
+
+  validates_inclusion_of :access_level,  in: ACCESS_LEVELS
 
   validates :year, numericality: { only_integer: true }
 
@@ -83,6 +106,8 @@ class Submission < ActiveRecord::Base
   }
   scope :format_review_is_submitted, -> { where(status: 'waiting for format review response') }
   scope :final_submission_is_incomplete, -> { where(status: 'collecting final submission files') }
+  scope :final_submission_is_submitted, -> { where(status: 'waiting for final submission response') }
+  scope :final_submission_is_approved, -> { where(status: 'waiting for publication release') }
 
   def has_committee?
     if committee_members.any?
@@ -92,36 +117,40 @@ class Submission < ActiveRecord::Base
     end
   end
 
+  def status_class
+    status.parameterize
+  end
+
   def collecting_program_information?
-    status == 'collecting program information' ? true : false
+    status == 'collecting program information'
   end
 
   def collecting_committee?
-    status == 'collecting committee' ? true : false
+    status == 'collecting committee'
   end
 
   def collecting_format_review_files?
-    status == 'collecting format review files' ? true : false
+    status == 'collecting format review files'
   end
 
   def waiting_for_format_review_response?
-    status == 'waiting for format review response' ? true : false
+    status == 'waiting for format review response'
   end
 
   def collecting_final_submission_files?
-    status == 'collecting final submission files' ? true : false
+    status == 'collecting final submission files'
   end
 
   def waiting_for_final_submission_response?
-    status == 'waiting for final submission response' ? true : false
+    status == 'waiting for final submission response'
   end
 
   def waiting_for_publication_release?
-    status == 'waiting for publication release' ? true : false
+    status == 'waiting for publication release'
   end
 
   def released_for_publication?
-    status == 'released for publication' ? true : false
+    status == 'released for publication'
   end
 
   def beyond_collecting_committee?
@@ -149,4 +178,11 @@ class Submission < ActiveRecord::Base
   def set_status_to_collecting_program_information
     self.status = 'collecting program information' if self.new_record? && self.status.nil?
   end
+
+  def agreement_to_terms
+    unless has_agreed_to_terms?
+      errors.add(:base, 'You must agree to terms')
+    end
+  end
+
 end

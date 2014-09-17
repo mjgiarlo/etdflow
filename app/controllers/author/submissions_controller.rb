@@ -89,6 +89,7 @@ class Author::SubmissionsController < AuthorController
     status_giver.can_upload_format_review_files?
     @submission.update_attributes!(format_review_params)
     status_giver.waiting_for_format_review_response!
+    @submission.update_attribute :format_review_files_uploaded_at, Time.zone.now
     redirect_to author_root_path
     flash[:notice] = 'Format review files uploaded successfully.'
   rescue ActiveRecord::RecordInvalid => e
@@ -126,16 +127,26 @@ class Author::SubmissionsController < AuthorController
     status_giver.can_upload_final_submission_files?
     @submission.update_attributes!(final_submission_params)
     status_giver.waiting_for_final_submission_response!
+    @submission.update_attribute :final_submission_files_uploaded_at, Time.zone.now
     redirect_to author_root_path
     flash[:notice] = 'Final submission files uploaded successfully.'
   rescue ActiveRecord::RecordInvalid
-    render :final_submission
+    render :edit_final_submission
   rescue SubmissionStatusGiver::AccessForbidden
     redirect_to author_root_path
     flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
   rescue SubmissionStatusGiver::InvalidTransition
     redirect_to author_root_path
     flash[:alert] = 'Oops! You may have submitted invalid format review data. Please check that your format review information is correct.'
+  end
+
+  def final_submission
+    @submission = Submission.find(params[:submission_id])
+    status_giver = SubmissionStatusGiver.new(@submission)
+    status_giver.can_review_final_submission_files?
+  rescue SubmissionStatusGiver::AccessForbidden
+    redirect_to author_root_path
+    flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
   end
 
   private

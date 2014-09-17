@@ -17,6 +17,7 @@ class Author::CommitteesController < AuthorController
     @committee = Committee.new(params[:committee])
     @committee.save
     status_giver.collecting_format_review_files!
+    submission.update_attribute :committee_provided_at, Time.zone.now
     flash[:notice] = 'Committee saved successfully'
     redirect_to author_root_path
   rescue Committee::InvalidCommitteeError

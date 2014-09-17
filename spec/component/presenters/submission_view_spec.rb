@@ -213,7 +213,7 @@ describe SubmissionView do
           submission.format_review_notes = 'some format review notes'
         end
         it 'returns rejection instructions' do
-          expect(view.step_three_status).to eq "<span class='fa fa-warning'></span> rejected, please see the <a href='#{author_submission_edit_format_review_path(submission, anchor: 'format-review-notes')}'>notes from the administrator</a>"
+          expect(view.step_three_status).to eq "<span class='fa fa-exclamation-circle'></span> rejected, please see the <a href='#{author_submission_edit_format_review_path(submission, anchor: 'format-review-notes')}'>notes from the administrator</a>"
         end
       end
     end
@@ -250,8 +250,8 @@ describe SubmissionView do
       end
       context 'when the submission is currently waiting for format review response' do
         before { submission.status = 'waiting for format review response' }
-        it 'returns "in process"' do
-          expect(view.step_four_status).to eq 'in process'
+        it 'returns "under review by an administrator"' do
+          expect(view.step_four_status).to eq "<span class='fa fa-warning'></span> under review by an administrator"
         end
       end
       context "when the submission's Format Review files have been approved" do
@@ -292,16 +292,28 @@ describe SubmissionView do
           expect(view.step_five_description).to eq 'Upload Final Submission files'
         end
       end
-      context "when step five is the current step" do
-        before { submission.status = 'collecting final submission files' }
+      context "when step five is the current step for the first time" do
+        before do
+          submission.status = 'collecting final submission files'
+          submission.final_submission_rejected_at = nil
+        end
         it "returns a link to complete step five" do
          expect(view.step_five_description).to eq "<a href='#{author_submission_edit_final_submission_path(submission)}'>Upload Final Submission files</a>"
         end
       end
-      context "when step five has been completed" do
+      context 'when step five is the current step after my final submission is rejected' do
+        before do
+          submission.status = 'collecting final submission files'
+          submission.final_submission_rejected_at = Time.zone.now
+        end
+        it "returns a link to edit step five" do
+          expect(view.step_five_description).to eq "Upload Final Submission files <a href='#{author_submission_edit_final_submission_path(submission)}' class='small'>[update]</a>"
+        end
+      end
+      context "when the submission is beyond step five" do
         before { submission.stub(beyond_collecting_final_submission_files?: true) }
         it "returns a link to review the files" do
-          expect(view.step_five_description).to eq "Upload Final Submission files <a href='#' class='small'>[review]</a>"
+          expect(view.step_five_description).to eq "Upload Final Submission files <a href='#{author_submission_final_submission_path(submission)}' class='small'>[review]</a>"
         end
       end
     end
@@ -317,6 +329,15 @@ describe SubmissionView do
         before { submission.stub(beyond_collecting_final_submission_files?: true) }
         it 'returns completed' do
           expect(view.step_five_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> completed"
+        end
+      end
+      context 'when step five is the current step after my final submission is rejected' do
+        before do
+          submission.status = 'collecting final submission files'
+          submission.final_submission_rejected_at = Time.zone.now
+        end
+        it 'returns rejection instructions' do
+          expect(view.step_five_status).to eq "<span class='fa fa-exclamation-circle'></span> rejected, please see the <a href='#{author_submission_edit_final_submission_path(submission, anchor: 'final-submission-notes')}'>notes from the administrator</a>"
         end
       end
     end
@@ -353,8 +374,8 @@ describe SubmissionView do
       end
       context 'when the submission is currently waiting for final submission response' do
         before { submission.status = 'waiting for final submission response' }
-        it 'returns "in process"' do
-          expect(view.step_six_status).to eq 'in process'
+        it 'returns "under review by an administrator"' do
+          expect(view.step_six_status).to eq "<span class='fa fa-warning'></span> under review by an administrator"
         end
       end
       context "when the submission's Final Submission files have been approved" do

@@ -1,8 +1,8 @@
-<h2>Format Review Evaluation</h2>
+<h2><%= @view.title %></h2>
 
 <%= render partial: 'shared/error_messages', locals: { object: @submission } %>
 
-<%= simple_form_for @submission, url: admin_submissions_format_review_response_path do |f| %>
+<%= simple_form_for @submission, url: @view.form_for_url, html: { class: "admin-edit-submission #{@submission.status_class}" } do |f| %>
 
   <div class="form-section-body">
     <%= f.input :title %>
@@ -41,10 +41,16 @@
     <span class="hide-show-indicator fa-rotate-90"></span>
   </div>
   <div id="program-information" class="form-section-body collapse in">
-    <%= f.input :program_id, label: 'Program', collection: Program.all, prompt: "Please Select" %>
-    <%= f.input :degree_id, label: 'Degree', collection: Degree.all, prompt: "Please Select" %>
-    <%= f.input :semester, label: 'Semester Intending to Graduate', collection: Submission::SEMESTERS, prompt: "Please Select" %>
-    <%= f.input :year, label: 'Graduation Year', collection: Submission.years, prompt: "Please Select" %>
+    <%= f.input :program_id, label: 'Program', collection: Program.all, prompt: "Please Select", input_html: { class: 'can-toggle-selectability' } %>
+    <%= f.input :degree_id, label: 'Degree', collection: Degree.all, prompt: "Please Select", input_html: { class: 'can-toggle-selectability' } %>
+    <%= f.input :semester, label: 'Semester Intending to Graduate', collection: Submission::SEMESTERS, prompt: "Please Select", input_html: { class: 'can-toggle-selectability' } %>
+    <%= f.input :year, label: 'Graduation Year', collection: Submission.years, prompt: "Please Select", input_html: { class: 'can-toggle-selectability' } %>
+
+    <% if @submission.beyond_waiting_for_format_review_response? %>
+      <%= link_to '#', class: 'form-edit-link toggle-link' do %>
+        <span class="fa"></span> <span class="verb">Edit</span> Program Information
+      <% end %>
+    <% end %>
   </div>
 
   <div class="form-section-heading" data-toggle="collapse" data-target="#committee">Committee
@@ -57,23 +63,28 @@
         <%= cmf.input :role, as: :hidden %>
         <div class="row ">
           <div class="col-xs-12">
-            <label class="role-label"><%= cmf.object.role %>
-              <span title="require" class="required-asterisk">*</span></label>
+            <label class="role-label"><%= cmf.object.role %><span title="require" class="required-asterisk">*</span></label>
           </div>
           <div class="col-xs-12 col-sm-6">
             <div class="input-group">
               <span class="input-group-addon">Name</span>
-              <%= cmf.input :name, label: false %>
+              <%= cmf.input :name, label: false, input_html: { class: 'can-toggle-editability' } %>
             </div>
           </div>
           <div class="col-xs-12 col-sm-6">
             <div class="input-group">
               <span class="input-group-addon">Email</span>
-              <%= cmf.input :email, label: false %>
+              <%= cmf.input :email, label: false, input_html: { class: 'can-toggle-editability' } %>
             </div>
           </div>
         </div>
       </fieldset>
+    <% end %>
+
+    <% if @submission.beyond_waiting_for_format_review_response? %>
+      <%= link_to '#', class: 'form-edit-link toggle-link' do %>
+        <span class="fa"></span> <span class="verb">Edit</span> Committee
+      <% end %>
     <% end %>
   </div>
 
@@ -84,10 +95,10 @@
     <div class="links cocoon-links">
       <label>Files<span class="required-astrisk">*</span></label>
       <%= link_to_add_association f, :format_review_files,
-                                     class: 'btn btn-default btn-sm',
-                                     data: { association_insertion_node: '#format-review-file-fields', association_insertion_method: 'append' },
-                                     form_name: 'file_fields',
-                                     partial: 'file_fields' do %>
+          class: 'btn btn-default btn-sm can-toggle-clickability',
+          data: { association_insertion_node: '#format-review-file-fields', association_insertion_method: 'append' },
+          form_name: 'file_fields',
+          partial: 'file_fields' do %>
         <span class="glyphicon glyphicon-plus"></span> Additional File
       <% end %>
     </div>
@@ -97,13 +108,19 @@
       <% end %>
     </div>
 
-    <%= f.input :format_review_notes, as: :text, label: "Format Review Notes to Student<span title='require' class='required-asterisk'>*</span>".html_safe %>
+    <%= f.input :format_review_notes, as: :text, label: "Format Review Notes to Student<span title='require' class='required-asterisk'>*</span>".html_safe, input_html: { class: 'can-toggle-editability' } %>
+
+    <% if @submission.beyond_waiting_for_format_review_response? %>
+      <%= link_to '#', class: 'form-edit-link toggle-link' do %>
+        <span class="fa"></span> <span class="verb">Edit</span> Format Review Information
+      <% end %>
+    <% end %>
   </div>
 
+  <%= render partial: 'final_submission_fields', locals: { f: f } if @submission.beyond_waiting_for_format_review_response? %>
+
   <div class="form-group actions">
-    <%= f.button :submit, name: 'approved', class: "btn btn-success", value: "Approve Format Review" %>
-    <%= f.button :submit, name: 'rejected', class: "btn btn-danger", value: "Reject & request revisions" %>
-    <%= link_to "Cancel", admin_submissions_format_review_submitted_path(@submission.parameterized_degree_type) %>
+    <%= render partial: "admin/submissions/edit_form_actions/#{@view.actions_partial_name}", locals: { f: f } %>
   </div>
 
 <% end %>
