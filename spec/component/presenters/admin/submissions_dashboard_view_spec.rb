@@ -38,6 +38,12 @@ describe Admin::SubmissionsDashboardView do
                 description: 'Submissions whose final submission information is currently waiting to be approved or rejected.',
                 path: nil,
                 count: nil
+            },
+            {
+                title: 'Final Submission is Approved',
+                description: 'Submissions whose final submission information has been approved and is waiting to be released for publication.',
+                path: nil,
+                count: nil
             }
         ]
       end
@@ -50,6 +56,7 @@ describe Admin::SubmissionsDashboardView do
         create :submission, :waiting_for_format_review_response
         create :submission, :collecting_final_submission_files
         create :submission, :waiting_for_final_submission_response
+        create :submission, :waiting_for_publication_release
       end
       it "returns a set of links according to submission status" do
         expect(view.filters).to eq [
@@ -75,6 +82,12 @@ describe Admin::SubmissionsDashboardView do
                 title: 'Final Submission is Submitted',
                 description: 'Submissions whose final submission information is currently waiting to be approved or rejected.',
                 path: admin_submissions_final_submission_submitted_path(degree_type),
+                count: '1'
+            },
+            {
+                title: 'Final Submission is Approved',
+                description: 'Submissions whose final submission information has been approved and is waiting to be released for publication.',
+                path: admin_submissions_final_submission_approved_path(degree_type),
                 count: '1'
             }
         ]

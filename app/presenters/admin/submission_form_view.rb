@@ -20,4 +20,24 @@ class Admin::SubmissionFormView < SimpleDelegator
     end
   end
 
+  def actions_partial_name
+    if waiting_for_format_review_response?
+      'format_review_evaluation_actions'
+    elsif waiting_for_final_submission_response?
+      'final_submission_evaluation_actions'
+    else
+      'standard_actions'
+    end
+  end
+
+  def form_for_url
+    if waiting_for_format_review_response?
+      "/admin/submissions/#{id}/format_review_response"
+    elsif waiting_for_final_submission_response?
+      "/admin/submissions/#{id}/final_submission_response"
+    else
+      "/admin/submissions/#{id}"
+    end
+  end
+
 end
