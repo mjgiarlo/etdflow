@@ -28,7 +28,7 @@ Feature: Manage submissions
     And I go to the admin dashboard page
     And I click the "Format Review is Submitted" link
     Then I should see the submission listed
-    When I click the title of the submitted format review
+    When I click the title of the submission
     And I click the "format_review_file_01.pdf" link
     Then I should see a link to view the PDF file
     And the file looks good
@@ -45,7 +45,7 @@ Feature: Manage submissions
     And I go to the admin dashboard page
     And I click the "Format Review is Submitted" link
     Then I should see the submission listed
-    When I click the title of the submitted format review
+    When I click the title of the submission
     Then I should see a link to view the PDF file
     And the file looks bad
     And I fill in "Format Review Notes to Student" with "There are problem with your file. Please re-upload."
@@ -62,7 +62,7 @@ Feature: Manage submissions
     And I go to the admin dashboard page
     And I click the "Final Submission is Submitted" link
     Then I should see the submission listed
-    When I click the title of the submitted format review
+    When I click the title of the submission
     Then I should see valid content in the final submissions fields
     And I should see a link to view the PDF file
     And the file looks good
@@ -72,4 +72,21 @@ Feature: Manage submissions
     And I should no longer see the submission
     When I go to the admin dashboard page
     And I click the "Final Submission is Approved" link
+    Then I should see the submission listed
+
+  Scenario: Reject a submitted final submission
+    Given a submitted final submission exists
+    And I go to the admin dashboard page
+    And I click the "Final Submission is Submitted" link
+    Then I should see the submission listed
+    When I click the title of the submission
+    Then I should see a link to view the PDF file
+    And the file looks bad
+    And I fill in "Final Submission Notes to Student" with "There are problem with your final file. Please revise."
+    And I click the "[delete]" link within "#final-submission-file-1"
+    And I click the "Reject & request revisions" button
+    Then I should be on the admin default type final submission submitted page
+    And I should no longer see the submission
+    When I go to the admin dashboard page
+    And I click the "Final Submission is Incomplete" link
     Then I should see the submission listed

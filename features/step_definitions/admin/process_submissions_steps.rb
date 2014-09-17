@@ -72,7 +72,7 @@ Given(/^a submitted final submission exists$/) do
   @file = create :final_submission_file, submission: @submissions.first
 end
 
-When(/^I click the title of the submitted format review$/) do
+When(/^I click the title of the submission$/) do
   click_link @submissions.first.title
 end
 
