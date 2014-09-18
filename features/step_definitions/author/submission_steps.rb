@@ -19,11 +19,11 @@ Then(/^I should see my new program information$/) do
 end
 
 Then(/^My program information progress indicator should be updated$/) do
-  expect(page).to_not have_css ".preview"
+  expect(page).to_not have_css '.preview'
   within '#submission-1' do
     within '.step.step-1' do
       expect(page).to have_link '[update]'
-      expect(page).to have_content "completed on #{Time.zone.now.strftime('%B %e, %Y')}"
+      expect(page).to have_content "completed on #{Time.zone.now.strftime('%B %-e, %Y')}"
     end
   end
 end
@@ -43,10 +43,11 @@ When(/^I provide my committee$/) do
 end
 
 Then(/^My committee progress indicator should be updated$/) do
+  submission = Submission.first
   within '#submission-1' do
     within '.step.step-2' do
       expect(page).to have_link '[update]'
-      expect(page).to have_content "completed"
+      expect(page).to have_content "completed on #{submission.committee_provided_at.strftime('%B %-e, %Y')}"
     end
   end
 end
@@ -71,8 +72,10 @@ Then(/^The system should save my Format Review files$/) do
 end
 
 Then(/^I should see that my Format Review is being reviewed$/) do
+  submission = Submission.first
   within '.step-3' do
     expect(page).to have_link '[review]'
+    expect(page).to have_content "completed on #{submission.format_review_files_uploaded_at.strftime('%B %-e, %Y')}"
   end
   within '.step-4' do
     expect(page).to have_content 'under review by an administrator'
@@ -121,14 +124,16 @@ When(/^My Format Review is approved$/) do
   s.save!
   status_giver = SubmissionStatusGiver.new(s)
   status_giver.collecting_final_submission_files!
+  s.update_attribute :format_review_approved_at, Time.zone.now
   expect(s.beyond_waiting_for_format_review_response?).to be_true
   visit author_submissions_path
 end
 
 Then(/^My Format Review approval progress indicator should be updated$/) do
+  submission = Submission.first
   within '#submission-1' do
     within '.step.step-4' do
-      expect(page).to have_content "approved"
+      expect(page).to have_content "approved on #{submission.format_review_approved_at.strftime('%B %-e, %Y')}"
     end
   end
 end
@@ -182,16 +187,18 @@ Given(/^My Format Review is rejected/) do
   s.save!
   status_giver = SubmissionStatusGiver.new(s)
   status_giver.collecting_format_review_files!
+  s.update_attribute :format_review_rejected_at, Time.zone.now
   expect(s.collecting_format_review_files?).to be_true
 end
 
 Then(/^I should see that my format review was rejected$/) do
+  submission = Submission.first
   within '#submission-1' do
     expect(page).to_not have_link '[delete]'
 
     within '.step-3' do
       expect(page).to have_link '[update]'
-      expect(page).to have_content "rejected"
+      expect(page).to have_content "rejected on #{submission.format_review_rejected_at.strftime('%B %-e, %Y')}"
     end
   end
 end
@@ -279,8 +286,18 @@ Given(/^My Final Submission is approved$/) do
   s.save!
   status_giver = SubmissionStatusGiver.new(s)
   status_giver.waiting_for_publication_release!
+  s.update_attribute :final_submission_approved_at, Time.zone.now
   expect(s.beyond_waiting_for_final_submission_response?).to be_true
   visit author_submissions_path
+end
+
+Then(/^My Final Submission approval progress indicator should be updated$/) do
+  submission = Submission.first
+  within '#submission-1' do
+    within '.step.step-6' do
+      expect(page).to have_content "approved on #{submission.final_submission_approved_at.strftime('%B %-e, %Y')}"
+    end
+  end
 end
 
 Then(/^I should see all of my final submission files$/) do
@@ -294,7 +311,7 @@ end
 
 Then(/^I should see all of my final submission information$/) do
   s = Submission.first
-  expect(page).to have_content s.defended_at.strftime('%B %d, %Y')
+  expect(page).to have_content s.defended_at.strftime('%B %-e, %Y')
   expect(page).to have_content s.abstract
   expect(page).to have_content s.keywords
   expect(page).to have_content s.access_level
@@ -317,9 +334,10 @@ Given(/^My Final Submission is rejected$/) do
 end
 
 Then(/^I should see that my final submission was rejected$/) do
+  submission = Submission.first
   within '#submission-1 .step-5' do
     expect(page).to have_link '[update]'
-    expect(page).to have_content "rejected"
+    expect(page).to have_content "rejected on #{submission.final_submission_rejected_at.strftime('%B %-e, %Y')}"
   end
 end
 
@@ -343,4 +361,12 @@ end
 Then(/^The system should save my updated Final Submission file$/) do
   expect(FinalSubmissionFile.count).to eq 1
   expect(FinalSubmissionFile.first.filename_identifier).to eq 'final_submission_file_02.docx'
+end
+
+Then(/^I should see that my submission's publication release is pending$/) do
+  submission = Submission.first
+  within '.step-7' do
+    expect(page).to have_content "#{submission.access_level} publication is pending"
+  end
+  expect(page).to have_css ".step.step-7.current"
 end

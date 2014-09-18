@@ -54,7 +54,7 @@ class SubmissionView < SimpleDelegator
 
   def step_two_status
     if beyond_collecting_committee?
-      "<span class='glyphicon glyphicon-ok-circle'></span> completed".html_safe
+      "<span class='glyphicon glyphicon-ok-circle'></span> completed#{formatted_timestamp_of(committee_provided_at)}".html_safe
     else
       ''
     end
@@ -86,9 +86,9 @@ class SubmissionView < SimpleDelegator
 
   def step_three_status
     if beyond_collecting_format_review_files?
-      "<span class='glyphicon glyphicon-ok-circle'></span> completed".html_safe
+      "<span class='glyphicon glyphicon-ok-circle'></span> completed#{formatted_timestamp_of(format_review_files_uploaded_at)}".html_safe
     elsif collecting_format_review_files? && format_review_notes.present?
-      ("<span class='fa fa-exclamation-circle'></span> rejected, please see the <a href='" + "/author/submissions/#{id}/format_review/edit#format-review-notes" + "'>notes from the administrator</a>").html_safe
+      ("<span class='fa fa-exclamation-circle'></span> rejected#{formatted_timestamp_of(format_review_rejected_at)}, please see the <a href='" + "/author/submissions/#{id}/format_review/edit#format-review-notes" + "'>notes from the administrator</a>").html_safe
     else
       ''
     end
@@ -108,7 +108,7 @@ class SubmissionView < SimpleDelegator
     if waiting_for_format_review_response?
       "<span class='fa fa-warning'></span> under review by an administrator".html_safe
     elsif beyond_waiting_for_format_review_response?
-      "<span class='glyphicon glyphicon-ok-circle'></span> approved".html_safe
+      "<span class='glyphicon glyphicon-ok-circle'></span> approved#{formatted_timestamp_of(format_review_approved_at)}".html_safe
     else
       ''
     end
@@ -140,9 +140,9 @@ class SubmissionView < SimpleDelegator
 
   def step_five_status
     if beyond_collecting_final_submission_files?
-      "<span class='glyphicon glyphicon-ok-circle'></span> completed".html_safe
+      "<span class='glyphicon glyphicon-ok-circle'></span> completed#{formatted_timestamp_of(final_submission_files_uploaded_at)}".html_safe
     elsif collecting_final_submission_files? && final_submission_rejected_at.present?
-      ("<span class='fa fa-exclamation-circle'></span> rejected, please see the <a href='" + "/author/submissions/#{id}/final_submission/edit#final-submission-notes" + "'>notes from the administrator</a>").html_safe
+      ("<span class='fa fa-exclamation-circle'></span> rejected#{formatted_timestamp_of(final_submission_rejected_at)}, please see the <a href='" + "/author/submissions/#{id}/final_submission/edit#final-submission-notes" + "'>notes from the administrator</a>").html_safe
     else
       ''
     end
@@ -162,10 +162,36 @@ class SubmissionView < SimpleDelegator
     if waiting_for_final_submission_response?
       "<span class='fa fa-warning'></span> under review by an administrator".html_safe
     elsif beyond_waiting_for_final_submission_response?
-      "<span class='glyphicon glyphicon-ok-circle'></span> approved".html_safe
+      "<span class='glyphicon glyphicon-ok-circle'></span> approved#{formatted_timestamp_of(final_submission_approved_at)}".html_safe
     else
       ''
     end
+  end
+
+  def step_seven_class
+    if waiting_for_publication_release?
+      'current'
+    elsif released_for_publication?
+      'complete'
+    else
+      ''
+    end
+  end
+
+  def step_seven_status
+    if waiting_for_publication_release?
+      "<span class='fa fa-warning'></span> #{access_level} publication is pending".html_safe
+    elsif released_for_publication?
+      "<span class='glyphicon glyphicon-ok-circle'></span> published#{formatted_timestamp_of(released_for_publication_at)}".html_safe
+    else
+      ''
+    end
+  end
+
+  private
+
+  def formatted_timestamp_of datetime
+    datetime.present? ? " on #{datetime.strftime('%B %-e, %Y')}" : ''
   end
 
 end
