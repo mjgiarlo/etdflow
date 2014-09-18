@@ -126,6 +126,13 @@
       .description {
         color: inherit;
       }
+
+      &.step-4, &.step-6, &.step-7 {
+        .description {
+          color: inherit;
+          padding-top: 0px;
+        }
+      }
     }
   }
 

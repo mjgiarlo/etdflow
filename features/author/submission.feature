@@ -40,6 +40,9 @@ So that I can eventually graduate
     Then The system should save my Final Submission files
     And I should be on the author submissions page
     And I should see that my Final Submission is being reviewed
+    When My Final Submission is approved
+    Then My Final Submission approval progress indicator should be updated
+    And I should see that my submission's publication release is pending
 
   Scenario: Delete my submission
     Given I have started a submission

@@ -131,9 +131,12 @@ describe SubmissionView do
         end
       end
       context 'when the submission has a committee' do
-        before { submission.stub(beyond_collecting_committee?: true) }
+        before do
+          submission.stub(beyond_collecting_committee?: true)
+          submission.committee_provided_at = Time.new 2014, 7, 4
+        end
         it 'returns completed' do
-          expect(view.step_two_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> completed"
+          expect(view.step_two_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> completed on July 4, 2014"
         end
       end
     end
@@ -202,18 +205,22 @@ describe SubmissionView do
         end
       end
       context 'when step three has been completed' do
-        before { submission.stub(beyond_collecting_format_review_files?: true) }
+        before do
+          submission.stub(beyond_collecting_format_review_files?: true)
+          submission.format_review_files_uploaded_at = Time.new 2014, 7, 4
+        end
         it 'returns completed' do
-          expect(view.step_three_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> completed"
+          expect(view.step_three_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> completed on July 4, 2014"
         end
       end
       context 'when step three is the current step after my format review is rejected' do
         before do
           submission.status = 'collecting format review files'
           submission.format_review_notes = 'some format review notes'
+          submission.format_review_rejected_at = Time.new 2014, 7, 4
         end
         it 'returns rejection instructions' do
-          expect(view.step_three_status).to eq "<span class='fa fa-exclamation-circle'></span> rejected, please see the <a href='#{author_submission_edit_format_review_path(submission, anchor: 'format-review-notes')}'>notes from the administrator</a>"
+          expect(view.step_three_status).to eq "<span class='fa fa-exclamation-circle'></span> rejected on July 4, 2014, please see the <a href='#{author_submission_edit_format_review_path(submission, anchor: 'format-review-notes')}'>notes from the administrator</a>"
         end
       end
     end
@@ -255,9 +262,12 @@ describe SubmissionView do
         end
       end
       context "when the submission's Format Review files have been approved" do
-        before { submission.stub(beyond_waiting_for_format_review_response?: true) }
+        before do
+          submission.stub(beyond_waiting_for_format_review_response?: true)
+          submission.format_review_approved_at = Time.new 2014, 7, 4
+        end
         it 'returns approved' do
-          expect(view.step_four_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> approved"
+          expect(view.step_four_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> approved on July 4, 2014"
         end
       end
     end
@@ -326,18 +336,21 @@ describe SubmissionView do
         end
       end
       context 'when step five has been completed' do
-        before { submission.stub(beyond_collecting_final_submission_files?: true) }
+        before do
+          submission.stub(beyond_collecting_final_submission_files?: true)
+          submission.final_submission_files_uploaded_at = Time.new 2014, 7, 4
+        end
         it 'returns completed' do
-          expect(view.step_five_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> completed"
+          expect(view.step_five_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> completed on July 4, 2014"
         end
       end
       context 'when step five is the current step after my final submission is rejected' do
         before do
           submission.status = 'collecting final submission files'
-          submission.final_submission_rejected_at = Time.zone.now
+          submission.final_submission_rejected_at = Time.new 2014, 7, 4
         end
         it 'returns rejection instructions' do
-          expect(view.step_five_status).to eq "<span class='fa fa-exclamation-circle'></span> rejected, please see the <a href='#{author_submission_edit_final_submission_path(submission, anchor: 'final-submission-notes')}'>notes from the administrator</a>"
+          expect(view.step_five_status).to eq "<span class='fa fa-exclamation-circle'></span> rejected on July 4, 2014, please see the <a href='#{author_submission_edit_final_submission_path(submission, anchor: 'final-submission-notes')}'>notes from the administrator</a>"
         end
       end
     end
@@ -379,12 +392,64 @@ describe SubmissionView do
         end
       end
       context "when the submission's Final Submission files have been approved" do
-        before { submission.stub(beyond_waiting_for_final_submission_response?: true) }
+        before do
+          submission.stub(beyond_waiting_for_final_submission_response?: true)
+          submission.final_submission_approved_at = Time.new 2014, 7, 4
+        end
         it 'returns approved' do
-          expect(view.step_six_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> approved"
+          expect(view.step_six_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> approved on July 4, 2014"
         end
       end
     end
   end
 
+  describe 'step seven: Released for Publication' do
+    describe '#step_seven_class' do
+      context "when the submission is before step seven" do
+        before { submission.stub(beyond_waiting_for_final_submission_response?: false) }
+        it "returns an empty string" do
+          expect(view.step_seven_class).to eq ''
+        end
+      end
+      context "when step seven is the current step" do
+        before { submission.status = 'waiting for publication release' }
+        it "returns 'current'" do
+          expect(view.step_seven_class).to eq 'current'
+        end
+      end
+      context "when step seven has been completed" do
+        before { submission.status = 'released for publication' }
+        it "returns 'complete'" do
+          expect(view.step_seven_class).to eq 'complete'
+        end
+      end
+    end
+
+    describe '#step_seven_status' do
+      context 'when the submission is before step seven' do
+        before { submission.stub(beyond_waiting_for_final_submission_response?: false) }
+        it 'returns an empty string' do
+          expect(view.step_seven_status).to eq ''
+        end
+      end
+      context 'when the submission is currently waiting for publication release' do
+        before do
+          submission.status = 'waiting for publication release'
+          submission.access_level = 'open_access'
+        end
+        it 'returns "publication is pending"' do
+          expect(view.step_seven_status).to eq "<span class='fa fa-warning'></span> open_access publication is pending"
+        end
+      end
+      context "when the submission has been released for publication" do
+        before do
+          submission.status = 'released for publication'
+          submission.released_for_publication_at = Time.new 2014, 7, 4
+        end
+        it 'returns published' do
+          expect(view.step_seven_status).to eq "<span class='glyphicon glyphicon-ok-circle'></span> published on July 4, 2014"
+        end
+      end
+    end
+  end
 end
