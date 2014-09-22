@@ -1,4 +1,4 @@
-<div class="progress-indicator">
+<div class="progress-indicator <%= 'archive' if @submission_view.released_for_publication? %>">
   <div class="step step-1 complete">
     <div class="number">1</div>
     <div class="information">
