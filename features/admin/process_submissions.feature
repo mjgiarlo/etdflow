@@ -98,3 +98,16 @@ Feature: Manage submissions
     When I go to the admin dashboard page
     And I click the "Final Submission is Incomplete" link
     Then I should see the submission listed
+
+  Scenario: Release marked submissions for publication
+    Given one approved final submission exists for each access level
+    When I go to the admin dashboard page
+    And I click the "Final Submission is Approved" link
+    Then I should see the submissions listed
+    When I click the "Select All" button
+    Then I should see a button to release for publication
+    And I click the "Release selected for publication" button
+    Then I should be on the admin dashboard page
+    And I should see that there are zero approved final submissions
+    When I click the "Released eTDs" link
+    Then I should see the submissions listed

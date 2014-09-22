@@ -143,3 +143,20 @@ end
 Then(/^the file looks bad$/) do
   # Admin thinks the file is unacceptable
 end
+
+Given(/^one approved final submission exists for each access level$/) do
+  @submissions = []
+  @submissions << (create :submission, :waiting_for_publication_release, access_level: 'open_access')
+  @submissions << (create :submission, :waiting_for_publication_release, access_level: 'restricted_to_institution')
+  @submissions << (create :submission, :waiting_for_publication_release, access_level: 'restricted')
+end
+
+Then(/^I should see a button to release for publication$/) do
+  expect(page).to have_button 'Release selected for publication'
+end
+
+Then(/^I should see that there are zero approved final submissions$/) do
+  within '#final-submission-is-approved.no-submissions .badge' do
+    expect(page).to have_content '0'
+  end
+end
