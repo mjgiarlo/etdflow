@@ -29,6 +29,10 @@ class Admin::SubmissionsController < AdminController
     @submissions = Submission.send(params[:degree_type]).final_submission_is_approved
   end
 
+  def released_for_publication
+    @submissions = Submission.send(params[:degree_type]).released_for_publication
+  end
+
   def bulk_destroy
     ids = params[:submission_ids].split(',')
     Submission.destroy(ids)
@@ -37,6 +41,16 @@ class Admin::SubmissionsController < AdminController
   rescue
     flash[:alert] = 'There was a problem deleting your submissions'
     redirect_to admin_submissions_format_review_incomplete_path(params[:degree_type])
+  end
+
+  def release_for_publication
+    ids = params[:submission_ids].split(',')
+    Submission.release_for_publication(ids)
+    flash[:notice] = 'Submissions released successfully'
+    redirect_to admin_submissions_dashboard_path(params[:degree_type])
+  rescue
+    flash[:alert] = 'There was a problem releasing the submissions'
+    redirect_to admin_submissions_dashboard_path(params[:degree_type])
   end
 
   def record_format_review_response

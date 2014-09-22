@@ -11,6 +11,11 @@
             params: { submission_ids: '' },
             data: { confirm: "Are you sure you want to permanently delete the selected submission(s)?" },
             class: 'btn btn-danger' %>
+        <%= button_to 'Release selected for publication', admin_submissions_release_final_submission_approved_path,
+            method: 'patch',
+            params: { submission_ids: '' },
+            data: { confirm: "Are you sure you want to release the selected submission(s)?" },
+            class: 'btn btn-primary' %>
       </div>
     </div>
     <div id="row-selection-buttons">

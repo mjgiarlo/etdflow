@@ -101,6 +101,15 @@ table.dataTable {
   background: #fcfcfc;
   padding: 5px 10px 15px;
   margin-bottom: 15px;
+
+  .actions {
+    @extend .clearfix;
+
+    form.button_to {
+      float: left;
+      margin-right: 10px;
+    }
+  }
 }
 
 #row-selection-buttons {
