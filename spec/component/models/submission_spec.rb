@@ -359,6 +359,22 @@ describe Submission do
     end
   end
 
+  describe '.released_for_publication' do
+    before do
+      create :submission, :collecting_program_information
+      create :submission, :collecting_committee
+      create :submission, :collecting_format_review_files
+      create :submission, :waiting_for_format_review_response
+      create :submission, :collecting_final_submission_files
+      create :submission, :waiting_for_final_submission_response
+      create :submission, :waiting_for_publication_release
+      create :submission, :released_for_publication
+    end
+    it "returns submissions whose final submissions have been approved" do
+      expect(Submission.released_for_publication.count).to eq 1
+    end
+  end
+
   describe '.years' do
     it 'Returns an array containing the current year plus 3 more' do
       today = Date.today
@@ -772,4 +788,31 @@ describe Submission do
       end
     end
   end
+
+  describe '.release_for_publication' do
+    before do
+      create :submission, :collecting_program_information
+      create :submission, :collecting_committee
+      create :submission, :collecting_format_review_files
+      create :submission, :waiting_for_format_review_response
+      create :submission, :collecting_final_submission_files
+      create :submission, :waiting_for_final_submission_response
+      create :submission, :waiting_for_publication_release, access_level: 'open_access'
+      create :submission, :waiting_for_publication_release, access_level: 'restricted_to_institution'
+      create :submission, :waiting_for_publication_release, access_level: 'restricted'
+    end
+    context 'when given ids for approved final submissions' do
+      before do
+        @submission_ids = []
+        Submission.final_submission_is_approved.each do |submission|
+          @submission_ids << submission.id
+        end
+      end
+      it "updates status to 'released for publication'" do
+        Submission.release_for_publication(@submission_ids)
+        expect(Submission.released_for_publication.count).to eq 3
+      end
+    end
+  end
+
 end

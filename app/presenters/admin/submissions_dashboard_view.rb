@@ -14,7 +14,8 @@ class Admin::SubmissionsDashboardView
         format_review_is_submitted_filter,
         final_submission_is_incomplete_filter,
         final_submission_is_submitted_filter,
-        final_submission_is_approved_filter
+        final_submission_is_approved_filter,
+        released_for_publication_filter
     ]
   end
 
@@ -23,6 +24,7 @@ class Admin::SubmissionsDashboardView
   def format_review_is_incomplete_filter
     submissions = Submission.send(@degree_type).format_review_is_incomplete
     {
+        id: 'format-review-incomplete',
         title: 'Format Review is Incomplete',
         description: 'Submissions whose format review has not yet been submitted or whose format review is currently rejected.',
         path: submissions.empty? ? nil : "/admin/#{@degree_type}/format_review_incomplete",
@@ -33,6 +35,7 @@ class Admin::SubmissionsDashboardView
   def format_review_is_submitted_filter
     submissions = Submission.send(@degree_type).format_review_is_submitted
     {
+        id: 'format-review-submitted',
         title: 'Format Review is Submitted',
         description: 'Submissions whose format review is currently waiting to be approved or rejected.',
         path: submissions.empty? ? nil : "/admin/#{@degree_type}/format_review_submitted",
@@ -43,6 +46,7 @@ class Admin::SubmissionsDashboardView
   def final_submission_is_incomplete_filter
     submissions = Submission.send(@degree_type).final_submission_is_incomplete
     {
+        id: 'final-submission-incomplete',
         title: 'Final Submission is Incomplete',
         description: 'Submissions whose format review information has been approved, but whose final submission information has not yet been submitted or whose final submission information is currently rejected.',
         path: submissions.empty? ? nil : "/admin/#{@degree_type}/final_submission_incomplete",
@@ -53,6 +57,7 @@ class Admin::SubmissionsDashboardView
   def final_submission_is_submitted_filter
     submissions = Submission.send(@degree_type).final_submission_is_submitted
     {
+        id: 'final-submission-submitted',
         title: 'Final Submission is Submitted',
         description: 'Submissions whose final submission information is currently waiting to be approved or rejected.',
         path: submissions.empty? ? nil : "/admin/#{@degree_type}/final_submission_submitted",
@@ -63,9 +68,21 @@ class Admin::SubmissionsDashboardView
   def final_submission_is_approved_filter
     submissions = Submission.send(@degree_type).final_submission_is_approved
     {
+        id: 'final-submission-approved',
         title: 'Final Submission is Approved',
         description: 'Submissions whose final submission information has been approved and is waiting to be released for publication.',
         path: submissions.empty? ? nil : "/admin/#{@degree_type}/final_submission_approved",
+        count: submissions.empty? ? nil : submissions.count.to_s
+    }
+  end
+
+  def released_for_publication_filter
+    submissions = Submission.send(@degree_type).released_for_publication
+    {
+        id: 'released-for-publication',
+        title: 'Released eTDs',
+        description: 'Electronic Theses and Dissertations of all access levels that have been released for publication.',
+        path: submissions.empty? ? nil : "/admin/#{@degree_type}/released_for_publication",
         count: submissions.empty? ? nil : submissions.count.to_s
     }
   end

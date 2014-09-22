@@ -64,5 +64,16 @@ FactoryGirl.define do
       final_submission_notes "Final submission notes"
     end
 
+    trait :released_for_publication do
+      status "released for publication"
+      format_review_notes "Format review notes"
+      defended_at DateTime.new(2014, 9, 1, 0, 0, 0)
+      abstract 'my abstract'
+      keywords 'key, word'
+      access_level 'open_access'
+      has_agreed_to_terms true
+      final_submission_notes "Final submission notes"
+    end
+
   end
 end

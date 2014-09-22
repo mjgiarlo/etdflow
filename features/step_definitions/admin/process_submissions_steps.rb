@@ -156,7 +156,7 @@ Then(/^I should see a button to release for publication$/) do
 end
 
 Then(/^I should see that there are zero approved final submissions$/) do
-  within '#final-submission-is-approved.no-submissions .badge' do
+  within '#final-submission-approved.no-submissions .badge' do
     expect(page).to have_content '0'
   end
 end

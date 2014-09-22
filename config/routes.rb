@@ -31,6 +31,9 @@ Rails.application.routes.draw do
     get '/:degree_type/final_submission_submitted', to: 'submissions#final_submission_submitted', as: :submissions_final_submission_submitted
 
     get '/:degree_type/final_submission_approved', to: 'submissions#final_submission_approved', as: :submissions_final_submission_approved
+    patch '/:degree_type/final_submission_approved', to: 'submissions#release_for_publication', as: :submissions_release_final_submission_approved
+
+    get '/:degree_type/released_for_publication', to: 'submissions#released_for_publication', as: :submissions_released_for_publication
 
     root to: redirect(path: "/admin/#{Degree.default_degree_type}"), as: :dashboard
   end

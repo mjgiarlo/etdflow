@@ -108,6 +108,7 @@ class Submission < ActiveRecord::Base
   scope :final_submission_is_incomplete, -> { where(status: 'collecting final submission files') }
   scope :final_submission_is_submitted, -> { where(status: 'waiting for final submission response') }
   scope :final_submission_is_approved, -> { where(status: 'waiting for publication release') }
+  scope :released_for_publication, -> { where(status: 'released for publication') }
 
   def has_committee?
     if committee_members.any?
@@ -119,6 +120,13 @@ class Submission < ActiveRecord::Base
 
   def status_class
     status.parameterize
+  end
+
+  def self.release_for_publication submission_ids
+    submission_ids.each do |id|
+      s = Submission.find(id)
+      SubmissionStatusGiver.new(s).released_for_publication!
+    end
   end
 
   def collecting_program_information?

@@ -10,7 +10,7 @@ module NavigationHelper
       when 'the author submissions page' then author_root_path
       when 'the new author page' then new_author_author_path
       when 'the new submission program information page' then new_author_submission_path
-      when 'the admin dashboard page' then admin_dashboard_path
+      when 'the admin dashboard page' then admin_submissions_dashboard_path(Degree.default_degree_type)
       when 'the admin master thesis submissions page' then admin_submissions_dashboard_path('master_theses')
       when 'the admin default type incomplete format review submissions page' then admin_submissions_format_review_incomplete_path(Degree.default_degree_type)
       when 'the admin default type format review submitted page' then admin_submissions_format_review_submitted_path(Degree.default_degree_type)
