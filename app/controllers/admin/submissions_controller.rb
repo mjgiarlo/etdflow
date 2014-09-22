@@ -10,26 +10,32 @@ class Admin::SubmissionsController < AdminController
   end
 
   def format_review_incomplete
+    session[:return_to] = request.referer
     @submissions = Submission.send(params[:degree_type]).format_review_is_incomplete
   end
 
   def format_review_submitted
+    session[:return_to] = request.referer
     @submissions = Submission.send(params[:degree_type]).format_review_is_submitted
   end
 
   def final_submission_incomplete
+    session[:return_to] = request.referer
     @submissions = Submission.send(params[:degree_type]).final_submission_is_incomplete
   end
 
   def final_submission_submitted
+    session[:return_to] = request.referer
     @submissions = Submission.send(params[:degree_type]).final_submission_is_submitted
   end
 
   def final_submission_approved
+    session[:return_to] = request.referer
     @submissions = Submission.send(params[:degree_type]).final_submission_is_approved
   end
 
   def released_for_publication
+    session[:return_to] = request.referer
     @submissions = Submission.send(params[:degree_type]).released_for_publication
   end
 
@@ -37,10 +43,10 @@ class Admin::SubmissionsController < AdminController
     ids = params[:submission_ids].split(',')
     Submission.destroy(ids)
     flash[:notice] = 'Submissions deleted successfully'
-    redirect_to admin_submissions_format_review_incomplete_path(params[:degree_type])
+    redirect_to session.delete(:return_to)
   rescue
     flash[:alert] = 'There was a problem deleting your submissions'
-    redirect_to admin_submissions_format_review_incomplete_path(params[:degree_type])
+    redirect_to session.delete(:return_to)
   end
 
   def release_for_publication
