@@ -622,4 +622,97 @@ describe 'Submission status transitions', js: true do
     end
   end
 
+  describe "When status is 'waiting for publication release'" do
+    before do
+      submission.update_attribute :status, 'waiting for publication release'
+    end
+
+    context "visiting the 'Update Program Information' page" do
+      before { visit edit_author_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Provide Committee' page" do
+      before { visit new_author_submission_committee_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Update Committee' page" do
+      before { visit edit_author_submission_committee_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Upload Format Review Files' page" do
+      before { visit author_submission_edit_format_review_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Review Program Information' page" do
+      before { visit author_submission_program_information_path(submission) }
+      specify "loads the page" do
+        expect(current_path).to eq author_submission_program_information_path(submission)
+      end
+    end
+
+    context "visiting the 'Review Committee' page" do
+      before { visit author_submission_committee_path(submission) }
+      specify "loads the page" do
+        expect(current_path).to eq author_submission_committee_path(submission)
+      end
+    end
+
+    context "visiting the 'Review Format Review Files' page" do
+      before { visit author_submission_format_review_path(submission) }
+      specify "loads the page" do
+        expect(current_path).to eq author_submission_format_review_path(submission)
+      end
+    end
+
+    context "visiting the 'Upload Final Submission Files' page" do
+      before { visit author_submission_edit_final_submission_path(submission) }
+      specify "raises a forbidden access error" do
+        expect(page).to have_content 'You are not allowed to visit that page at this time, please contact your administrator'
+        expect(current_path).to eq author_root_path
+      end
+    end
+
+    context "visiting the 'Review Final Submission Files' page" do
+      before { visit author_submission_final_submission_path(submission) }
+      specify "loads the page" do
+        expect(current_path).to eq author_submission_final_submission_path(submission)
+      end
+    end
+
+    context "when an admin releases the submission for publication" do
+      let(:submission) { create :submission, :waiting_for_publication_release }
+      before do
+        expect(submission.released_for_publication_at).to be_nil
+        visit admin_submissions_final_submission_approved_path(Degree.default_degree_type)
+        click_button 'Select All'
+        expect(page).to have_button 'Release selected for publication'
+        click_button 'Release selected for publication'
+      end
+      specify "submission status updates to 'released for publication'" do
+        submission.reload
+        expect(submission.status).to eq 'released for publication'
+      end
+      specify "submission released_for_publication_at is set" do
+        submission.reload
+        expect(submission.released_for_publication_at).to_not be_nil
+      end
+    end
+  end
+
 end
