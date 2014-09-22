@@ -123,9 +123,14 @@ class Submission < ActiveRecord::Base
   end
 
   def self.release_for_publication submission_ids
-    submission_ids.each do |id|
-      s = Submission.find(id)
-      SubmissionStatusGiver.new(s).released_for_publication!
+    Submission.transaction do
+      submission_ids.each do |id|
+        s = Submission.find(id)
+        status_giver = SubmissionStatusGiver.new(s)
+        status_giver.can_release_for_publication?
+        status_giver.released_for_publication!
+        s.update_attribute :released_for_publication_at, Time.zone.now
+      end
     end
   end
 

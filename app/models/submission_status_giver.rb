@@ -88,6 +88,15 @@ class SubmissionStatusGiver
     end
   end
 
+  def can_release_for_publication?
+    s = @submission
+    if s.waiting_for_publication_release?
+      return
+    else
+      raise AccessForbidden
+    end
+  end
+
   def collecting_committee!
     s = @submission
     new_status = 'collecting committee'

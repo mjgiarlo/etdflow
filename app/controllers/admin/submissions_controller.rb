@@ -54,9 +54,9 @@ class Admin::SubmissionsController < AdminController
     Submission.release_for_publication(ids)
     flash[:notice] = 'Submissions released successfully'
     redirect_to admin_submissions_dashboard_path(params[:degree_type])
-  rescue
-    flash[:alert] = 'There was a problem releasing the submissions'
-    redirect_to admin_submissions_dashboard_path(params[:degree_type])
+  rescue SubmissionStatusGiver::AccessForbidden
+    flash[:alert] = 'There was a problem releasing the submissions, please try again.'
+    redirect_to session.delete(:return_to)
   end
 
   def record_format_review_response
