@@ -16,14 +16,14 @@ Rails.application.routes.draw do
 
     get '/submissions/:id/edit', to: 'submissions#edit', as: :edit_submission
     patch '/submissions/:id', to: 'submissions#update', as: :update_submission
+    delete '/submissions', to: 'submissions#bulk_destroy', as: :delete_submissions
+
     patch '/submissions/:id/format_review_response', to: 'submissions#record_format_review_response', as: :submissions_format_review_response
     patch '/submissions/:id/final_submission_response', to: 'submissions#record_final_submission_response', as: :submissions_final_submission_response
 
     get '/:degree_type', to: 'submissions#dashboard', as: :submissions_dashboard
 
     get '/:degree_type/:scope', to: 'submissions#index', as: :submissions_index
-
-    delete '/:degree_type/format_review_incomplete', to: 'submissions#bulk_destroy', as: :submissions_delete_format_review_incomplete
 
     patch '/:degree_type/final_submission_approved', to: 'submissions#release_for_publication', as: :submissions_release_final_submission_approved
 
