@@ -15,7 +15,6 @@ Rails.application.routes.draw do
     resources :authors,  except: [:new, :create, :show, :destroy]
 
     get '/submissions/:id/edit', to: 'submissions#edit', as: :edit_submission
-    patch '/submissions/:id', to: 'submissions#update', as: :update_submission
     delete '/submissions', to: 'submissions#bulk_destroy', as: :delete_submissions
 
     patch '/submissions/:id/format_review_response', to: 'submissions#record_format_review_response', as: :submissions_format_review_response

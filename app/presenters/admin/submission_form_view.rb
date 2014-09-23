@@ -36,8 +36,12 @@ class Admin::SubmissionFormView < SimpleDelegator
     elsif waiting_for_final_submission_response?
       "/admin/submissions/#{id}/final_submission_response"
     else
-      "/admin/submissions/#{id}"
+      "#"
     end
+  end
+
+  def cancellation_path
+    @session.delete(:return_to)
   end
 
 end
