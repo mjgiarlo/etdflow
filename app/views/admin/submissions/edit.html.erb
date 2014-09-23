@@ -121,6 +121,7 @@
 
   <div class="form-group actions">
     <%= render partial: "admin/submissions/edit_form_actions/#{@view.actions_partial_name}", locals: { f: f } %>
+    <%= link_to "Cancel", @view.cancellation_path %>
   </div>
 
 <% end %>
