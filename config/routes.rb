@@ -21,19 +21,11 @@ Rails.application.routes.draw do
 
     get '/:degree_type', to: 'submissions#dashboard', as: :submissions_dashboard
 
-    get '/:degree_type/format_review_incomplete', to: 'submissions#format_review_incomplete', as: :submissions_format_review_incomplete
+    get '/:degree_type/:scope', to: 'submissions#index', as: :submissions_index
+
     delete '/:degree_type/format_review_incomplete', to: 'submissions#bulk_destroy', as: :submissions_delete_format_review_incomplete
 
-    get '/:degree_type/format_review_submitted', to: 'submissions#format_review_submitted', as: :submissions_format_review_submitted
-
-    get '/:degree_type/final_submission_incomplete', to: 'submissions#final_submission_incomplete', as: :submissions_final_submission_incomplete
-
-    get '/:degree_type/final_submission_submitted', to: 'submissions#final_submission_submitted', as: :submissions_final_submission_submitted
-
-    get '/:degree_type/final_submission_approved', to: 'submissions#final_submission_approved', as: :submissions_final_submission_approved
     patch '/:degree_type/final_submission_approved', to: 'submissions#release_for_publication', as: :submissions_release_final_submission_approved
-
-    get '/:degree_type/released_for_publication', to: 'submissions#released_for_publication', as: :submissions_released_for_publication
 
     root to: redirect(path: "/admin/#{Degree.default_degree_type}"), as: :dashboard
   end

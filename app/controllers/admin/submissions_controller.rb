@@ -9,34 +9,9 @@ class Admin::SubmissionsController < AdminController
     @view = Admin::SubmissionFormView.new(@submission)
   end
 
-  def format_review_incomplete
+  def index
     session[:return_to] = request.referer
-    @submissions = Submission.send(params[:degree_type]).format_review_is_incomplete
-  end
-
-  def format_review_submitted
-    session[:return_to] = request.referer
-    @submissions = Submission.send(params[:degree_type]).format_review_is_submitted
-  end
-
-  def final_submission_incomplete
-    session[:return_to] = request.referer
-    @submissions = Submission.send(params[:degree_type]).final_submission_is_incomplete
-  end
-
-  def final_submission_submitted
-    session[:return_to] = request.referer
-    @submissions = Submission.send(params[:degree_type]).final_submission_is_submitted
-  end
-
-  def final_submission_approved
-    session[:return_to] = request.referer
-    @submissions = Submission.send(params[:degree_type]).final_submission_is_approved
-  end
-
-  def released_for_publication
-    session[:return_to] = request.referer
-    @submissions = Submission.send(params[:degree_type]).released_for_publication
+    @view = Admin::SubmissionsIndexView.new(params[:degree_type], params[:scope])
   end
 
   def bulk_destroy
@@ -67,7 +42,7 @@ class Admin::SubmissionsController < AdminController
       @submission.update_attributes!(format_review_params)
       status_giver.collecting_final_submission_files!
       @submission.update_attribute :format_review_approved_at, Time.zone.now
-      redirect_to admin_submissions_format_review_submitted_path(@submission.parameterized_degree_type)
+      redirect_to admin_submissions_index_path(@submission.parameterized_degree_type, 'format_review_submitted')
       flash[:notice] = 'The submission\'s format review information was successfully approved and returned to the author to collect final submission information.'
     end
     if params[:rejected]
@@ -76,7 +51,7 @@ class Admin::SubmissionsController < AdminController
       @submission.update_attributes!(format_review_params)
       status_giver.collecting_format_review_files!
       @submission.update_attribute :format_review_rejected_at, Time.zone.now
-      redirect_to admin_submissions_format_review_submitted_path(@submission.parameterized_degree_type)
+      redirect_to admin_submissions_index_path(@submission.parameterized_degree_type, 'format_review_submitted')
       flash[:notice] = 'The submission\'s format review information was successfully rejected and returned to the author for revision.'
     end
   rescue ActiveRecord::RecordInvalid
@@ -97,7 +72,7 @@ class Admin::SubmissionsController < AdminController
       @submission.update_attributes!(final_submission_params)
       status_giver.waiting_for_publication_release!
       @submission.update_attribute :final_submission_approved_at, Time.zone.now
-      redirect_to admin_submissions_final_submission_submitted_path(@submission.parameterized_degree_type)
+      redirect_to admin_submissions_index_path(@submission.parameterized_degree_type, 'final_submission_submitted')
       flash[:notice] = 'The submission\'s final submission information was successfully approved.'
     end
     if params[:rejected]
@@ -106,7 +81,7 @@ class Admin::SubmissionsController < AdminController
       @submission.update_attributes!(final_submission_params)
       status_giver.collecting_final_submission_files!
       @submission.update_attribute :final_submission_rejected_at, Time.zone.now
-      redirect_to admin_submissions_final_submission_submitted_path(@submission.parameterized_degree_type)
+      redirect_to admin_submissions_index_path(@submission.parameterized_degree_type, 'final_submission_submitted')
       flash[:notice] = 'The submission\'s final submission information was successfully rejected and returned to the author for revision.'
     end
   rescue ActiveRecord::RecordInvalid

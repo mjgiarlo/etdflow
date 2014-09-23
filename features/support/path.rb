@@ -12,9 +12,9 @@ module NavigationHelper
       when 'the new submission program information page' then new_author_submission_path
       when 'the admin dashboard page' then admin_submissions_dashboard_path(Degree.default_degree_type)
       when 'the admin master thesis submissions page' then admin_submissions_dashboard_path('master_theses')
-      when 'the admin default type incomplete format review submissions page' then admin_submissions_format_review_incomplete_path(Degree.default_degree_type)
-      when 'the admin default type format review submitted page' then admin_submissions_format_review_submitted_path(Degree.default_degree_type)
-      when 'the admin default type final submission submitted page' then admin_submissions_final_submission_submitted_path(Degree.default_degree_type)
+      when 'the admin default type incomplete format review submissions page' then admin_submissions_index_path(Degree.default_degree_type, 'format_review_incomplete')
+      when 'the admin default type format review submitted page' then admin_submissions_index_path(Degree.default_degree_type, 'format_review_submitted')
+      when 'the admin default type final submission submitted page' then admin_submissions_index_path(Degree.default_degree_type, 'final_submission_submitted')
       else
         raise ArgumentError, 'Cannot find path mapping for page called #{page_name.inspect}'
     end

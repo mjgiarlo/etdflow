@@ -1,5 +1,11 @@
 <div class="row">
   <div class="col-xs-12">
+    <h1><%= @view.title %></h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
     <div id="bulk-actions">
       <h5>Bulk Actions
         <span class="small"><span class="number-of-selected-rows"></span> submissions selected ( <span class="number-of-visible-selected-rows"></span> visible )</span>
@@ -15,7 +21,7 @@
             method: 'patch',
             params: { submission_ids: '' },
             data: { confirm: "Are you sure you want to release the selected submission(s)?" },
-            class: 'btn btn-primary' if render_release_for_publication_button == true %>
+            class: 'btn btn-primary' if @view.render_release_for_publication_button? %>
       </div>
     </div>
     <div id="row-selection-buttons">
@@ -26,3 +32,16 @@
     </div>
   </div>
 </div>
+
+
+<table id="<%= @view.id %>" class="table table-striped admin-submissions-index datatable" data-ajax-url="<%= admin_submissions_index_path %>">
+  <thead>
+    <tr>
+      <th>&nbsp;</th><%# for the hidden id %>
+      <th>&nbsp;</th><%# for the checkbox %>
+      <th>Title</th>
+      <th>Last Name</th>
+      <th>First Name</th>
+    </tr>
+  </thead>
+</table>
