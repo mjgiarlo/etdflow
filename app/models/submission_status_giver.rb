@@ -88,6 +88,24 @@ class SubmissionStatusGiver
     end
   end
 
+  def can_respond_to_format_review?
+    s = @submission
+    if s.waiting_for_format_review_response?
+      return
+    else
+      raise AccessForbidden
+    end
+  end
+
+  def can_respond_to_final_submission?
+    s = @submission
+    if s.waiting_for_final_submission_response?
+      return
+    else
+      raise AccessForbidden
+    end
+  end
+
   def can_release_for_publication?
     s = @submission
     if s.waiting_for_publication_release?

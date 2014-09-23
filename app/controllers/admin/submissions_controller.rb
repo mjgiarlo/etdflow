@@ -62,16 +62,18 @@ class Admin::SubmissionsController < AdminController
   def record_format_review_response
     @submission = Submission.find(params[:id])
     if params[:approved]
-      @submission.update_attributes!(format_review_params)
       status_giver = SubmissionStatusGiver.new(@submission)
+      status_giver.can_respond_to_format_review?
+      @submission.update_attributes!(format_review_params)
       status_giver.collecting_final_submission_files!
       @submission.update_attribute :format_review_approved_at, Time.zone.now
       redirect_to admin_submissions_format_review_submitted_path(@submission.parameterized_degree_type)
       flash[:notice] = 'The submission\'s format review information was successfully approved and returned to the author to collect final submission information.'
     end
     if params[:rejected]
-      @submission.update_attributes!(format_review_params)
       status_giver = SubmissionStatusGiver.new(@submission)
+      status_giver.can_respond_to_format_review?
+      @submission.update_attributes!(format_review_params)
       status_giver.collecting_format_review_files!
       @submission.update_attribute :format_review_rejected_at, Time.zone.now
       redirect_to admin_submissions_format_review_submitted_path(@submission.parameterized_degree_type)
@@ -80,26 +82,28 @@ class Admin::SubmissionsController < AdminController
   rescue ActiveRecord::RecordInvalid
     render :edit
   rescue SubmissionStatusGiver::AccessForbidden
-    redirect_to author_root_path
-    flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
+    redirect_to session.delete(:return_to)
+    flash[:alert] = 'This submission\'s format review information has already been evaluated.'
   rescue SubmissionStatusGiver::InvalidTransition
-    redirect_to author_root_path
-    flash[:alert] = 'Oops! You may have submitted invalid format review data. Please check that your format review information is correct.'
+    redirect_to session.delete(:return_to)
+    flash[:alert] = 'Oops! You may have submitted invalid format review data. Please check that the submission\'s format review information is correct.'
   end
 
   def record_final_submission_response
     @submission = Submission.find(params[:id])
     if params[:approved]
-      @submission.update_attributes!(final_submission_params)
       status_giver = SubmissionStatusGiver.new(@submission)
+      status_giver.can_respond_to_final_submission?
+      @submission.update_attributes!(final_submission_params)
       status_giver.waiting_for_publication_release!
       @submission.update_attribute :final_submission_approved_at, Time.zone.now
       redirect_to admin_submissions_final_submission_submitted_path(@submission.parameterized_degree_type)
       flash[:notice] = 'The submission\'s final submission information was successfully approved.'
     end
     if params[:rejected]
-      @submission.update_attributes!(final_submission_params)
       status_giver = SubmissionStatusGiver.new(@submission)
+      status_giver.can_respond_to_final_submission?
+      @submission.update_attributes!(final_submission_params)
       status_giver.collecting_final_submission_files!
       @submission.update_attribute :final_submission_rejected_at, Time.zone.now
       redirect_to admin_submissions_final_submission_submitted_path(@submission.parameterized_degree_type)
@@ -108,11 +112,11 @@ class Admin::SubmissionsController < AdminController
   rescue ActiveRecord::RecordInvalid
     render :edit
   rescue SubmissionStatusGiver::AccessForbidden
-    redirect_to author_root_path
-    flash[:alert] = 'You are not allowed to visit that page at this time, please contact your administrator'
+    redirect_to session.delete(:return_to)
+    flash[:alert] = 'This submission\'s final submission information has already been evaluated.'
   rescue SubmissionStatusGiver::InvalidTransition
-    redirect_to author_root_path
-    flash[:alert] = 'Oops! You may have submitted invalid format review data. Please check that your format review information is correct.'
+    redirect_to session.delete(:return_to)
+    flash[:alert] = 'Oops! You may have submitted invalid final submission data. Please check that the submission\'s final submission information is correct.'
   end
 
   private
