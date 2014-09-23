@@ -4,6 +4,6 @@
   </div>
 </div>
 
-<%= render 'bulk_actions' %>
+<%= render partial: 'bulk_actions', locals: { render_release_for_publication_button: true } %>
 
 <%= render partial: 'table', locals: { id: 'approved-final-submission-submissions-index', ajax_url: admin_submissions_final_submission_approved_path } %>
