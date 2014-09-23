@@ -789,6 +789,57 @@ describe Submission do
     end
   end
 
+  describe '#admin_index_title' do
+    context "when status is 'collecting program information'" do
+      before { submission.status = 'collecting program information' }
+      it "returns the title as a string" do
+        expect(submission.admin_index_title).to eq submission.title
+      end
+    end
+    context "when status is 'collecting committee'" do
+      before { submission.status = 'collecting committee' }
+      it "returns the title as a string" do
+        expect(submission.admin_index_title).to eq submission.title
+      end
+    end
+    context "when status is 'collecting format review files'" do
+      before { submission.status = 'collecting format review files' }
+      it "returns the title as a string" do
+        expect(submission.admin_index_title).to eq submission.title
+      end
+    end
+    context "when status is 'waiting for format review response'" do
+      before { submission.status = 'waiting for format review response' }
+      it "returns the title as a link" do
+        expect(submission.admin_index_title).to eq "<a href='/admin/submissions/#{submission.id}/edit'>#{submission.title}</a>".html_safe
+      end
+    end
+    context "when status is 'collecting final submission files'" do
+      before { submission.status = 'collecting final submission files' }
+      it "returns the title as a string" do
+        expect(submission.admin_index_title).to eq submission.title
+      end
+    end
+    context "when status is 'waiting for final submission response'" do
+      before { submission.status = 'waiting for final submission response' }
+      it "returns the title as a link" do
+        expect(submission.admin_index_title).to eq "<a href='/admin/submissions/#{submission.id}/edit'>#{submission.title}</a>".html_safe
+      end
+    end
+    context "when status is 'waiting for publication release'" do
+      before { submission.status = 'waiting for publication release' }
+      it "returns the title as a string" do
+        expect(submission.admin_index_title).to eq submission.title
+      end
+    end
+    context "when status is 'released for publication'" do
+      before { submission.status = 'released for publication' }
+      it "returns the title as a string" do
+        expect(submission.admin_index_title).to eq submission.title
+      end
+    end
+  end
+
   describe '.release_for_publication' do
     before do
       create :submission, :collecting_program_information

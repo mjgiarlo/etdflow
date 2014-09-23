@@ -122,6 +122,14 @@ class Submission < ActiveRecord::Base
     status.parameterize
   end
 
+  def admin_index_title
+    if waiting_for_format_review_response? || waiting_for_final_submission_response?
+      "<a href='/admin/submissions/#{id}/edit'>#{title}</a>".html_safe
+    else
+      title
+    end
+  end
+
   def self.release_for_publication submission_ids
     Submission.transaction do
       submission_ids.each do |id|
