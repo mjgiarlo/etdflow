@@ -699,7 +699,7 @@ describe 'Submission status transitions', js: true do
       let(:submission) { create :submission, :waiting_for_publication_release }
       before do
         expect(submission.released_for_publication_at).to be_nil
-        visit admin_submissions_final_submission_approved_path(Degree.default_degree_type)
+        visit admin_submissions_index_path(Degree.default_degree_type, 'final_submission_approved')
         click_button 'Select All'
         expect(page).to have_button 'Release selected for publication'
         click_button 'Release selected for publication'

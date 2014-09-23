@@ -1,7 +1,7 @@
 object false
 
 node(:data) do
-  table = @submissions.map do |submission|
+  table = @view.submissions.map do |submission|
     row = [
         submission.id,
         "<input type='checkbox' class='row-checkbox' />",
