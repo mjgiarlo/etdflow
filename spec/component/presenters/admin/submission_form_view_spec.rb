@@ -62,8 +62,8 @@ describe Admin::SubmissionFormView do
   describe '#form_for_url' do
     context "When the status is before 'waiting for format review response'" do
       before { submission.stub(beyond_collecting_format_review_files?: false) }
-      it "returns update path" do
-        expect(view.form_for_url).to eq admin_update_submission_path(submission)
+      it "returns no path" do
+        expect(view.form_for_url).to eq '#'
       end
     end
     context "When the status is 'waiting for format review response'" do
@@ -74,8 +74,8 @@ describe Admin::SubmissionFormView do
     end
     context "When the status is 'collecting final submission files'" do
       before { submission.status = 'collecting final submission files' }
-      it "returns 'standard_actions'" do
-        expect(view.form_for_url).to eq admin_update_submission_path(submission)
+      it "returns no path" do
+        expect(view.form_for_url).to eq '#'
       end
     end
     context "When the status is 'waiting for final submission response'" do
