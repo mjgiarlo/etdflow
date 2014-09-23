@@ -7,6 +7,7 @@ setup_edit_submission_form = () ->
   program_information = form.find('#program-information')
   committee = form.find('#committee')
   format_review_files = form.find('#format-review-files')
+  final_submission_files = form.find('#final-submission-information')
   edit_links = $('.form-edit-link.toggle-link')
 
   toggle_edit_link = (link) ->
@@ -65,5 +66,19 @@ setup_edit_submission_form = () ->
     format_review_files.collapse()
     toggle_editability(format_review_files)
 
+  if form.hasClass('collecting-program-information') || form.hasClass('collecting-committee') || form.hasClass('collecting-format-review-files')
+    toggle_editability(program_information)
+    toggle_editability(committee)
+    toggle_editability(format_review_files)
+    edit_links.off('click').addClass('disabled')
+    edit_links.on( 'click', false )
+
+  if form.hasClass('collecting-final-submission-files') || form.hasClass('waiting-for-publication-release') || form.hasClass('released-for-publication')
+    toggle_editability(program_information)
+    toggle_editability(committee)
+    toggle_editability(format_review_files)
+    toggle_editability(final_submission_files)
+    edit_links.off('click').addClass('disabled')
+    edit_links.on( 'click', false )
 
 $(document).on('page:load ready', setup_edit_submission_form)
