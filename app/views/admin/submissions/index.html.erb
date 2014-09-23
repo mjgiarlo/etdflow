@@ -12,7 +12,7 @@
       </h5>
 
       <div class="actions">
-        <%= button_to 'Delete selected', admin_submissions_delete_format_review_incomplete_path,
+        <%= button_to 'Delete selected', admin_delete_submissions_path,
             method: 'delete',
             params: { submission_ids: '' },
             data: { confirm: "Are you sure you want to permanently delete the selected submission(s)?" },
