@@ -8,6 +8,11 @@ class Admin::SubmissionFormView < SimpleDelegator
     __getobj__.class
   end
 
+  def initialize(submission, session)
+    super(submission)
+    @session = session
+  end
+
   def title
     if waiting_for_format_review_response?
       'Format Review Evaluation'
