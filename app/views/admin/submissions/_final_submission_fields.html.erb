@@ -3,8 +3,8 @@
 </div>
 <div id="final-submission-information" class="form-section-body collapse in">
   <%= f.input :defended_at, as: :date, label: 'Date defended<span class="required-astrisk">*</span>'.html_safe %>
-  <%= f.input :abstract, as: :text, label: 'Abstract<span class="required-astrisk">*</span>'.html_safe %>
-  <%= f.input :keywords, as: :text, label: 'Keywords<span class="required-astrisk">*</span>'.html_safe %>
+  <%= f.input :abstract, as: :text, label: 'Abstract<span class="required-astrisk">*</span>'.html_safe, input_html: { class: 'can-toggle-editability' } %>
+  <%= f.input :keywords, as: :text, label: 'Keywords<span class="required-astrisk">*</span>'.html_safe, input_html: { class: 'can-toggle-editability' } %>
   <%= f.input :access_level, as: :radio_buttons,
       collection: [['Open Access', 'open_access'], ['Restricted (Penn State only)', 'restricted_to_institution'],['Restricted', 'restricted']],
       wrapper: :vertical_radio_and_checkboxes,
@@ -13,7 +13,7 @@
   <div class="links cocoon-links">
     <label>Final Submission Files<span class="required-astrisk">*</span></label>
     <%= link_to_add_association f, :final_submission_files,
-        class: 'btn btn-default btn-sm',
+        class: 'btn btn-default btn-sm can-toggle-clickability',
         data: { association_insertion_node: '#final-submission-file-fields', association_insertion_method: 'append' },
         form_name: 'file_fields',
         partial: 'file_fields' do %>
@@ -26,5 +26,11 @@
     <% end %>
   </div>
 
-  <%= f.input :final_submission_notes, as: :text, label: "Final Submission Notes to Student<span title='require' class='required-asterisk'>*</span>".html_safe %>
+  <%= f.input :final_submission_notes, as: :text, label: "Final Submission Notes to Student<span title='require' class='required-asterisk'>*</span>".html_safe, input_html: { class: 'can-toggle-editability' } %>
+
+  <% if @submission.beyond_waiting_for_final_submission_response? %>
+    <%= link_to '#', class: 'form-edit-link toggle-link' do %>
+      <span class="fa"></span> <span class="verb">Edit</span> Final Submission Information
+    <% end %>
+  <% end %>
 </div>
