@@ -1,4 +1,5 @@
 class Paper < ActiveFedora::Base
+  include CurationConcern::Work
 
   has_metadata 'descMetadata', type: PaperMetadata
 
