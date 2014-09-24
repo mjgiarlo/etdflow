@@ -1,19 +1,1 @@
 <h1><%= Rails.env %> environment</h1>
-<h2> Gem versions for worthwhile and its dependencies: </h2>
-<% @gem_list = [
-                'worthwhile',
-                'sufia-models',
-                'hydra',
-                'hydra-core',
-                'hydra-head',
-                'active-fedora',
-                'solrizer',
-                'blacklight',
-                'rails',
-                'mysql2',
-               ] %>
-<ul>
-  <% @gem_list.each do |gem| %>
-    <li><%= gem %> version: <%= Gem.loaded_specs["#{gem}"].version %></li>
-  <% end %>
-</ul>
