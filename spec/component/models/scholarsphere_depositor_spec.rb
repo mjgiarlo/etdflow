@@ -35,11 +35,11 @@ describe ScholarsphereDepositor do
       paper = Paper.last
       expect(submission.fedora_id).to eq paper.id
     end
-    pending "adds a corresponding datastream to the fedora object for each final submission file" do
+    it "adds a corresponding datastream to the fedora object for each final submission file" do
       depositor.deposit!
       submission.reload
       paper = Paper.find(submission.fedora_id)
-      expect(paper.datastreams.count).to eq 2
+      expect(paper.datastreams.keys.count).to eq 2
     end
   end
 
