@@ -1,22 +1,28 @@
+require 'etd'
+
 class ScholarsphereDepositor
+  attr_reader :submission
 
-  def self.save(submission, files)
-    if submission.nil? || files.nil? || files.empty?
-      raise ArgumentError, "files can't be empty"
-    end 
-    files.each do |f| 
-      if self.uploaded_file? f
-        true 
-      else
-        raise ArgumentError, "argument is not an uploaded file"
-      end 
-    end 
-  end 
+  def initialize(submission)
+    @submission = submission
+  end
 
-  private
-
-  def self.uploaded_file?(f)
-    ( f.instance_of? Rack::Test::UploadedFile ) || ( f.instance_of? ActionDispatch::Http::UploadedFile )
-  end 
+  def deposit!
+    paper = Paper.new
+    paper.descMetadata.title << @submission.title
+    paper.descMetadata.creator << "#{@submission.author_first_name + @submission.author_last_name}"
+    paper.descMetadata.semester << @submission.semester
+    paper.descMetadata.year << @submission.year
+    paper.descMetadata.program << @submission.program_name
+    paper.descMetadata.degree << @submission.degree_name
+    paper.descMetadata.abstract << @submission.abstract
+    paper.descMetadata.keyword << @submission.keywords.split(',').map(&:strip)
+    paper.descMetadata.keyword.flatten
+    @submission.final_submission_files.each do |file|
+#     paper.add_file_datastream(File.open(file.filename_url), mimeType: file.content_type)
+    end
+    paper.save
+    @submission.update_attribute :fedora_id, paper.id
+  end
 
 end
