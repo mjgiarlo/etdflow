@@ -1,4 +1,5 @@
 class FinalSubmissionFile < ActiveRecord::Base
+  before_save :update_filename_attributes
 
   validates :submission_id, :filename, presence: true
 
@@ -10,4 +11,11 @@ class FinalSubmissionFile < ActiveRecord::Base
     self.class.to_s.underscore.dasherize
   end
 
+  private
+
+  def update_filename_attributes
+    if filename.present? && filename_changed?
+    # self.content_type = filename.file.content_type
+    end
+  end
 end
