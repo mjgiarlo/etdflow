@@ -1,4 +1,4 @@
-class StudentPaperMetadata < ActiveFedora::NtriplesRDFDatastream
+class PaperMetadata < ActiveFedora::NtriplesRDFDatastream
   property :title, predicate: RDF::DC.title do |index|
     index.as :stored_searchable
   end
