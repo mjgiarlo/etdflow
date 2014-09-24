@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140916165109) do
+ActiveRecord::Schema.define(version: 20140924050047) do
 
   create_table "authors", force: true do |t|
     t.string   "access_id"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20140916165109) do
     t.text     "filename"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "content_type"
   end
 
   create_table "format_review_files", force: true do |t|
@@ -118,6 +119,7 @@ ActiveRecord::Schema.define(version: 20140916165109) do
     t.datetime "final_submission_rejected_at"
     t.datetime "final_submission_approved_at"
     t.datetime "released_for_publication_at"
+    t.string   "fedora_id"
   end
 
   create_table "users", force: true do |t|

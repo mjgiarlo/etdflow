@@ -25,6 +25,7 @@ describe Submission do
   specify { expect(subject).to have_db_column :final_submission_files_uploaded_at }
   specify { expect(subject).to have_db_column :final_submission_rejected_at }
   specify { expect(subject).to have_db_column :final_submission_approved_at }
+  specify { expect(subject).to have_db_column :fedora_id }
 
   specify { expect(subject).to validate_presence_of :author_id }
   specify { expect(subject).to validate_presence_of :title }
