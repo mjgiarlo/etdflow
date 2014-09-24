@@ -1,7 +1,6 @@
-class StudentPaper < ActiveFedora::Base
-  include Worthwhile::CurationConcern::Work
+class Paper < ActiveFedora::Base
 
-  has_metadata 'descMetadata', type: StudentPaperMetadata
+  has_metadata 'descMetadata', type: PaperMetadata
 
   has_attributes :creator, :semester, :year, :program, :degree, :defense_date,
     :abstract, :title, :status, datastream: :descMetadata, multiple: false
