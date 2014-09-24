@@ -5,7 +5,7 @@ require 'ffaker'
 
 def random_access_id(first_name, middle_name, last_name)
   initials = first_name[0,1] + middle_name.to_s[0,1] + last_name[0,1]
-  access_id = initials + (0..rand(1..3)).map { (1..9).to_a[rand(9)] }.join
+  access_id = initials.downcase + (0..rand(1..3)).map { (1..9).to_a[rand(9)] }.join
 end
 
 def degrees
@@ -59,7 +59,7 @@ end
     first_name: first_name,
     last_name: last_name,
     middle_name: middle_name,
-    alternate_email_address: first_name[0,1] + '.' + last_name + domain,
+    alternate_email_address: first_name[0,1].downcase + '.' + last_name.downcase + domain,
     psu_email_address: access_id + "@psu.edu",
     phone_number: Faker::PhoneNumber.short_phone_number,
     address_1: Faker::AddressUS.street_address, 
