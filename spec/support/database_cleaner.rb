@@ -17,6 +17,8 @@ RSpec.configure do |config|
   config.before(:each) do
     # Begin transaction
     DatabaseCleaner.start
+    # Clean Fedora (Not sure whether we need to also clean Solr)
+    ActiveFedora::Base.delete_all
   end
 
   config.after(:each) do
