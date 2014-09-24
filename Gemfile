@@ -8,7 +8,7 @@ gem 'rails', '~> 4.1.0'
 gem 'mysql2'
 
 # Use SCSS for stylesheets
-gem 'sass-rails'
+gem 'sass-rails', '~> 4.0.3'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier'
@@ -29,16 +29,14 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 
-# core institutional repository platform
-# temporarily pointing to their github repo
-# see: https://github.com/curationexperts/worthwhile/issues/10
-gem 'worthwhile', github: 'curationexperts/worthwhile' 
+# Core institutional repository platform
+gem 'worthwhile', github: 'curationexperts/worthwhile' # Use master, even if it hasn't been released yet
 
 # Authentication
 gem 'devise'
 
 # Form builder
-gem 'simple_form', '3.1.0.rc1'
+gem 'simple_form'
 
 # Ruby templating system for generating JSON
 gem 'rabl'
