@@ -16,8 +16,7 @@ class ScholarsphereDepositor
     paper.descMetadata.program << @submission.program_name
     paper.descMetadata.degree << @submission.degree_name
     paper.descMetadata.abstract << @submission.abstract
-    paper.descMetadata.keyword << @submission.keywords.split(',').map(&:strip)
-    paper.descMetadata.keyword.flatten
+    paper.descMetadata.keyword.concat(@submission.keywords.split(',').map(&:strip))
     @submission.final_submission_files.each do |file|
 #     paper.add_file_datastream(File.open(file.filename_url), mimeType: file.content_type)
     end
