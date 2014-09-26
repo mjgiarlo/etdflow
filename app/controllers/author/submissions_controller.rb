@@ -5,11 +5,11 @@ class Author::SubmissionsController < AuthorController
   end
 
   def new
-    @submission = Submission.new
+    @submission = @author.submissions.new
   end
 
   def create
-    @submission = Submission.new(program_information_params)
+    @submission = @author.submissions.new(program_information_params)
     @submission.save!
     status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.collecting_committee!
@@ -23,7 +23,7 @@ class Author::SubmissionsController < AuthorController
   end
 
   def edit
-    @submission = Submission.find(params[:id])
+    @submission = @author.submissions.find(params[:id])
     status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.can_update_program_information?
   rescue SubmissionStatusGiver::AccessForbidden
@@ -32,7 +32,7 @@ class Author::SubmissionsController < AuthorController
   end
 
   def update
-    @submission = Submission.find(params[:id])
+    @submission = @author.submissions.find(params[:id])
     status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.can_update_program_information?
     @submission.update_attributes!(program_information_params)
@@ -47,7 +47,7 @@ class Author::SubmissionsController < AuthorController
   end
 
   def destroy
-    @submission = Submission.find(params[:id])
+    @submission = @author.submissions.find(params[:id])
     @submission.destroy
     flash[:notice] = "Submission deleted successfully."
     redirect_to author_root_path
@@ -57,7 +57,7 @@ class Author::SubmissionsController < AuthorController
   end
 
   def program_information
-    @submission = Submission.find(params[:submission_id])
+    @submission = @author.submissions.find(params[:submission_id])
     status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.can_review_program_information?
   rescue SubmissionStatusGiver::AccessForbidden
@@ -66,7 +66,7 @@ class Author::SubmissionsController < AuthorController
   end
 
   def committee
-    @submission = Submission.find(params[:submission_id])
+    @submission = @author.submissions.find(params[:submission_id])
     status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.can_review_committee?
   rescue SubmissionStatusGiver::AccessForbidden
@@ -75,7 +75,7 @@ class Author::SubmissionsController < AuthorController
   end
 
   def edit_format_review
-    @submission = Submission.find(params[:submission_id])
+    @submission = @author.submissions.find(params[:submission_id])
     status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.can_upload_format_review_files?
   rescue SubmissionStatusGiver::AccessForbidden
@@ -84,7 +84,7 @@ class Author::SubmissionsController < AuthorController
   end
 
   def update_format_review
-    @submission = Submission.find(params[:submission_id])
+    @submission = @author.submissions.find(params[:submission_id])
     status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.can_upload_format_review_files?
     @submission.update_attributes!(format_review_params)
@@ -104,7 +104,7 @@ class Author::SubmissionsController < AuthorController
   end
 
   def format_review
-    @submission = Submission.find(params[:submission_id])
+    @submission = @author.submissions.find(params[:submission_id])
     status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.can_review_format_review_files?
   rescue SubmissionStatusGiver::AccessForbidden
@@ -113,7 +113,7 @@ class Author::SubmissionsController < AuthorController
   end
 
   def edit_final_submission
-    @submission = Submission.find(params[:submission_id])
+    @submission = @author.submissions.find(params[:submission_id])
     status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.can_upload_final_submission_files?
   rescue SubmissionStatusGiver::AccessForbidden
@@ -122,7 +122,7 @@ class Author::SubmissionsController < AuthorController
   end
 
   def update_final_submission
-    @submission = Submission.find(params[:submission_id])
+    @submission = @author.submissions.find(params[:submission_id])
     status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.can_upload_final_submission_files?
     @submission.update_attributes!(final_submission_params)
@@ -141,7 +141,7 @@ class Author::SubmissionsController < AuthorController
   end
 
   def final_submission
-    @submission = Submission.find(params[:submission_id])
+    @submission = @author.submissions.find(params[:submission_id])
     status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.can_review_final_submission_files?
   rescue SubmissionStatusGiver::AccessForbidden

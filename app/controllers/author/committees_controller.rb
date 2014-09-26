@@ -1,7 +1,7 @@
 class Author::CommitteesController < AuthorController
 
   def new 
-    submission = Submission.find(params[:submission_id])
+    submission = @author.submissions.find(params[:submission_id])
     status_giver = SubmissionStatusGiver.new(submission)
     status_giver.can_provide_new_committee?
     @committee = Committee.new(committee_members: Committee.members(submission))
@@ -11,7 +11,7 @@ class Author::CommitteesController < AuthorController
   end 
 
   def create
-    submission = Submission.find(params[:submission_id])
+    submission = @author.submissions.find(params[:submission_id])
     status_giver = SubmissionStatusGiver.new(submission)
     status_giver.can_provide_new_committee?
     @committee = Committee.new(params[:committee])
@@ -31,7 +31,7 @@ class Author::CommitteesController < AuthorController
   end 
 
   def edit
-    @submission = Submission.find(params[:submission_id])
+    @submission = @author.submissions.find(params[:submission_id])
     @committee = Committee.new(committee_members: @submission.committee_members)
     status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.can_update_committee?
@@ -41,7 +41,7 @@ class Author::CommitteesController < AuthorController
   end
 
   def update
-    @submission = Submission.find(params[:submission_id])
+    @submission = @author.submissions.find(params[:submission_id])
     status_giver = SubmissionStatusGiver.new(@submission)
     status_giver.can_update_committee?
     @committee = Committee.new(params[:committee])
