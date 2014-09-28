@@ -512,6 +512,7 @@ DEPENDENCIES
   factory_girl_rails
   ffaker
   font-awesome-sass
+  foreigner
   jbuilder
   jettywrapper
   jquery-rails
