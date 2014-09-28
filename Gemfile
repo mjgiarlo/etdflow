@@ -50,6 +50,9 @@ gem 'cocoon'
 # FontAwesome sass integration
 gem 'font-awesome-sass'
 
+# Add and remove foreign key constraints
+gem 'foreigner'
+
 group :development do
 
   # Spring speeds up development by keeping your application running in the background.
