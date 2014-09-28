@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140924161109) do
+ActiveRecord::Schema.define(version: 20140928200334) do
 
   create_table "authors", force: true do |t|
     t.string   "access_id"
@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(version: 20140924161109) do
     t.datetime "updated_at"
   end
 
+  add_index "committee_members", ["submission_id"], name: "committee_members_submission_id_fk", using: :btree
+
   create_table "degrees", force: true do |t|
     t.string   "name"
     t.string   "description"
@@ -58,12 +60,16 @@ ActiveRecord::Schema.define(version: 20140924161109) do
     t.string   "content_type"
   end
 
+  add_index "final_submission_files", ["submission_id"], name: "final_submission_files_submission_id_fk", using: :btree
+
   create_table "format_review_files", force: true do |t|
     t.integer  "submission_id"
     t.text     "filename"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "format_review_files", ["submission_id"], name: "format_review_files_submission_id_fk", using: :btree
 
   create_table "programs", force: true do |t|
     t.string   "name"
@@ -99,5 +105,19 @@ ActiveRecord::Schema.define(version: 20140924161109) do
     t.datetime "released_for_publication_at"
     t.string   "fedora_id"
   end
+
+  add_index "submissions", ["author_id"], name: "submissions_author_id_fk", using: :btree
+  add_index "submissions", ["degree_id"], name: "submissions_degree_id_fk", using: :btree
+  add_index "submissions", ["program_id"], name: "submissions_program_id_fk", using: :btree
+
+  add_foreign_key "committee_members", "submissions", name: "committee_members_submission_id_fk", dependent: :delete
+
+  add_foreign_key "final_submission_files", "submissions", name: "final_submission_files_submission_id_fk", dependent: :delete
+
+  add_foreign_key "format_review_files", "submissions", name: "format_review_files_submission_id_fk", dependent: :delete
+
+  add_foreign_key "submissions", "authors", name: "submissions_author_id_fk", dependent: :delete
+  add_foreign_key "submissions", "degrees", name: "submissions_degree_id_fk"
+  add_foreign_key "submissions", "programs", name: "submissions_program_id_fk"
 
 end
