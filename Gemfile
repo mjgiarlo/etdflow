@@ -53,6 +53,9 @@ gem 'font-awesome-sass'
 # Add and remove foreign key constraints
 gem 'foreigner'
 
+# Foreigner migration generator
+gem 'immigrant'
+
 group :development do
 
   # Spring speeds up development by keeping your application running in the background.
