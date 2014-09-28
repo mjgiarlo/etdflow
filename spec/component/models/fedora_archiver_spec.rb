@@ -1,6 +1,6 @@
 require 'component/component_spec_helper'
 
-describe ScholarsphereDepositor do
+describe FedoraArchiver do
   let!(:submission) { create :submission, :waiting_for_publication_release }
 
   let!(:file1) { FinalSubmissionFile.create!(submission: submission,
@@ -11,14 +11,14 @@ describe ScholarsphereDepositor do
                                             filename: File.open( fixture 'final_submission_file_02.docx' ),
                                             content_type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') }
 
-  let(:depositor) { ScholarsphereDepositor.new(submission) }
+  let(:depositor) { FedoraArchiver.new(submission) }
 
-  describe '#deposit!' do
+  describe '#create!' do
     it "creates a new fedora object" do
-      expect{depositor.deposit!}.to change{Paper.count}.by(1)
+      expect{depositor.create!}.to change{Paper.count}.by(1)
     end
     it "translates the submission's attributes into the new fedora object's metadata" do
-      depositor.deposit!
+      depositor.create!
       paper = Paper.last
       expect(paper.descMetadata.title.first).to eq submission.title
       expect(paper.descMetadata.creator.first).to eq "#{submission.author_first_name + submission.author_last_name}"
@@ -30,13 +30,13 @@ describe ScholarsphereDepositor do
       expect(paper.descMetadata.keyword).to eq submission.keywords.split(',').map(&:strip)
     end
     it "records the new fedora object's id in the submission" do
-      depositor.deposit!
+      depositor.create!
       submission.reload
       paper = Paper.last
       expect(submission.fedora_id).to eq paper.id
     end
     pending "adds a corresponding datastream to the fedora object for each final submission file" do
-      depositor.deposit!
+      depositor.create!
       submission.reload
       paper = Paper.find(submission.fedora_id)
       expect(paper.datastreams.keys.count).to eq 2

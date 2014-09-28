@@ -1,13 +1,13 @@
 require 'etd'
 
-class ScholarsphereDepositor
+class FedoraArchiver
   attr_reader :submission
 
   def initialize(submission)
     @submission = submission
   end
 
-  def deposit!
+  def create!
     paper = Paper.new
     paper.descMetadata.title << @submission.title
     paper.descMetadata.creator << "#{@submission.author_first_name + @submission.author_last_name}"
