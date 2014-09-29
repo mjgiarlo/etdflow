@@ -21,7 +21,8 @@ module Etdflow
     config.assets.precompile += %w( author.css admin.css base.js author.js admin.js )
 
     config.autoload_paths += [
-      Rails.root.join('app/presenters')
+      Rails.root.join('app/presenters'),
+      Rails.root.join('app/datastreams')
     ]
 
     # Settings in config/environments/* take precedence over those specified here.
