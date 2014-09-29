@@ -13,4 +13,25 @@ describe FinalSubmissionFile do
 
   specify { expect(subject).to belong_to :submission }
 
+  describe '#filename' do
+    context "after a file has been saved" do
+      before do
+        # attach pdf
+      end
+
+      describe '#read' do
+        it "provides an open IO stream to the file contents" do
+          expect(file.filename.read).to_not be_blank
+        end
+      end
+
+      describe '#content_type' do
+        it "returns the content type for the file" do
+          expect(file.filename.content_type).to eq "application/pdf"
+        end
+      end
+
+    end
+  end
+
 end
