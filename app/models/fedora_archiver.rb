@@ -19,10 +19,12 @@ class FedoraArchiver
     @submission.keywords.split(',').map(&:strip).each do |keyword|
       paper.descMetadata.keyword << keyword
     end
-    @submission.final_submission_files.each do |file|
-      # paper.add_file_datastream(File.open(file.filename_url), mimeType: file.content_type)
-    end
     paper.save
+    @submission.final_submission_files.each do |file|
+      generic_file = Worthwhile::GenericFile.new
+      generic_file.add_file_datastream(file.filename.read, mimeType: file.filename.content_type)
+      paper.generic_files << generic_file
+    end
     @submission.update_attribute :fedora_id, paper.id
   end
 

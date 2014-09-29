@@ -35,11 +35,14 @@ describe FedoraArchiver do
       paper = Paper.last
       expect(submission.fedora_id).to eq paper.id
     end
-    pending "adds a corresponding datastream to the fedora object for each final submission file" do
+    it "adds a corresponding file to the fedora object for each final submission file" do
       depositor.create!
       submission.reload
       paper = Paper.find(submission.fedora_id)
-      expect(paper.datastreams.keys.count).to eq 2
+      expect(paper.generic_files.count).to eq 2
+      paper.generic_files.each do |gf|
+        expect(gf.content).to_not be_blank
+      end
     end
   end
 
