@@ -162,7 +162,7 @@ class Author::SubmissionsController < AuthorController
 
   def format_review_params
     params.require(:submission).permit(:title,
-                                       format_review_files_attributes: [:filename, :submission_id, :id, :_destroy])
+                                       format_review_files_attributes: [:asset, :submission_id, :id, :_destroy])
   end
 
   def final_submission_params
@@ -171,7 +171,7 @@ class Author::SubmissionsController < AuthorController
                                        :keywords,
                                        :access_level,
                                        :has_agreed_to_terms,
-                                       final_submission_files_attributes: [:filename, :submission_id, :id, :_destroy])
+                                       final_submission_files_attributes: [:asset, :submission_id, :id, :_destroy])
   end
 
 end

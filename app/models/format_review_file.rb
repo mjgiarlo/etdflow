@@ -1,10 +1,10 @@
 class FormatReviewFile < ActiveRecord::Base
 
-  validates :submission_id, :filename, presence: true
+  mount_uploader :asset, SubmissionFileUploader
+
+  validates :submission_id, :asset, presence: true
 
   belongs_to :submission
-
-  mount_uploader :filename, SubmissionFileUploader
 
   def class_name
     self.class.to_s.underscore.dasherize

@@ -1,12 +1,12 @@
 <div class="nested-fields">
-  <% if file_fields.object.filename? %>
+  <% if file_fields.object.asset? %>
     <div id="<%= file_fields.object.class_name %>-<%= file_fields.object.id %>" class="form-group uploaded-file-link">
-      <%= file_fields.input :filename, as: :hidden %>
+      <%= file_fields.input :asset, as: :hidden %>
       <%= link_to_remove_association "[delete]", file_fields, class: 'text-danger can-toggle-clickability' %>
-      <%= link_to file_fields.object.filename_identifier, file_fields.object.filename_url, class: 'file-link', target: '_blank' %>
+      <%= link_to file_fields.object.asset_identifier, file_fields.object.asset_url, class: 'file-link', target: '_blank' %>
     </div>
   <% else %>
-    <%= file_fields.input :filename, as: :file, label: false %>
+    <%= file_fields.input :asset, as: :file, label: false %>
     <%= link_to_remove_association "[remove]", file_fields, class: 'text-danger' %>
   <% end %>
 </div>

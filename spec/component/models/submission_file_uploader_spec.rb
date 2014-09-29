@@ -4,7 +4,7 @@ class MockSubmissionFile
   def id
     123 
   end 
-  def filename
+  def asset
     'format_review_file.pdf'
   end 
 end
@@ -14,7 +14,7 @@ describe SubmissionFileUploader do
   let(:mock_submission_file) { MockSubmissionFile.new }
 
   before do
-    uploader.stub(model: mock_submission_file, mounted_as: 'filename' )
+    uploader.stub(model: mock_submission_file, mounted_as: 'asset' )
   end 
 
   it "stores files in the file system" do

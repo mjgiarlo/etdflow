@@ -133,7 +133,7 @@ Then(/^I should now be able to edit the Format Review Notes to Student field$/) 
 end
 
 And(/^I should see a link to view the PDF file/) do
-  expect(page).to have_link(@file.filename_identifier, { href: @file.filename_url })
+  expect(page).to have_link(@file.asset_identifier, { href: @file.asset_url })
 end
 
 When(/^the file looks good$/) do
