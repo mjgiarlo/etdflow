@@ -105,7 +105,7 @@ class Admin::SubmissionsController < AdminController
                                        :title,
                                        :format_review_notes,
                                        committee_members_attributes: [:role, :name, :email, :is_advisor, :id],
-                                       format_review_files_attributes: [:filename, :id, :_destroy])
+                                       format_review_files_attributes: [:asset, :id, :_destroy])
   end
 
   def final_submission_params
@@ -122,8 +122,8 @@ class Admin::SubmissionsController < AdminController
                                        :keywords,
                                        :access_level,
                                        committee_members_attributes: [:role, :name, :email, :is_advisor, :id],
-                                       format_review_files_attributes: [:filename, :id, :_destroy],
-                                       final_submission_files_attributes: [:filename, :id, :_destroy])
+                                       format_review_files_attributes: [:asset, :id, :_destroy],
+                                       final_submission_files_attributes: [:asset, :id, :_destroy])
   end
 
 end

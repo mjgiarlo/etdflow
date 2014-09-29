@@ -41,7 +41,7 @@
       <label>Files</label>
       <% @submission.final_submission_files.each do |file| %>
         <div id="final-submission-file-<%=file.id%>">
-          <%= link_to file.filename_identifier, file.filename_url, class: 'file-link', target: '_blank' %>
+          <%= link_to file.asset_identifier, file.asset_url, class: 'file-link', target: '_blank' %>
         </div>
       <% end %>
     </div>

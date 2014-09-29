@@ -231,7 +231,7 @@ Then(/^I should see all of my format review files$/) do
   submission = Submission.first
   submission.format_review_files.each do |file|
     within "#format-review-file-#{file.id}" do
-      expect(page).to have_link file.filename_identifier
+      expect(page).to have_link file.asset_identifier
     end
   end
 end
@@ -304,7 +304,7 @@ Then(/^I should see all of my final submission files$/) do
   submission = Submission.first
   submission.final_submission_files.each do |file|
     within "#final-submission-file-#{file.id}" do
-      expect(page).to have_link file.filename_identifier
+      expect(page).to have_link file.asset_identifier
     end
   end
 end
@@ -360,7 +360,7 @@ end
 
 Then(/^The system should save my updated Final Submission file$/) do
   expect(FinalSubmissionFile.count).to eq 1
-  expect(FinalSubmissionFile.first.filename_identifier).to eq 'final_submission_file_02.docx'
+  expect(FinalSubmissionFile.first.asset_identifier).to eq 'final_submission_file_02.docx'
 end
 
 Then(/^I should see that my submission's publication release is pending$/) do

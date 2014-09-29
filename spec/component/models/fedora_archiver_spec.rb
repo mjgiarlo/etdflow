@@ -4,11 +4,11 @@ describe FedoraArchiver do
   let!(:submission) { create :submission, :waiting_for_publication_release }
 
   let!(:file1) { FinalSubmissionFile.create!(submission: submission,
-                                            filename: File.open( fixture 'final_submission_file_01.pdf' ),
+                                            asset: File.open( fixture 'final_submission_file_01.pdf' ),
                                             content_type: 'application/pdf') }
 
   let!(:file2) { FinalSubmissionFile.create!(submission: submission,
-                                            filename: File.open( fixture 'final_submission_file_02.docx' ),
+                                            asset: File.open( fixture 'final_submission_file_02.docx' ),
                                             content_type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') }
 
   let(:depositor) { FedoraArchiver.new(submission) }

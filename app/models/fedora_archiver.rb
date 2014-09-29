@@ -22,7 +22,7 @@ class FedoraArchiver
     paper.save
     @submission.final_submission_files.each do |file|
       generic_file = Worthwhile::GenericFile.new
-      generic_file.add_file_datastream(file.filename.read, mimeType: file.filename.content_type)
+      generic_file.add_file_datastream(file.asset.read, mimeType: file.asset.content_type)
       paper.generic_files << generic_file
     end
     @submission.update_attribute :fedora_id, paper.id

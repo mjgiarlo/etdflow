@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140928200334) do
+ActiveRecord::Schema.define(version: 20140929194958) do
 
   create_table "authors", force: true do |t|
     t.string   "access_id"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20140928200334) do
 
   create_table "final_submission_files", force: true do |t|
     t.integer  "submission_id"
-    t.text     "filename"
+    t.text     "asset"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "content_type"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20140928200334) do
 
   create_table "format_review_files", force: true do |t|
     t.integer  "submission_id"
-    t.text     "filename"
+    t.text     "asset"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
