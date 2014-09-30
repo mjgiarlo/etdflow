@@ -111,3 +111,4 @@ Feature: Manage submissions
     And I should see that there are zero approved final submissions
     When I click the "Released eTDs" link
     Then I should see the submissions listed
+    And all the Released eTDs should be archived in Fedora
