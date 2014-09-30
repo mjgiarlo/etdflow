@@ -31,6 +31,7 @@ gem 'jbuilder'
 
 # Core institutional repository platform
 gem 'worthwhile', github: 'curationexperts/worthwhile' # Use master, even if it hasn't been released yet
+gem 'devise' # Referenced by worthwhile, but not used by this app
 
 # Form builder
 gem 'simple_form'
