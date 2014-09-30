@@ -34,7 +34,7 @@ describe FedoraArchiver do
       paper = Paper.find(submission.fedora_id)
       expect(paper.generic_files.count).to eq 2
       paper.generic_files.each do |gf|
-        expect(gf.content).to_not be_blank
+        expect(gf.datastreams['DS1'].content).to_not be_blank
       end
     end
   end
