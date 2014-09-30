@@ -160,3 +160,7 @@ Then(/^I should see that there are zero approved final submissions$/) do
     expect(page).to have_content '0'
   end
 end
+
+Then(/^all the Released eTDs should be archived in Fedora$/) do
+  expect(Paper.count).to eq @submissions.count
+end
