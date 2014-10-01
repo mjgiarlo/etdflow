@@ -537,6 +537,7 @@ DEPENDENCIES
   poltergeist
   rabl
   rails (~> 4.1.0)
+  rake
   rspec-rails
   sass-rails (~> 4.0.3)
   shoulda-matchers

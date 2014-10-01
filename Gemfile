@@ -103,7 +103,10 @@ group :development, :test do
 
   # core testing framework for rails
   gem 'rspec-rails'
-  
+
+  # Must be required before jettywrapper for tests to run in RubyMine
+  gem 'rake'
+
   # Solr and fedora development environment
   gem 'jettywrapper'
   
