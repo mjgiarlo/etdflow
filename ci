@@ -29,7 +29,7 @@ EOF
 bundle exec rake db:create:all
 bundle exec rake db:migrate
 bundle exec rake db:test:prepare
-bundle exec rake jetty:restart
+bundle exec rake jetty:stop jetty:clean jetty:config jetty:start
 
 echo '========== Unit Tests ============================================='
 bundle exec rspec --no-color spec/unit
