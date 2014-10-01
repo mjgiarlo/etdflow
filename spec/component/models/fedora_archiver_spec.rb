@@ -32,10 +32,18 @@ describe FedoraArchiver do
       depositor.create!
       submission.reload
       paper = Paper.find(submission.fedora_id)
+
       expect(paper.generic_files.count).to eq 2
-      paper.generic_files.each do |gf|
-        expect(gf.datastreams['DS1'].content).to_not be_blank
-      end
+
+      gf1 = paper.generic_files.first
+      expect(gf1.datastreams['DS1'].content).to_not be_blank
+      expect(gf1.datastreams['DS1'].mimeType).to match /pdf/
+      expect(gf1.datastreams['DS1'].size).to eq 7765
+
+      gf2 = paper.generic_files.last
+      expect(gf2.datastreams['DS1'].content).to_not be_blank
+      expect(gf2.datastreams['DS1'].mimeType).to match /office/
+      expect(gf2.datastreams['DS1'].size).to eq 22360
     end
   end
 
