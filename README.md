@@ -2,6 +2,24 @@
 
 ## Development Setup
 
+Bundle
+
+Create MySQL databases: etdflow\_development and etdflow\_test
+
+```
+rake db:schema:load
+```
+
+```
+rake db:test:clone
+```
+
+Seed your development database:
+
+```
+rake db:seed
+```
+
 Jetty is a packaged development environment for Fedora and Solr. You can initialize and start it with the commands:
 
 ```
