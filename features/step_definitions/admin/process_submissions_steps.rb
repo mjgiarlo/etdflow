@@ -162,5 +162,13 @@ Then(/^I should see that there are zero approved final submissions$/) do
 end
 
 Then(/^all the Released eTDs should be archived in Fedora$/) do
-  expect(Paper.count).to eq @submissions.count
+
+  pending "NEXT DEVELOPMENT STEP: Ingest released submissions as papers into Fedora"
+# expect(Paper.count).to eq @submissions.count
+# # Each Paper should have the same number of generic_files
+# # as the associated Submission has final_submission_files
+# Paper.all.each do |paper|
+#   submission = Submission.where(fedora_id: paper.id).first
+#   expect(paper.generic_files.count).to eq submission.final_submission_files.count
+# end
 end
