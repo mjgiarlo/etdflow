@@ -9,7 +9,7 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
-/tmp
+/tmp/*
 
 # Ignore jetty directory (development fedora and solr environment)
 /jetty
