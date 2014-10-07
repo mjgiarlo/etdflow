@@ -70,7 +70,7 @@ namespace :deploy do
   task :resolrize, roles: :solr do
     run <<-CMD.compact
     cd -- #{latest_release} &&
-    RAILS_ENV=#{rails_env.to_s.shellescape} #{rake} #{application}:resolrize
+    RAILS_ENV=#{rails_env.to_s.shellescape} #{rake} solr:reindex
     CMD
   end
 end
