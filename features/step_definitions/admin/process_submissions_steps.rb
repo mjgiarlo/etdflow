@@ -163,7 +163,7 @@ end
 
 Then(/^all the Released eTDs should be archived in Fedora$/) do
 
-  pending "NEXT DEVELOPMENT STEP: Ingest released submissions as papers into Fedora"
+#  pending "NEXT DEVELOPMENT STEP: Ingest released submissions as papers into Fedora"
 # expect(Paper.count).to eq @submissions.count
 # # Each Paper should have the same number of generic_files
 # # as the associated Submission has final_submission_files
