@@ -2,11 +2,16 @@ require_relative 'system_spec_helper'
 
 describe 'On the deployed application', type: :system do
 
-  specify "I can see the public home page" do
-    require 'base64'
-    page.driver.headers = {'Authorization' => 'Basic '+ Base64.encode64('etdflow:fold wet')};
-    visit '/'
-    page.should have_content "production environment"
+  context "When I'm logged in with HTTP basic" do
+    before do
+      page.driver.basic_authorize('etdflow', 'fold wet')
+    end
+
+    specify "I can see my submissions" do
+      visit '/'
+      click_link "Submissions"
+      page.should have_content "Title of a Thesis"
+    end
   end
 
 end
