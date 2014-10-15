@@ -19,7 +19,7 @@
 
     <div id="defended-at" class="review-group odd">
       <label>Date defended</label>
-      <p><%= @submission.defended_at.strftime('%B %d, %Y') if @submission.defended_at.present? %></p>
+      <p><%= @submission.defended_at.strftime('%B %-e, %Y') if @submission.defended_at.present? %></p>
     </div>
 
     <div id="abstract" class="review-group">

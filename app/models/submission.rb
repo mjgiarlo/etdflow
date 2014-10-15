@@ -138,6 +138,7 @@ class Submission < ActiveRecord::Base
         status_giver.can_release_for_publication?
         status_giver.released_for_publication!
         s.update_attribute :released_for_publication_at, Time.zone.now
+        FedoraArchiver.new(s).create!
       end
     end
   end
