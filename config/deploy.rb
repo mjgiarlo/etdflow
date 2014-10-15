@@ -64,17 +64,18 @@ before "deploy:finalize_update", "deploy:symlink_shared"
 # Always run migrations.
 after "deploy:update_code", "deploy:migrate"
 
+# Will bring back later not needed for prototype.
 # Resolrize.
-namespace :deploy do
-  desc "Re-solrize objects"
-  task :resolrize, roles: :solr do
-    run <<-CMD.compact
-    cd -- #{latest_release} &&
-    RAILS_ENV=#{rails_env.to_s.shellescape} #{rake} #{application}:resolrize
-    CMD
-  end
-end
-after "deploy:migrate", "deploy:resolrize"
+#namespace :deploy do
+#  desc "Re-solrize objects"
+#  task :resolrize, roles: :solr do
+#    run <<-CMD.compact
+#    cd -- #{latest_release} &&
+#    RAILS_ENV=#{rails_env.to_s.shellescape} #{rake} #{application}:resolrize
+#    CMD
+#  end
+#end
+#after "deploy:migrate", "deploy:resolrize"
 
 # config/deploy/_passenger.rb hooks.
 after "rbenv:setup", "passenger:install"
