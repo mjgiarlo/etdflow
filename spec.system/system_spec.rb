@@ -10,7 +10,7 @@ describe 'On the deployed application', type: :system do
     specify "I can see my submissions" do
       visit '/'
       click_link "Submissions"
-      page.should have_content "Title of a Thesis"
+      expect(page).to have_content "Title of a Thesis"
     end
   end
 
