@@ -55,6 +55,7 @@ class Admin::SubmissionsController < AdminController
       flash[:notice] = 'The submission\'s format review information was successfully rejected and returned to the author for revision.'
     end
   rescue ActiveRecord::RecordInvalid
+    @view = Admin::SubmissionFormView.new(@submission, session)
     render :edit
   rescue SubmissionStatusGiver::AccessForbidden
     redirect_to session.delete(:return_to)
@@ -85,6 +86,7 @@ class Admin::SubmissionsController < AdminController
       flash[:notice] = 'The submission\'s final submission information was successfully rejected and returned to the author for revision.'
     end
   rescue ActiveRecord::RecordInvalid
+    @view = Admin::SubmissionFormView.new(@submission, session)
     render :edit
   rescue SubmissionStatusGiver::AccessForbidden
     redirect_to session.delete(:return_to)

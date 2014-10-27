@@ -75,6 +75,9 @@ group :development do
   # Used to seed the development database
   gem 'ffaker'
 
+  gem 'better_errors'
+  gem 'binding_of_caller'
+
 end
 
 group :test do

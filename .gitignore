@@ -16,3 +16,8 @@
 
 # Files that have been uploaded via the web interface
 /public/uploads
+
+#These files should be copied from the $file.yml.sample and tweaked
+# per environment.
+/config/database.yml
+
