@@ -1,5 +1,15 @@
 class Author <  ActiveRecord::Base
 
+  self.include_root_in_json = false
+
+
+  Devise.add_module(:http_header_authenticatable,
+                    strategy: true,
+                    controller: :sessions,
+                    model: 'devise/models/http_header_authenticatable')
+
+  devise :http_header_authenticatable, :rememberable
+
   has_many :submissions
 
   validates_presence_of :access_id,

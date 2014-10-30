@@ -57,6 +57,8 @@ gem 'foreigner'
 # Foreigner migration generator
 gem 'immigrant'
 
+gem 'hydra-ldap'
+
 group :development do
 
   # Spring speeds up development by keeping your application running in the background.

@@ -21,3 +21,6 @@
 # per environment.
 /config/database.yml
 
+#Ignore RubyMine files
+/.gitignore
+

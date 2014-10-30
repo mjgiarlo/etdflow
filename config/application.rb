@@ -7,7 +7,9 @@ require "action_controller/railtie"
 require "action_mailer/railtie"
 require "action_view/railtie"
 require "sprockets/railtie"
+
 # require "rails/test_unit/railtie"
+
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -22,8 +24,9 @@ module Etdflow
 
     config.autoload_paths += [
       Rails.root.join('app/presenters'),
-      Rails.root.join('app/datastreams')
+      Rails.root.join('app/datastreams'),
     ]
+    config.autoload_paths += Dir["#{config.root}/lib/**/*"]
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -36,6 +39,15 @@ module Etdflow
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+
+    config.hosts_vhosts_map = {
+        'etda1qa' => 'https://etda-qa.dlt.psu.edu/',
+        'etda2qa' => 'https://etda-qa.dlt.psu.edu/',
+        'etda1stage' => 'https://etda-staging.dlt.psu.edu/',
+        'etda2stage' => 'https://etda-staging.dlt.psu.edu/',
+        'etda1prod' => 'https://etda.dlt.psu.edu/',
+        'etda2prod' => 'https://etda.dlt.psu.edu/'
+    }
 
     # Partner name
     config.partner_name = "Graduate School"
@@ -74,5 +86,8 @@ module Etdflow
                                              "Committee Member",
                                              "Special Member"
                                             ].freeze
+
+
+
   end
 end
