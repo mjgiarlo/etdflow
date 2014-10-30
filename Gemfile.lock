@@ -225,6 +225,9 @@ GEM
       hydra-access-controls (= 7.2.1)
       hydra-core (= 7.2.1)
       rails (>= 3.2.6)
+    hydra-ldap (0.1.0)
+      net-ldap
+      rails
     i18n (0.6.11)
     immigrant (0.1.8)
       activerecord (>= 3.0)
@@ -290,6 +293,7 @@ GEM
     nest (1.1.2)
       redis
     net-http-persistent (1.9)
+    net-ldap (0.8.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -537,6 +541,7 @@ DEPENDENCIES
   ffaker
   font-awesome-sass
   foreigner
+  hydra-ldap
   immigrant
   jbuilder
   jettywrapper

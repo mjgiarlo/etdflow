@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  devise_for :authors
+    get 'logout' => 'author#logout', as: :logout_author
+    get 'login' => 'author#login', as: :login_author
+
   namespace :admin do
     resources :programs, except: [:show, :destroy]
     resources :degrees,  except: [:show, :destroy]
