@@ -1,14 +1,19 @@
 #!/bin/bash
 # Continuous Integration build script.
 
-echo '========== Set Up RVM ==============================================='
-export PATH=$PATH:~/.rvm/bin
-source ~/.rvm/scripts/rvm
-rvm use `cat .ruby-version`
 set -e # Exit on any error
 set -x # Echo each command
 
-echo '========== Install Gems ============================================='
+# Don't run the spring application preloader on ci
+export DISABLE_SPRING=1
+
+echo '========== Install Ruby ================================================='
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+rbenv install -s
+rbenv version
+
+echo '========== Install Gems ================================================='
 bundle install --no-color
 
 echo '========== Prepare Database ============================================='
@@ -32,13 +37,13 @@ bundle exec rake db:test:prepare
 bundle exec rake jetty:stop jetty:clean jetty:config jetty:start
 sleep 30 # We need to wait a good long time for jetty to fully fire up
 
-echo '========== Unit Tests ============================================='
+echo '========== Unit Tests ==================================================='
 bundle exec rspec --no-color spec/unit
 
-echo '========== Component Tests ============================================='
+echo '========== Component Tests =============================================='
 bundle exec rspec --no-color spec/component
 
-echo '========== Integration Tests ============================================='
+echo '========== Integration Tests ============================================'
 bundle exec rspec --no-color spec/integration
 
 echo '========== Acceptance Tests ============================================='
