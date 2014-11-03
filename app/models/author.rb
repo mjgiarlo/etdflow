@@ -92,6 +92,7 @@ class Author <  ActiveRecord::Base
 
   validates_inclusion_of :state,  in: USSTATES
 
+
   def full_name
     first_name + ' ' + middle_name + ' ' + last_name
   end
@@ -99,5 +100,23 @@ class Author <  ActiveRecord::Base
   def self.ask_to_display_email?
     Etdflow::Application.config.display_is_alternate_email_public_question
   end
+
+  def self.current
+    Thread.current[:author]
+  end
+
+  def self.current=(author)
+    Thread.current[:author] = author
+  end
+
+
+  def populate_with_ldap_attributes
+
+    entry_attributes = LdapLookup.map_author_attributes(access_id)
+    return unless !entry_attributes.nil?
+    self.update_attributes(entry_attributes)
+    self.save(validate: false)
+  end
+
 
 end

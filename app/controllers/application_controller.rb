@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include Behaviors::HttpHeaderAuthenticatableBehavior
 
   before_filter :clear_session_author
+  before_filter :set_current_author
 
   layout 'author'
 
@@ -27,7 +28,9 @@ class ApplicationController < ActionController::Base
     session[:search] = search
   end
 
-
+  def set_current_author
+    Author.current = current_author
+  end
 
   protected
 
