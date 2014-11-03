@@ -22,5 +22,6 @@
 /config/database.yml
 
 #Ignore RubyMine files
-/.gitignore
+/.idea
+
 
