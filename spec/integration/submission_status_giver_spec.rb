@@ -3,7 +3,7 @@ require 'integration/integration_spec_helper'
 describe 'Submission status transitions', js: true do
 
   let(:submission) { create :submission, author: author }
-  let(:author) { create :author, access_id: "etdflow" }
+  let(:author) { create :author, access_id: 'authorflow' }
 
   before do
     basic_auth_and_visit root_path
