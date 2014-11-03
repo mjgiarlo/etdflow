@@ -1,7 +1,7 @@
 Given(/^I have confirmed my contact information$/) do
   # Due to http_basic_auth the author's access_id has to be set as the
   # http_basic_auth user.
-  create :author, access_id: 'etdflow'
+  create :author, access_id: 'authorflow'
 end
 
 When(/^I fill in my program information$/) do
