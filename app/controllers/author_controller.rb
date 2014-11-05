@@ -15,6 +15,7 @@ class AuthorController < ApplicationController
   protected
 
   def find_or_initialize_author
-    @author = Author.find_or_initialize_by(access_id: current_remote_user)
+    @author = Author.find_or_initialize_by(access_id: current_author.access_id)
+    @author
   end
 end

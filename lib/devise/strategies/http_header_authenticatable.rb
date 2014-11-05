@@ -19,7 +19,7 @@ module Devise
             author=Author.create(access_id: access_id, psu_email_address: access_id+"@psu.edu")
             author.populate_with_ldap_attributes
           end
-          success!(author)
+            success!(author)
         else
           fail!
         end
