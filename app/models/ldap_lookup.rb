@@ -82,13 +82,13 @@ class LdapLookup
   end
 
   def self.ldap_first_name
-    name= @ldap_displayname.first.split(' ').first || ''
+    name= @ldap_displayname.split(' ').first || ''
     name.titleize unless name.nil?
   end
 
   def self.ldap_middle_name
     middle=''
-    name = @ldap_displayname.first.split(' ')
+    name = @ldap_displayname.split(' ')
     if name.count > 2
       middle=name.second || ''
     end
