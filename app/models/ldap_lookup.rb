@@ -1,4 +1,59 @@
 class LdapLookup
+  USABBREVIATIONS =
+      [
+          'AL',
+          'AK',
+          'AZ',
+          'AR',
+          'CA',
+          'CO',
+          'CT',
+          'DE',
+          'DC',
+          'FL',
+          'GA',
+          'HI',
+          'ID',
+          'IL',
+          'IN',
+          'IA',
+          'KS',
+          'KY',
+          'LA',
+          'ME',
+          'MD',
+          'MA',
+          'MI',
+          'MN',
+          'MS',
+          'MO',
+          'MT',
+          'NE',
+          'NV',
+          'NH',
+          'NJ',
+          'NM',
+          'NY',
+          'NC',
+          'ND',
+          'OH',
+          'OK',
+          'OR',
+          'PA',
+          'PR',
+          'RI',
+          'SC',
+          'SD',
+          'TN',
+          'TX',
+          'UT',
+          'VT',
+          'VA',
+          'WA',
+          'WV',
+          'WI',
+          'WY',
+      ].freeze
 
   def self.map_author_attributes (access_id)
 
@@ -110,9 +165,15 @@ class LdapLookup
   end
 
   def self.ldap_state
-    addr = (@ldap_postaladdress.split('$').last).split(',').last
-    addr=addr.split(' ').first
-    addr || ''
+    state = (@ldap_postaladdress.split('$').last).split(',').last
+    state=state.split(' ').first
+    i = USABBREVIATIONS.index state
+    if i
+      state = Author::USSTATES[i] || ''
+    else
+      state || ''
+    end
+    state
   end
 
   def self.ldap_city
