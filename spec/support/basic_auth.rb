@@ -11,6 +11,5 @@
 #   #   # Poltergeist
 #   #   page.driver.basic_authorize(user, pass)
 #   # end
-    author = Author.new(access_id: 'etdflow', psu_email_address: 'etdflow@psu.edu')
     sign_in_as author
  end
