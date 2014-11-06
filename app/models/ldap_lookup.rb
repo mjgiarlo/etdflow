@@ -167,7 +167,7 @@ class LdapLookup
   def self.ldap_state
     state = (@ldap_postaladdress.split('$').last).split(',').last
     state=state.split(' ').first
-    i = USABBREVIATIONS.index state
+    i = USABBREVIATIONS.index state.upcase
     if i
       state = Author::USSTATES[i] || ''
     else
