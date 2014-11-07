@@ -8,7 +8,8 @@ class Author <  ActiveRecord::Base
                     controller: :sessions,
                     model: 'devise/models/http_header_authenticatable')
 
-  devise :http_header_authenticatable, :rememberable
+  devise :http_header_authenticatable, :rememberable, :trackable, :registerable
+
 
   has_many :submissions
 
