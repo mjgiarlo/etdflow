@@ -12,7 +12,11 @@ class Author::SubmissionsIndexView
     elsif author_has_submissions?
       'submissions'
     else
-      'no_submissions'
+      if !author_ldap_info_valid?
+        'confirm_ldap_information'
+      else
+        'no_submissions'
+      end
     end
   end
 
@@ -22,6 +26,11 @@ class Author::SubmissionsIndexView
 
   def author_has_submissions?
     @author.submissions.any?
+  end
+
+  def author_ldap_info_valid?
+    #Must force author to edit LDAP contact information if attributes are missing or invalid.
+    @author.valid?
   end
 
 end

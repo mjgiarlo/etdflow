@@ -69,6 +69,7 @@ class LdapLookup
     #map LDAP directory entry to Author record
     @ldap_displayname = ldap_entry[:displayname].first
     @ldap_postaladdress = ldap_entry[:postaladdress].first
+    @ldap_phone = ldap_entry[:telephonenumber].first
 
     #build attributes hash for author
     entry_attributes={}
@@ -80,7 +81,7 @@ class LdapLookup
     entry_attributes[:city] = LdapLookup.ldap_city
     entry_attributes[:state]  = LdapLookup.ldap_state
     entry_attributes[:zip] = LdapLookup.ldap_zip
-    entry_attributes[:phone_number] = ldap_entry[:telephonenumber].first || ''
+    entry_attributes[:phone_number] = LdapLookup.ldap_telephone || ''
     entry_attributes
   end
 
@@ -156,7 +157,11 @@ class LdapLookup
   end
 
   def self.ldap_address_1
-    addr = @ldap_postaladdress.split('$').first || ''
+    addr = @ldap_postaladdress.titleize.split('$').first || ''
+  end
+
+  def self.ldap_address_2
+
   end
 
   def self.ldap_zip
@@ -179,6 +184,14 @@ class LdapLookup
   def self.ldap_city
     addr = (@ldap_postaladdress.titleize.split('$').last).split(',')
     addr[0] || ''
+  end
+
+  def self.ldap_telephone
+    phone = @ldap_phone
+    return phone unless !phone.nil?
+    #remove prefix and replace blanks with dashes
+    phone = phone.remove('+1 ').gsub(' ', '-')
+    phone
   end
 
 end
