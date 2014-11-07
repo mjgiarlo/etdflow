@@ -177,7 +177,7 @@ class LdapLookup
   end
 
   def self.ldap_city
-    addr = (@ldap_postaladdress.split('$').last).split(',')
+    addr = (@ldap_postaladdress.titleize.split('$').last).split(',')
     addr[0] || ''
   end
 

@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
   devise_for :authors
-    get 'logout' => 'author#logout', as: :logout_author
-    get 'login' => 'author#login', as: :login_author
+    get '/logout', to: 'application#logout', as: :logout_author
+    get '/login', to: 'application#login', as: :login_author
 
   namespace :admin do
     resources :programs, except: [:show, :destroy]

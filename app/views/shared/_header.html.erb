@@ -25,8 +25,8 @@
             <span class="icon-bar"></span>
           </button>
           <div class="pull-right">
-            <span class="navbar-text small hidden-xs">Logged in as Joe Example</span>
-            <button type="button" class="btn btn-default btn-sm navbar-btn">Log Out</button>
+            <span class="navbar-text small hidden-xs">Logged in as <%= @author.full_name %> </span>
+            <%= link_to 'Log Out', :logout_author, :class=>"btn btn-default btn-sm navbar-btn" %>
           </div>
         </div>
         <!-- /.col-* -->
