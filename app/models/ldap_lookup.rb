@@ -55,16 +55,19 @@ class LdapLookup
           'WY',
       ].freeze
 
-  def self.map_author_attributes (access_id)
-
+  def self.get_author_entry(access_id)
+    ldap_entry = nil
     #get the ldap directory entry for access_id
     ldap_entry = self.directory_entry(access_id)
 
     #no ldap entry found
     if ldap_entry.nil?
       Rails.logger.info "Access id #{access_id} does not exist in LDAP - #{Time.now}"
-      return
     end
+    ldap_entry
+  end
+
+  def self.map_author_attributes (ldap_entry)
 
     #map LDAP directory entry to Author record
     @ldap_displayname = ldap_entry[:displayname].first

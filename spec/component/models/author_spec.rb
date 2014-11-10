@@ -18,6 +18,15 @@ describe Author do
   specify { expect(subject).to have_db_column :created_at }
   specify { expect(subject).to have_db_column :updated_at }
 
+  specify { expect(subject).to have_db_column :remember_created_at }
+  specify { expect(subject).to have_db_column :sign_in_count }
+  specify { expect(subject).to have_db_column :remember_created_at }
+  specify { expect(subject).to have_db_column :current_sign_in_at }
+  specify { expect(subject).to have_db_column :last_sign_in_at }
+  specify { expect(subject).to have_db_column :current_sign_in_at }
+  specify { expect(subject).to have_db_column :current_sign_in_ip }
+  specify { expect(subject).to have_db_column :last_sign_in_ip }
+
   specify { expect(subject).to validate_presence_of :access_id }
   specify { expect(subject).to validate_presence_of :first_name }
   specify { expect(subject).to validate_presence_of :last_name }

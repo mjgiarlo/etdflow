@@ -20,4 +20,9 @@ FactoryGirl.define do
     zip "16801"
   end
 
+  trait :author_from_ldap do
+     alternate_email_address  ""
+     to_create {|instance| instance.save(validate: false) }
+  end
+ 
 end

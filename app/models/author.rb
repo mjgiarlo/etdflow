@@ -113,9 +113,10 @@ class Author <  ActiveRecord::Base
 
   def populate_with_ldap_attributes
 
-    entry_attributes = LdapLookup.map_author_attributes(access_id)
-    return unless !entry_attributes.nil?
-    self.update_attributes(entry_attributes)
+    ldap_entry_attributes = LdapLookup.get_author_entry(access_id)
+    return unless !ldap_entry_attributes.nil?
+    author_attributes = LdapLookup.map_author_attributes(ldap_entry_attributes)
+    self.update_attributes(author_attributes)
     self.save(validate: false)
   end
 
