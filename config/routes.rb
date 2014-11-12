@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     get '/logout', to: 'application#logout', as: :logout_author
     get '/login', to: 'application#login', as: :login_author
 
+    get '/lookup_committee', to:  'ldap_lookup#ldap_lookups', as: :ldap_lookup
   namespace :admin do
     resources :programs, except: [:show, :destroy]
     resources :degrees,  except: [:show, :destroy]
@@ -39,7 +40,11 @@ Rails.application.routes.draw do
       get '/final_submission/edit', to: 'submissions#edit_final_submission', as: :edit_final_submission
       patch '/final_submission', to: 'submissions#update_final_submission', as: :update_final_submission
 
+#      get 'committee/lookup_member(:access_id)(:last_name)', to: 'submissions#lookup_committee_member', as: :lookup_member
+
       resource :committee, except: [:show, :destroy]
+
+
     end
     root to: 'submissions#index'
   end
