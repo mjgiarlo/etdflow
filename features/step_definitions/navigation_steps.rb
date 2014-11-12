@@ -20,6 +20,7 @@ When(/^I click the "(.*?)" button$/) do |button|
 end
 
 Then /^I should be on (.*)$/ do |page_name|
+  sleep 1
   expect(current_path).to eq( "#{path_to(page_name)}" )
 end
 
