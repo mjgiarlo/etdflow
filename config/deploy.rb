@@ -18,13 +18,15 @@ set :repository,  "https://github.com/psu-stewardship/#{application}.git"
 
 set :deploy_to, "/opt/heracles/deploy/#{application}"
 set :user, "deploy"
-ssh_options[:forward_agent] = true
-ssh_options[:keys] = [File.join(ENV["HOME"], ".ssh", "id_deploy_rsa")]
-unless File.exist?(ssh_options[:keys].first)
-  puts "Warning: You appear to be missing your ~/.ssh/id_deploy_rsa key. See the README for setup instructions."
-end
 set :use_sudo, false
 default_run_options[:pty] = true
+ssh_options[:forward_agent] = true
+deploy_key = File.join(ENV["HOME"], ".ssh", "id_deploy_rsa")
+if File.exist?(deploy_key)
+  ssh_options[:keys] = [deploy_key]
+else
+  puts "Warning: You appear to be missing your ~/.ssh/id_deploy_rsa key. See the README for setup instructions."
+end
 
 set :rbenv_ruby_version, File.read(File.join(File.dirname(__FILE__), '..', '.ruby-version')).chomp
 set :rbenv_setup_shell, false
