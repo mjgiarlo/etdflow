@@ -20,7 +20,6 @@ When(/^I click the "(.*?)" button$/) do |button|
 end
 
 Then /^I should be on (.*)$/ do |page_name|
-  sleep 1
   expect(current_path).to eq( "#{path_to(page_name)}" )
 end
 
@@ -38,3 +37,7 @@ module WithinHelpers
   end
 end
 World WithinHelpers
+
+And(/^I wait for a few seconds$/) do
+  sleep 10 # Hang out for long operations, like for Fedora
+end
