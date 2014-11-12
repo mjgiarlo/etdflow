@@ -1,0 +1,30 @@
+<div class="modal" id="CommitteeSearchModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+        <h1 class="modal-title" id="myModalLabel">Penn State Directory Search</h1>
+      </div>
+       <%# @committee_member = @committee_members[0] %>
+      <div class="modal-body">
+        <% @ldap_lookup_info = LdapLookup.new %>
+        <%= simple_form_for(@ldap_lookup_info, remote: true, url: url_for(action: 'ldap_lookups', controller: '/ldap_lookup')) do |f| %>
+               <h2>Committee Member Search</h2>
+
+              <p>Please specify either a single Access Account User ID or a single last name and click Search to search for that person.</p>
+              <%= f.input :uid %>
+              or
+              <%= f.input :name %>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="committee_search btn btn-primary">Search</button>
+            </div>
+        <% end %>
+       </div>
+       <div class="modal-footer">
+            <div class="search_results">  </div>
+       </div>
+      </div>
+    </div>
+</div>
