@@ -21,9 +21,12 @@ require 'support/fixture'
   end
 
   def create_author_from_ldap
-    author_attributes = LdapLookup.map_author_attributes(ldap_entry)
-    author = Author.create(author_attributes)
+
+   @ldap_info = LdapLookup.new(uid: 'jxb13', ldap_record: ldap_entry)
+    @ldap_info.map_author_attributes
+    author = Author.create(@ldap_info.mapped_attributes)
     author
+
   end
 
 
