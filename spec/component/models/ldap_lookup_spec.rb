@@ -2,8 +2,6 @@ require 'component/component_spec_helper'
 
 describe LdapLookup do
 
-#  author_attributes = LdapLookup.map_author_attributes(ldap_entry)
-#  author = Author.create(author_attributes)
   author = create_author_from_ldap
 
   it "should map author's entry from LDAP into an author record" do
