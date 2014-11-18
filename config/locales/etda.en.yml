@@ -1,0 +1,6 @@
+en:
+  activemodel:
+    attributes:
+        ldap_lookup:
+          uid:  "Access ID or Last Name"
+

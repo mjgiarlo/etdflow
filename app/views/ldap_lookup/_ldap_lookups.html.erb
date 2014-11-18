@@ -1,1 +1,8 @@
-<%= @ldap_lookup_info.inspect %>
+<%= render partial: 'shared/error_messages', locals: {object: @ldap_lookup_info} %>
+<% if !@ldap_lookup_info.mapped_attributes.nil? && !@ldap_lookup_info.mapped_attributes.empty? %>
+    <div><h2>Select committee member</h2></div>
+    <%= form_tag("Search Results") do %>
+            <div><%= select_tag("select committee member", options_for_select(@ldap_lookup_info.mapped_attributes), {prompt: 'Choose Committee Member'}) %></div>
+        <br /><div><button type="button" class="choose_committee" data-dismiss="modal" aria-hidden="true" >Choose Committee Member </button></div>
+    <% end %>
+<% end %>

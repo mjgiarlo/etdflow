@@ -1,0 +1,21 @@
+
+.committee_committee_members_name {
+    position: relative;
+}
+
+.committee_committee_members_name input {
+    padding-left: 29px;
+}
+
+.icon-search {
+    position: absolute;
+    top: 7px;
+    left: 11px;
+    background-image: url("/assets/magnifying_glass.gif");
+    background-color: 'blue';
+    background-repeat: no-repeat;
+}
+
+.committee_committee_members_name input:focus, .committee_committee_members_name input.focused {
+    padding-left: 30px;
+}

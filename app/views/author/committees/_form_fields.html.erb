@@ -8,23 +8,21 @@
         <label class="role-label"><%= cmf.object.role %><span title="require" class="required-asterisk">*</span></label>
       </div>
        <div class="col-xs-12 col-sm-6">
-        <div class="input-group">
+        <div class="input-group name <%= cmf.object.role.parameterize %> ">
           <span class="input-group-addon">Name</span>
-          <%= cmf.input :name, label: false %>
+            <%= cmf.input :name, label: false %>
         </div>
       </div>
+      <div class="icon-search col-xs-12 col-sm-6">
+        <span><label class="sr-only">Lookup in Penn State Directory</label><%= link_to "Lookup", "#CommitteeSearchModal", :id=> "#{cmf.object.role.parameterize}", :class => "input-group modal-link #{cmf.object.role.parameterize}", "data-toggle" => "modal", "data-role" => "#{cmf.object.role}" %></span>
+      </div>
       <div class="col-xs-12 col-sm-6">
-        <div class="input-group">
+        <div class="input-group email-<%= cmf.object.role.parameterize %>">
           <span class="input-group-addon">Email</span>
           <%= cmf.input :email, label: false %>
         </div>
       </div>
     </div>
-    <div class=col-xs-12">
-      <span><label class="sr-only">Lookup user in Penn State Directory</label><%= link_to "Lookup", "#CommitteeSearchModal", :class => "btn btn-default btn-small", "data-toggle" => "modal" %></span>
-    </div>
-
   </fieldset>
 <% end %>
-<%= render partial: "committee_modal" %>
 

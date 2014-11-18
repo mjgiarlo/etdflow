@@ -2,7 +2,7 @@ class LdapLookup
 
   include ActiveModel::AttributeMethods
   include ActiveModel::Model
-
+  include ActiveModel::Validations
 
   USABBREVIATIONS =
       [
@@ -61,37 +61,59 @@ class LdapLookup
       ].freeze
 
   attr_accessor :uid
-  attr_accessor :name
+  attr_accessor :role
   attr_accessor :ldap_record
   attr_accessor :mapped_attributes
 
+#  validates :uid, presence: true
+  validates :uid, presence: true     ####:with => /\A[a-z0-9][a-z0-9_\-]*\z/i, presence: true
 
-  def self.directory_entry(access_id, attrs=[])
+  def self.directory_entry(lookup_type, searchterm, attrs=[])
 
-    exist = user_in_ldap? access_id
-    return nil unless exist
+    # exist = user_in_ldap? access_id
+    # return nil unless exist
 
     3.times do
       begin
-        attrs=Hydra::LDAP.get_user(Net::LDAP::Filter.eq('uid', access_id), attrs)
+        attrs=Hydra::LDAP.get_user(Net::LDAP::Filter.eq(lookup_type, searchterm), attrs)
         break unless attrs==[]
       end rescue[]
     end
-    return attrs.first
+    return attrs
   end
+
 
   def directory_entry(attrs=[])
-    self.class.directory_entry(access_id, attrs)
+
+    self.class.directory_entry(searchterm, attrs)
   end
 
+#Queries LDAP with access id and returns one entry
   def get_ldap_entry
     ldap_entry = nil
+    exist = LdapLookup.user_in_ldap? self.uid
+    return nil unless exist
+
     #get the ldap directory entry for access_id
-    ldap_entry = LdapLookup.directory_entry(self.uid)
-    self.ldap_record = ldap_entry
+    ldap_entry = LdapLookup.directory_entry('uid', self.uid)
+    self.ldap_record = ldap_entry.first
     #no ldap entry found
     if self.ldap_record.nil?
       Rails.logger.info "Access id #{self.uid} does not exist in LDAP - #{Time.now}"
+    end
+  end
+
+#Queries LDAP with last name or uid; returns list
+  def get_ldap_list
+    ldap_entry = []
+    if self.uid.count("0-9") > 0
+      ldap_entry = LdapLookup.directory_entry('uid', self.uid)
+    else
+      ldap_entry = LdapLookup.directory_entry('sn', self.uid)
+    end
+    self.ldap_record = ldap_entry
+    if self.ldap_record.nil?
+      Rails.logger.info "Name - #{self.name} does not exist in LDAP - #{Time.now}"
     end
   end
 
@@ -117,10 +139,22 @@ class LdapLookup
 
   def map_committee_attributes
 
-    self.mapped_attributes={}
-    self.mapped_attributes[:name] = (self.ldap_record[:displayname].first).titleize || ''
-    self.mapped_attributes[:email] = self.ldap_record[:mail].first || ''
-    self.mapped_attributes[:dept] = (self.ldap_record[:psadminarea].first).titleize || ''
+    return nil unless !self.ldap_record.nil?
+    self.mapped_attributes = []
+    tmp = {}
+    self.ldap_record.each_with_index do |rec|
+      uid = rec[:uid].first || ''
+      name = (rec[:displayname].first).titleize || ' '
+      email = rec[:mail].first || ' '
+#      dept = tmp[:dept] = rec[:psdepartment].first.titleize || ' '
+      val = name + ' ' + email
+       tmp = [val, uid, {name: name, email: email}]
+      self.mapped_attributes << tmp
+      tmp={}
+    end
+  end
+
+  def close_connection
   end
 
   def groups! access_id

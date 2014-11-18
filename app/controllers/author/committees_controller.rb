@@ -1,6 +1,6 @@
 class Author::CommitteesController < AuthorController
 
-  def new 
+  def new
     submission = @author.submissions.find(params[:submission_id])
     status_giver = SubmissionStatusGiver.new(submission)
     status_giver.can_provide_new_committee?
