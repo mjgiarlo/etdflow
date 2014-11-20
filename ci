@@ -54,4 +54,5 @@ current_revision=`git show | awk '/^commit / { print $2 }'`
 bundle exec cap qa deploy -s branch=$current_revision
 
 echo '========== System Tests ================================================='
-bundle exec rspec --no-color spec.system
+curl -u "etdflow:fold wet" https://etda-qa.dlt.psu.edu/author | grep "Submit an eTD"
+

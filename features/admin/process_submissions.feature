@@ -76,6 +76,7 @@ Feature: Manage submissions
     And the file looks good
     And I fill in "Final Submission Notes to Student" with "It looks good"
     And I click the "Approve Final Submission" button
+    And I wait for a few seconds
     Then I should be on the admin default type final submission submitted page
     And I should no longer see the submission
     When I go to the admin dashboard page
