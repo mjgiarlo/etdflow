@@ -11,24 +11,6 @@ $(document).on("click", ".modal-link", function () {
 
 
 });
-/*
-
-$(document).on("click", ".committee_search_submit", function () {
-
-    var role=$('span.this-role').text();
-    $('#ldap_lookup_role').val(role);
-     $.ajax({
-        url: "/lookup_committee",
-        data: { role: $(role) }
-    });
-    /*   this is on the way back - use on submit from results section in committe_modal- to populate committee form*/
-    /*    $('div.'+thisid+ ' input').val('hello');
-     $('div.email-'+thisid+ ' input').val('helloemail');
-
-    /*
-    window.location.replace('/lookup_committee?uid='+$('#ldap_lookup_uid').val()); */
-/*
-});  */
 
 $(document).on("click", ".add_selected_committee_member", function () {
 
