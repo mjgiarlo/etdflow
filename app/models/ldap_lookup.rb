@@ -129,7 +129,7 @@ class LdapLookup
       search_type = 'sn'
       search_desc = 'Last Name'
     end
-    ldap_entry = LdapLookup.directory_entry('uid', self.uid)
+    ldap_entry = LdapLookup.directory_entry(search_type, self.uid)
     self.ldap_record = ldap_entry
     if self.ldap_record.nil?
       Rails.logger.info "#{search_desc}- #{self.uid} - does not exist in LDAP - #{Time.now}"
