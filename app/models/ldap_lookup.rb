@@ -61,12 +61,28 @@ class LdapLookup
       ].freeze
 
   attr_accessor :uid
-  attr_accessor :role
+  attr_accessor :roles_list
   attr_accessor :ldap_record
   attr_accessor :mapped_attributes
 
-#  validates :uid, presence: true
   validates :uid, presence: true     ####:with => /\A[a-z0-9][a-z0-9_\-]*\z/i, presence: true
+
+  def self.committee_roles_list
+
+    rlist = [[Etdflow::Application.config.committee_advisor_role, Etdflow::Application.config.committee_advisor_role.parameterize]]
+    Etdflow::Application.config.committee_other_required_roles.each do |r|
+      rlist << [r, r.parameterize]
+    end
+    # rlist = [[Etdflow::Application.config.committee_advisor_role, 0]]
+    # Etdflow::Application.config.committee_other_required_roles.each_with_index do |r, idx|
+    #   rlist << [r, idx+1]
+    # end
+    rlist
+  end
+
+  def committee_roles_list
+    self.roles_list ||= self.class.committee_roles_list
+  end
 
   def self.directory_entry(lookup_type, searchterm, attrs=[])
 
@@ -107,18 +123,22 @@ class LdapLookup
   def get_ldap_list
     ldap_entry = []
     if self.uid.count("0-9") > 0
-      ldap_entry = LdapLookup.directory_entry('uid', self.uid)
+      search_type = 'uid'
+      search_desc = 'Access Id'
     else
-      ldap_entry = LdapLookup.directory_entry('sn', self.uid)
+      search_type = 'sn'
+      search_desc = 'Last Name'
     end
+    ldap_entry = LdapLookup.directory_entry('uid', self.uid)
     self.ldap_record = ldap_entry
     if self.ldap_record.nil?
-      Rails.logger.info "Name - #{self.name} does not exist in LDAP - #{Time.now}"
+      Rails.logger.info "#{search_desc}- #{self.uid} - does not exist in LDAP - #{Time.now}"
+      self.errors.add(:uid, "was not found in the directory.")
     end
   end
 
   def map_author_attributes
-
+    self.roles = self.roles_list
     #map LDAP directory entry to Author record
     @ldap_displayname = self.ldap_record[:displayname].first
     @ldap_postaladdress = self.ldap_record[:postaladdress].first
@@ -147,9 +167,13 @@ class LdapLookup
       name = (rec[:displayname].first).titleize || ' '
       email = rec[:mail].first || ' '
 #      dept = tmp[:dept] = rec[:psdepartment].first.titleize || ' '
-      val = name + ' ' + email
-       tmp = [val, uid, {name: name, email: email}]
-      self.mapped_attributes << tmp
+
+
+      self.mapped_attributes << {:uid => uid, :name => name, :email => email}
+      # val = name + ' ' + email
+      #  tmp = [val, uid, {name: name, email: email}]
+      tmp =
+      #self.mapped_attributes << tmp
       tmp={}
     end
   end
@@ -247,5 +271,6 @@ class LdapLookup
     phone = phone.remove('+1 ').gsub(' ', '-')
     phone
   end
+
 
 end
