@@ -1,4 +1,12 @@
-
+.main-committee-search-button
+{
+    float: right;
+}
+#search_committee_role_list
+{
+    float: right;
+}
+/*
 .committee_committee_members_name {
     position: relative;
 }
@@ -18,4 +26,4 @@
 
 .committee_committee_members_name input:focus, .committee_committee_members_name input.focused {
     padding-left: 30px;
-}
+}*/

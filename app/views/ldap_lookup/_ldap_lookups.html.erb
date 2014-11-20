@@ -1,8 +1,19 @@
 <%= render partial: 'shared/error_messages', locals: {object: @ldap_lookup_info} %>
 <% if !@ldap_lookup_info.mapped_attributes.nil? && !@ldap_lookup_info.mapped_attributes.empty? %>
     <div><h2>Select committee member</h2></div>
-    <%= form_tag("Search Results") do %>
-            <div><%= select_tag("select committee member", options_for_select(@ldap_lookup_info.mapped_attributes), {prompt: 'Choose Committee Member'}) %></div>
-        <br /><div><button type="button" class="choose_committee" data-dismiss="modal" aria-hidden="true" >Choose Committee Member </button></div>
+    <%= simple_form_for(:committee_selection_form, remote: true, method: :get, url: url_for(action: 'committee_member_select', controller: '/ldap_lookup')) do |f|  %>
+<%#             %= select_tag("select committee member", options_for_select(@ldap_lookup_info.mapped_attributes), {prompt: 'Choose Committee Member'}) %>
+            <div>
+              <span><%= select_tag("search_committee role_list", options_for_select(@ldap_lookup_info.committee_roles_list), {prompt: 'Choose Committee Member Role'}) %></span>
+              <% @ldap_lookup_info.mapped_attributes.each_with_index do |p, idx| %>
+                  <span class="cte-name_<%= idx %>"><%= p[:name] %></span> <span class="cte-email_<%= idx %>"><%= p[:email] %></span>
+                  <%= radio_button_tag 'search_for_committee_radio', idx %>
+                  <br>
+              <% end %>
+            </div>
+        <%= f.button :submit, "Add Committee Member", class:"btn btn-primary add_selected_committee_member", remote: true, method: :get %>
+
+         <br /><div><button type="button" class="add_selected_committee_member" data-dismiss="modal" aria-hidden="true" >quit </button></div>
     <% end %>
+    <br>
 <% end %>

@@ -11,7 +11,7 @@ $(document).on("click", ".modal-link", function () {
 
 
 });
-
+/*
 
 $(document).on("click", ".committee_search_submit", function () {
 
@@ -27,12 +27,20 @@ $(document).on("click", ".committee_search_submit", function () {
 
     /*
     window.location.replace('/lookup_committee?uid='+$('#ldap_lookup_uid').val()); */
+/*
+});  */
 
-});
+$(document).on("click", ".add_selected_committee_member", function () {
 
-$(document).on("click", ".choose_committee", function () {
-    alert ('here');
+    /*the radio list; person selected*/
+    var list_order = $('input[name=search_for_committee_radio]:checked').val();
+    var this_name = $('span.cte-name_'+list_order).text();
+    var this_email = $('span.cte-email_'+list_order).text();
 
+    /*the committee member role selected*/
+    var this_role = $("#search_committee_role_list option:selected").val();
+    $('div.'+this_role+' .committee_committee_members_name input').val(this_name);
+    $('div.'+this_role+' .committee_committee_members_email input').val(this_email);
 
 });
 
