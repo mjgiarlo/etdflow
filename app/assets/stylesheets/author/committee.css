@@ -1,29 +1,24 @@
+/* search button on committee form page*/
 .main-committee-search-button
 {
     float: right;
 }
+
+/* search modal */
+div.modal-footer .btn
+{
+    float: left;
+}
+
+/* modal search box */
+input#ldap_lookup_uid
+{
+    width: 55%;
+}
+
+/*modal search results drop-down list*/
 #search_committee_role_list
 {
     float: right;
 }
-/*
-.committee_committee_members_name {
-    position: relative;
-}
 
-.committee_committee_members_name input {
-    padding-left: 29px;
-}
-
-.icon-search {
-    position: absolute;
-    top: 7px;
-    left: 11px;
-    background-image: url("/assets/magnifying_glass.gif");
-    background-color: 'blue';
-    background-repeat: no-repeat;
-}
-
-.committee_committee_members_name input:focus, .committee_committee_members_name input.focused {
-    padding-left: 30px;
-}*/

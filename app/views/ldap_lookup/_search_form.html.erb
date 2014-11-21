@@ -1,0 +1,18 @@
+<%= render partial: 'shared/error_messages', locals: {object: @ldap_lookup_info} %>
+<%= simple_form_for(:ldap_lookup, remote: true, method: :get,
+url: url_for(action: 'ldap_lookups', controller: '/ldap_lookup')) do |f| %>
+
+<%= f.input :uid,
+    label: 'Please specify either a single Access Account User ID or a single last name and click Search.',
+        input_html: {maxlength: 50, size: 20, required: true} %>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+    <%= f.button :submit, "Search",
+        class:"btn btn-primary committee-search-submit",
+        remote: true, method: :get %>
+</div>
+
+<% end %>
+

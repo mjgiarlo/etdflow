@@ -1,16 +1,13 @@
 /* Use role value in classes to identify which committee member boxes to fill after search */
-$(document).on("click", ".modal-link", function () {
-
-    var thisrole=$(this).data('role');
-    var thisid=$(this).attr("id");
-
-    $(".modal-header .this-role").text(thisrole );
-    $('#ldap_lookup_uid').val('');
- /*   $('#ldap_lookup_role').text(thisid);  */
-    $('div.search_results').val('');
-
-
-});
+//$(document).on("click", ".modal-link", function () {
+//
+//    var thisrole=$(this).data('role');
+//    var thisid=$(this).attr("id");
+//
+//    $(".modal-header .this-role").text(thisrole );
+//    $('#ldap_lookup_uid').val('');
+//    $('div.search-results').val('');
+//});
 
 $(document).on("click", ".add_selected_committee_member", function () {
 
@@ -24,6 +21,6 @@ $(document).on("click", ".add_selected_committee_member", function () {
     $('div.'+this_role+' .committee_committee_members_name input').val(this_name);
     $('div.'+this_role+' .committee_committee_members_email input').val(this_email);
 
+    $('div.search-box').show();
+    $('div.search-results').hide();
 });
-
-

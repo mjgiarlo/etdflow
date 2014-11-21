@@ -1,0 +1,32 @@
+<%= render partial: 'shared/error_messages', locals: {object: @ldap_lookup_info} %>
+
+    <div><h2>Select committee member</h2></div>
+    <%= simple_form_for(:committee_selection_form, remote: true, method: :get,
+        url: url_for(action: 'committee_member_select', controller: '/ldap_lookup')) do |f|  %>
+        <p>
+        <div>
+
+              <span><%= select_tag("search_committee_role_list",
+                                   options_for_select(@ldap_lookup_info.committee_roles_list),
+                                   {prompt: 'Choose Committee Member Role', :required => true}) %>
+              </span>
+
+          <% @ldap_lookup_info.mapped_attributes.each_with_index do |p, idx| %>
+              <span class="cte-name_<%= idx %>"><%= p[:name] %></span>
+              <span class="cte-email_<%= idx %>"><%= p[:email] %></span>
+              <%= radio_button_tag 'search_for_committee_radio', idx  %>
+              <br>
+          <% end %>
+        </div>
+        </p>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+          <%= f.button :submit, "Add Committee Member",
+                       class:"btn btn-primary add_selected_committee_member",
+                       remote: true,
+                       method: :get %>
+
+        </div>
+    <% end %>

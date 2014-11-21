@@ -65,7 +65,8 @@ class LdapLookup
   attr_accessor :ldap_record
   attr_accessor :mapped_attributes
 
-  validates :uid, presence: true     ####:with => /\A[a-z0-9][a-z0-9_\-]*\z/i, presence: true
+  validates :uid, presence: true, :format => {:with => /\A[a-zA-Z][a-zA-Z]+[0-9]*\z/i }
+
 
   def self.committee_roles_list
 
@@ -73,10 +74,6 @@ class LdapLookup
     Etdflow::Application.config.committee_other_required_roles.each do |r|
       rlist << [r, r.parameterize]
     end
-    # rlist = [[Etdflow::Application.config.committee_advisor_role, 0]]
-    # Etdflow::Application.config.committee_other_required_roles.each_with_index do |r, idx|
-    #   rlist << [r, idx+1]
-    # end
     rlist
   end
 
@@ -138,7 +135,7 @@ class LdapLookup
   end
 
   def map_author_attributes
-    self.roles = self.roles_list
+    self.roles_list
     #map LDAP directory entry to Author record
     @ldap_displayname = self.ldap_record[:displayname].first
     @ldap_postaladdress = self.ldap_record[:postaladdress].first
@@ -170,10 +167,6 @@ class LdapLookup
 
 
       self.mapped_attributes << {:uid => uid, :name => name, :email => email}
-      # val = name + ' ' + email
-      #  tmp = [val, uid, {name: name, email: email}]
-      tmp =
-      #self.mapped_attributes << tmp
       tmp={}
     end
   end
@@ -274,3 +267,4 @@ class LdapLookup
 
 
 end
+
