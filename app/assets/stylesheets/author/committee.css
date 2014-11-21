@@ -11,7 +11,7 @@ div.modal-footer .btn
 }
 
 /* modal search box */
-input#ldap_lookup_uid
+input#ldap_lookup_info_uid
 {
     width: 55%;
 }

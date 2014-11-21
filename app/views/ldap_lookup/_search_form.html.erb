@@ -1,5 +1,4 @@
-<%= render partial: 'shared/error_messages', locals: {object: @ldap_lookup_info} %>
-<%= simple_form_for(:ldap_lookup, remote: true, method: :get,
+<%= simple_form_for(:ldap_lookup_info, remote: true, method: :get,
 url: url_for(action: 'ldap_lookups', controller: '/ldap_lookup')) do |f| %>
 
 <%= f.input :uid,
@@ -15,4 +14,4 @@ url: url_for(action: 'ldap_lookups', controller: '/ldap_lookup')) do |f| %>
 </div>
 
 <% end %>
-
+<div class="modal_errors"></div>
