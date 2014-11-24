@@ -1,6 +1,5 @@
-$('div.search-box').hide();
-$('div.search-results').show();
-
+display_off($('div.search-box'));
+display_on($('div.search-results'));
 $('div.search-results').html("<%= j (render partial: 'ldap_lookup/selection_form',
         locals: {ldap_lookup_info: @ldap_lookup_info}) %>");
 

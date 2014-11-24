@@ -4,3 +4,7 @@ en:
         ldap_lookup:
           uid:  "Access ID or Last Name"
 
+
+  ldap_lookup:
+    search_failed: "%{uid} was not found in directory."
+    choose_role:  "-- Choose Committee Member Role --"

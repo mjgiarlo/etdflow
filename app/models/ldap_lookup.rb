@@ -127,11 +127,13 @@ class LdapLookup
       search_desc = 'Last Name'
     end
     ldap_entry = LdapLookup.directory_entry(search_type, self.uid)
-    self.ldap_record = ldap_entry
-    if self.ldap_record.nil?
+#    self.ldap_record = ldap_entry
+#    if self.ldap_record.nil?
+    if ldap_entry.nil?
       Rails.logger.info "#{search_desc}- #{self.uid} - does not exist in LDAP - #{Time.now}"
       self.errors.add(:uid, "was not found in the directory.")
     end
+    ldap_entry
   end
 
   def map_author_attributes
@@ -154,22 +156,7 @@ class LdapLookup
     self.mapped_attributes[:phone_number] = ldap_telephone || ''
   end
 
-  def map_committee_attributes
 
-    return nil unless !self.ldap_record.nil?
-    self.mapped_attributes = []
-    tmp = {}
-    self.ldap_record.each_with_index do |rec|
-      uid = rec[:uid].first || ''
-      name = (rec[:displayname].first).titleize || ' '
-      email = rec[:mail].first || ' '
-#      dept = tmp[:dept] = rec[:psdepartment].first.titleize || ' '
-
-
-      self.mapped_attributes << {:uid => uid, :name => name, :email => email}
-      tmp={}
-    end
-  end
 
   def close_connection
   end
@@ -200,7 +187,22 @@ class LdapLookup
     end
   end
 
+  def lookup
 
+    ###These lines are commented to avoid hitting ldap while getting this working
+    self.ldap_record = get_ldap_list
+    if self.ldap_record.nil?
+      self.errors.add(:base, I18n.t('ldap_lookup.search_failed', uid: self.uid))
+      return nil
+    end
+
+    self.mapped_attributes = map_committee_attributes
+    if self.mapped_attributes.nil?
+     self.errors.add(:base, I18n.t('ldap_lookup.search_failed', uid: self.uid))
+     return nil
+    end
+
+  end
 
   private
 
@@ -265,6 +267,23 @@ class LdapLookup
     phone
   end
 
+  def map_committee_attributes
+
+    return nil unless !self.ldap_record.nil?
+#    self.mapped_attributes = []
+    mapped_attributes = []
+    tmp = {}
+    self.ldap_record.each_with_index do |rec|
+      uid = rec[:uid].first || ''
+      name = (rec[:displayname].first).titleize || ' '
+      email = rec[:mail].first || ' '
+#      dept = tmp[:dept] = rec[:psdepartment].first.titleize || ' '
+
+      mapped_attributes << {:uid => uid, :name => name, :email => email}
+      tmp={}
+    end
+    mapped_attributes
+  end
 
 end
 

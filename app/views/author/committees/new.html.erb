@@ -15,6 +15,6 @@
         <%= link_to "Cancel", author_root_path %>
       </div>
     <% end %>
-    <%= render partial: 'ldap_lookup/committee_modal' %>
+    <%= render partial: 'ldap_lookup/committee_modal', locals: {ldap_lookup_info: LdapLookup.new} %>
   </div>
 </div>

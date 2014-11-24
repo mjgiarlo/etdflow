@@ -2,32 +2,31 @@
 
     <div><h2>Select committee member</h2></div>
     <%= simple_form_for(:committee_selection_form, remote: true, method: :get,
-        url: url_for(action: 'committee_member_select', controller: '/ldap_lookup')) do |f|  %>
+        url: url_for(action: 'committee_select', controller: '/ldap_lookup')) do |f|  %>
         <p>
         <div>
 
               <span><%= select_tag("search_committee_role_list",
                                    options_for_select(@ldap_lookup_info.committee_roles_list),
-                                   {prompt: 'Choose Committee Member Role', :required => true}) %>
+                                   {prompt: I18n.t('ldap_lookup.choose_role'), :required => true}) %>
               </span>
-
-          <% @ldap_lookup_info.mapped_attributes.each_with_index do |p, idx| %>
-              <span class="cte-name_<%= idx %>"><%= p[:name] %></span>
-              <span class="cte-email_<%= idx %>"><%= p[:email] %></span>
-              <%= radio_button_tag 'search_for_committee_radio', idx  %>
+          <fieldset class="name-list">
+          <% @ldap_lookup_info.mapped_attributes.each_with_index do |p, idx| %>                         <%= radio_button_tag 'search_for_committee_radio', idx  %>
+              <span class="cte-name-<%= idx %>"><%= p[:name] %></span>
+              <span class="cte-email-<%= idx %>"><%= p[:email] %></span>
               <br>
           <% end %>
+          </fieldset>
         </div>
         </p>
         <div class="modal-footer">
 
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default committee-modal-close" data-dismiss="modal">Close</button>
 
           <%= f.button :submit, "Add Committee Member",
-                       class:"btn btn-primary add_selected_committee_member",
+                       class:"btn btn-primary add-selected-committee-member",
                        remote: true,
                        method: :get %>
 
         </div>
     <% end %>
-    <div class="modal_errors"></div>

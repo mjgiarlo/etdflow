@@ -4,8 +4,9 @@ Rails.application.routes.draw do
     get '/logout', to: 'application#logout', as: :logout_author
     get '/login', to: 'application#login', as: :login_author
 
-    get '/lookup_committee', to:  'ldap_lookup#ldap_lookups', as: :ldap_lookup
-    get '/committee_member_select', to: 'ldap_lookup#committee_member_select', as: :committee_member_select
+
+  get '/search_directory', to:  'ldap_lookup#ldap_lookups', as: :ldap_lookup
+  get '/committee_select', to: 'ldap_lookup#committee_select', as: :committee_select
 
   namespace :admin do
     resources :programs, except: [:show, :destroy]

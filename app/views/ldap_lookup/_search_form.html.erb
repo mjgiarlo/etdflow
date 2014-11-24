@@ -1,12 +1,12 @@
 <%= simple_form_for(:ldap_lookup_info, remote: true, method: :get,
-url: url_for(action: 'ldap_lookups', controller: '/ldap_lookup')) do |f| %>
+    url: url_for(action: 'ldap_lookups', controller: '/ldap_lookup')) do |f| %>
 
 <%= f.input :uid,
-    label: 'Please specify either a single Access Account User ID or a single last name and click Search.',
-        input_html: {maxlength: 50, size: 20, required: true} %>
+    label: 'Please specify either a single Access Account ID or a single last name and click Search.',
+        input_html: {maxlength: 50, size: 20, required: true}, value: ' ' %>
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-default committee-modal-close" data-dismiss="modal">Close</button>
 
     <%= f.button :submit, "Search",
         class:"btn btn-primary committee-search-submit",
@@ -14,4 +14,3 @@ url: url_for(action: 'ldap_lookups', controller: '/ldap_lookup')) do |f| %>
 </div>
 
 <% end %>
-<div class="modal_errors"></div>
