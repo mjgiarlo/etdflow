@@ -131,9 +131,9 @@ class LdapLookup
     ldap_entry = LdapLookup.directory_entry(search_type, self.uid)
 #    self.ldap_record = ldap_entry
 #    if self.ldap_record.nil?
-    if ldap_entry.nil?
+    if ldap_entry.nil? || ldap_entry.empty?
       self.errors.add(:base, I18n.t('ldap_lookup.search_failed', uid: self.uid))
-      Rails.logger.info (I18n.t('ldap_lookup.search_failed', uid: self.uid)+' - #{Time.now}')
+      Rails.logger.info (I18n.t('ldap_lookup.search_failed', uid: self.uid)+" - #{Time.now}")
     end
     ldap_entry
   end
@@ -191,7 +191,7 @@ class LdapLookup
 
   def map_committee_attributes
 
-    return nil unless !self.ldap_record.nil?
+    return nil unless !self.ldap_record.nil? && !self.ldap_record.empty?
 #    self.mapped_attributes = []
     mapped_attributes = []
     tmp = {}
