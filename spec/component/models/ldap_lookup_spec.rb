@@ -54,21 +54,30 @@ describe LdapLookup do
   end
 
   describe '#Query PSU-LDAP' do
+
     context "it should return one record from LDAP when given an Access ID that exists in the Penn State Directory" do
-      let (:ldap_info) { LdapLookup.new(uid: 'jxb13') }
+      ldap_info = LdapLookup.new(uid: 'jxb13')
+      before(:each) do
+        LdapLookup.any_instance.stub(:get_ldap_entry).and_return(mock_ldap_list.first)
+      end
 
       it "should return the LDAP record" do
-        ldap_info.get_ldap_entry
+        ldap_info.ldap_record = ldap_info.get_ldap_entry
         ldap_info.ldap_record.should_not be_nil
+        print ldap_info.ldap_record
       end
     end
 
     context "should return one or more records from LDAP when given a last name that exists in the Penn State Directory" do
-      let (:ldap_info) { LdapLookup.new(uid: 'barnoff') }
-      let (:ldap_list) {ldap_info.get_ldap_list }
+      ldap_info = LdapLookup.new(uid: 'barnoff')
+      before(:each) do
+        LdapLookup.any_instance.stub(:get_ldap_list).and_return(mock_ldap_list)
+      end
 
-      it "should return one or more records" do
-        ldap_list.count().should >= 1
+      it "should return one or more records from LDAP" do
+        ldap_info.ldap_record = ldap_info.get_ldap_list
+        ldap_info.ldap_record.count().should >= 1
+        print ldap_info.ldap_record.inspect
       end
     end
 

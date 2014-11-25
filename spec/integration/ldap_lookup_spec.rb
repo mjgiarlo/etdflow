@@ -1,6 +1,6 @@
 require 'integration/integration_spec_helper'
 
-describe 'Submission status transitions', js: true do
+describe 'Committee Search Modal', js: true do
 
   let(:submission) { create :submission, author: author }
   let(:author) { create :author, access_id: 'authorflow' }
@@ -22,26 +22,35 @@ describe 'Submission status transitions', js: true do
         end
 
 
-      context "opening the Committee Search Modal" do
+    context "opening the Committee Search Modal" do
 
-          before { click_button "Search Penn State Directory" }
-          specify "header is visible" do
+      before { click_button "Search Penn State Directory" }
+
+        specify "header is visible" do
             expect(page).to have_content 'Penn State Directory Search for Committee Members'
           end
-          specify "search form is displayed" do
+        specify "search form is displayed" do
             expect(page).to have_content 'Please specify either a single Access Account ID or a single last name and click Search.'
           end
-          specify "input access id" do
-            fill_in 'ldap_lookup_info_uid', with: 'jxb13'
-          end
-          specify "submit search form" do
-            click_button "Search" do
-              expect(page).to have_content('Select committee member')
-            end
-          end
+
+        before(:each) do
+          LdapLookup.any_instance.stub(:get_ldap_list).and_return(mock_ldap_list)
+        end
+        specify "perform search"  do
+          fill_in 'ldap_lookup_info_uid', with: 'barnoff'
+          find(:xpath, "//input[@value ='Search']").click
+          expect(page).to have_content('Select committee member')
+          expect(page).to have_content('Richard M Barnoff')
+
+
+
         end
       end
     end
   end
+end
+
+
+
 
 
