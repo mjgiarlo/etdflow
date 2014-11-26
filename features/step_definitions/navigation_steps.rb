@@ -39,5 +39,5 @@ end
 World WithinHelpers
 
 And(/^I wait for a few seconds$/) do
-  sleep 10 # Hang out for long operations, like for Fedora
+  sleep 15 # Hang out for long operations, like for Fedora
 end
