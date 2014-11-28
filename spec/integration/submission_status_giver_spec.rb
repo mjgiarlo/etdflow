@@ -590,7 +590,7 @@ describe 'Submission status transitions', js: true do
         visit admin_edit_submission_path(submission)
         fill_in 'Final Submission Notes to Student', with: 'Note on need for revisions'
         click_button 'Approve Final Submission'
-        sleep 15
+        sleep 30
       end
       specify "submission status updates to 'waiting for publication release'" do
         submission.reload
@@ -611,7 +611,7 @@ describe 'Submission status transitions', js: true do
         visit admin_edit_submission_path(submission)
         fill_in 'Final Submission Notes to Student', with: 'Note on need for revisions'
         click_button 'Reject & request revisions'
-        sleep 15
+        sleep 30
       end
       specify "submission status updates to 'collecting final submission files'" do
         submission.reload
