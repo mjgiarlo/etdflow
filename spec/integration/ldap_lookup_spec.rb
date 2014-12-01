@@ -8,47 +8,69 @@ describe 'Committee Search Modal', js: true do
   before do
     basic_auth_and_visit root_path
   end
+  before { submission.update_attribute :status, 'collecting committee' }
+  before do
+    visit new_author_submission_committee_path(submission)
+  end
 
   describe "When status is 'collecting committee'" do
-    before { submission.update_attribute :status, 'collecting committee' }
 
     context "visiting the 'Provide Committee' page" do
-      before { visit new_author_submission_committee_path(submission) }
-        specify "loads the page" do
-          expect(current_path).to eq new_author_submission_committee_path(submission)
-        end
-        specify "search button is visible" do
-          expect(page).to have_link("Search Penn State Directory")
-        end
+      specify "committee search button is visible" do
+        expect(page).to have_link("Search Penn State Directory")
+      end
+    end
 
-
-    context "opening the Committee Search Modal" do
-
+    context "Open the Committee Search Modal" do
       before { click_button "Search Penn State Directory" }
 
-        specify "header is visible" do
-            expect(page).to have_content 'Penn State Directory Search for Committee Members'
-          end
-        specify "search form is displayed" do
-            expect(page).to have_content 'Please specify either a single Access Account ID or a single last name and click Search.'
-          end
+      specify "header is visible" do
+        expect(page).to have_content 'Penn State Directory Search for Committee Members'
+        end
+      specify "search form is displayed" do
+        expect(page).to have_content 'Please specify either a single Access Account ID or a single last name and click Search.'
+      end
 
-        before(:each) do
+      context "perform successful search and selection"  do
+        before do
           LdapLookup.any_instance.stub(:get_ldap_list).and_return(mock_ldap_list)
         end
-        specify "perform search"  do
+
+        specify "fill in last name" do
           fill_in 'ldap_lookup_info_uid', with: 'barnoff'
           find(:xpath, "//input[@value ='Search']").click
+
           expect(page).to have_content('Select committee member')
           expect(page).to have_content('Richard M Barnoff')
+          choose('search_for_committee_radio_1')
+          select('Advisor', from: 'search_committee_role_list')
+          find(:xpath, "//input[@value = 'Add Committee Member']").click
 
+          expect(page).to have_content('Committee Member was added.')
+          end
+      end
 
+      context "unsuccessful search and selection should display an error message"  do
+        before do
+          LdapLookup.any_instance.stub(:get_ldap_list).and_return(mock_ldap_list)
+        end
 
+        specify "fill in last name" do
+          fill_in 'ldap_lookup_info_uid', with: 'barnoff'
+          find(:xpath, "//input[@value ='Search']").click
+
+          expect(page).to have_content('Select committee member')
+          expect(page).to have_content('Richard M Barnoff')
+          select('Advisor', from: 'search_committee_role_list')
+          find(:xpath, "//input[@value = 'Add Committee Member']").click
+
+          expect(page).to have_content('Please select a committee member and committee member role')
         end
       end
     end
   end
 end
+
 
 
 

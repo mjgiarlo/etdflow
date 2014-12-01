@@ -3,7 +3,7 @@ require 'support/ldap_lookup'
 
 describe LdapLookup do
 
-  describe "#mock LDAP queries" do
+  describe "#LDAP query and map results" do
 
     context "it should find the author's LDAP entry and initialize author record" do
       let(:author) { create_author_from_ldap }
@@ -37,6 +37,7 @@ describe LdapLookup do
     context "it should return a list of individuals' last name and email address from the LDAP directory" do
       let(:ldap_info) { create_committee_lookup_list }
 
+
       it "should return a list of 3 items" do
         ldap_info.mapped_attributes.count().should == 3
       end
@@ -53,12 +54,15 @@ describe LdapLookup do
     end
   end
 
-  describe '#Query PSU-LDAP' do
+  describe '#Query LDAP' do
+
 
     context "it should return one record from LDAP when given an Access ID that exists in the Penn State Directory" do
+
+
       ldap_info = LdapLookup.new(uid: 'jxb13')
       before(:each) do
-        LdapLookup.any_instance.stub(:get_ldap_entry).and_return(mock_ldap_list.first)
+        LdapLookup.any_instance.stub(:get_ldap_entry).and_return(mock_ldap_list)
       end
 
       it "should return the LDAP record" do

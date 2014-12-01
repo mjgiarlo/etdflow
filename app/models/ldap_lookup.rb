@@ -92,6 +92,8 @@ class LdapLookup
         break unless attrs==[]
       end rescue[]
     end
+    puts "AAAAAAAAA"
+    puts attrs.inspect
     return attrs
   end
 
